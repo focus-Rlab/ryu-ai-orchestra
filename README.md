@@ -24,10 +24,11 @@ Codex、Claude Code、Gemini、GitHub Copilotでは、専用指示ファイル�
 1. 会話履歴だけを正本にしない。
 2. 重要提案前に関係する正本を確認する。
 3. 全作業で`GOVERNANCE.md`と`SECURITY.md`を適用する。
-4. mainへ直接変更せず、専用ブランチとDraft PRを使う。
-5. 重要変更、削除、外部送信、公開、課金、本番反映、権限変更、mainマージは隆之介の承認後に行う。
-6. 既存決定を確認せず、会話や推測だけで仕様を上書きしない。
-7. 完了時は、参照した正本、変更点、検証、未解決事項、承認待ちを報告する。
+4. 誤字、リンク、表記、空白など、意味を変えない小変更はmainへ直接コミットしてよい。それ以外は、同じ目的ごとに一つの専用ブランチとDraft PRを使う。意味を変えないか迷う場合はブランチとDraft PRを使う。
+5. mainへ直接コミットした小変更は、コミットメッセージまたは報告に「意味を変えないと判断した理由」を残す。
+6. 重要変更、削除、外部送信、公開、課金、本番反映、権限変更、mainマージは隆之介の承認後に行う。
+7. 既存決定を確認せず、会話や推測だけで仕様を上書きしない。
+8. 完了時は、参照した正本、変更点、検証、未解決事項、承認待ちを報告する。
 
 ## 作業別の読込ルーター
 
@@ -39,9 +40,10 @@ Codex、Claude Code、Gemini、GitHub Copilotでは、専用指示ファイル�
 | 計画、進捗、実装順序 | 上記＋`ROADMAP.md` |
 | 長期方針、目的との整合 | 上記＋`VISION.md` |
 | エージェントやスキルの新設・分解・統合 | 上記＋`MASTER_SPEC.md`、`RECONSIDER.md`、`SPEC_TRACEABILITY.md` |
-| 権限、正本、重要設計の変更 | 上記＋`MASTER_SPEC.md`、`RECONSIDER.md`、`SPEC_TRACEABILITY.md` |
+| 権限、正本、重要設計の変更 | 上記＋`MASTER_SPEC.md`、`VISION.md`、`RECONSIDER.md`、`SPEC_TRACEABILITY.md` |
 | 過去の決定や情報落ちの確認 | `MASTER_SPEC.md`、`SPEC_TRACEABILITY.md`、関係する分割正本 |
 | AIツールごとの具体的な使い方 | `OPERATING_GUIDE.md` |
+| Stage 1の実行設計・引き継ぎ・評価 | `RAPHAEL_INITIAL_DESIGN.md`、`RAPHAEL_HANDOFF_PROTOCOL.md`、`RAPHAEL_TEST_PLAN.md` |
 
 必要以上に全ファイルを毎回読まず、作業に必要な範囲だけ読む。ただし、重要変更では完全版と対応表まで確認する。
 
@@ -61,6 +63,12 @@ Codex、Claude Code、Gemini、GitHub Copilotでは、専用指示ファイル�
 - `GOVERNANCE.md`: 権限、承認、変更管理
 - `SECURITY.md`: 外部アクセス、スキル、コード、成果物の安全基準
 - `agents/raphael.md`: Raphael初期版の実行仕様
+
+### Stage 1実行設計
+
+- `RAPHAEL_INITIAL_DESIGN.md`: Raphael初期版の実行フローと役割分担
+- `RAPHAEL_HANDOFF_PROTOCOL.md`: 複数環境間で文脈を忠実に渡す共通形式
+- `RAPHAEL_TEST_PLAN.md`: 初期版の実運用・クロスモデル評価計画
 
 ### AI自動読込・実行入口
 
@@ -90,10 +98,11 @@ Codex、Claude Code、Gemini、GitHub Copilotでは、専用指示ファイル�
 1. READMEから必要な正本を選ぶ。
 2. 目的、範囲、完了条件、承認条件を確認する。
 3. 調査、設計、実装、検証を行う。
-4. 変更は専用ブランチとDraft PRで提出する。
+4. 小変更は監査理由を残してmainへ直接コミットできる。重要変更は一つの専用ブランチとDraft PRで提出する。
 5. 正本との整合性、セキュリティ、テスト結果を確認する。
-6. 隆之介の承認後にmainへ反映する。
+6. 隆之介の承認後に重要変更をmainへ反映する。
 7. 重要な新決定は、関連する正本・完全版・対応表へ同期する。
+8. マージ済みの作業ブランチは削除し、常時存在する作業ブランチを原則1〜2本に抑える。
 
 ## 次の段階
 
@@ -102,5 +111,5 @@ Codex、Claude Code、Gemini、GitHub Copilotでは、専用指示ファイル�
 3. 質問管理、調査、実験、統合、品質検査の実行手順を設計する。
 4. 承認、セキュリティ、ログ、評価の保存形式を決める。
 5. 初期テストケースを作る。
-6. 専用ブランチとDraft PRでStage 1の実装案を提出する。
-7. 約1か月・最低10件の実運用評価へ進む。
+6. Stage 1正本同期と独立レビューを完了する。
+7. 隆之介の承認後、約1か月・最低10件の実運用評価へ進む。
