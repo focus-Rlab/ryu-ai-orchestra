@@ -2,28 +2,43 @@
 
 ## 現在地
 
-- 段階: Raphael Foundation Draft
-- 状態: 正本草案作成中
-- ブランチ: `agent/raphael-foundation`
-- main反映: 未承認・未実施
+- 段階: Master Specification and Operating Model Review
+- 状態: 現在実装中
+- main基盤: Raphael Foundation反映済み
+- 作業ブランチ: `agent/master-spec-and-usage`
+- 現在の目的: 完全版保存、分割正本との対応確認、複数AIでの運用方法確立
 
-## Stage 0: 基盤整理
+## Stage 0: Raphael基盤整理
 
-Status: 現在実装中
+Status: 完了
 
 目的: 会話で確定した構想を、再利用可能な正本へ移す。
 
-完了条件:
-- README、VISION、ROADMAP、USER、RECONSIDER、GOVERNANCE、agents/raphael.mdが存在する
-- SECURITY.mdが横断安全基準として存在する
-- 正本間に重大な矛盾がない
-- 旧Meta Agent Builder構想の扱いが明記される
-- 隆之介が草案を承認する
+完了済み:
+- README、VISION、ROADMAP、USER、RECONSIDER、GOVERNANCE、SECURITY、agents/raphael.mdをmainへ反映
+- 旧Meta Agent Builder構想と旧テンプレート群を削除
+- `.gitignore`を安全装置として保持
+- 隆之介の承認後にPR #1をmainへマージ
+
+## Stage 0.5: 完全性監査と運用モデル
+
+Status: 現在実装中
+
+目的: 圧縮による情報落ちを防ぎ、複数AIから正しく再利用できる状態にする。
 
 成果物:
-- 7つの中核正本
-- SECURITY.md
-- Draft PR
+- `MASTER_SPEC.md`: 完全版基準文書
+- `SPEC_TRACEABILITY.md`: 完全版と分割正本の対応表
+- `OPERATING_GUIDE.md`: ChatGPT、Claude、Codex、Gemini等での運用方法
+- 詳細を補強した分割正本
+
+完了条件:
+- 統合仕様書の主要決定が完全版に保存されている
+- 完全版の各項目に分割正本の対応先がある
+- 分割正本に運用必須の詳細が反映されている
+- READMEから完全版、対応表、運用ガイドへ到達できる
+- 隆之介が内容を確認する
+- 承認後にmainへ反映する
 
 ## Stage 1: Raphael初期版の実装設計
 
@@ -36,6 +51,8 @@ Status: 次に実装
 - 正本確認、質問管理、調査、実験、統合、品質検査、再発防止の手順がある
 - セキュリティ検査手順がある
 - 初期テストケースがある
+- ログ、評価、正本更新の保存形式がある
+- ChatGPT、Claude、Codex等のどの環境で何を実行するかが決まる
 
 ## Stage 2: 要求整理・構想具体化エージェント
 
@@ -80,6 +97,13 @@ Status: 条件付き将来
 - 実際に役立つ: 80点以上
 - 4項目平均85点以上
 
+実装前に確定する項目:
+- 大幅修正と軽微修正の定義
+- タスク種類の配分
+- 評価ログ形式
+- 客観条件の重み
+- 重大ミス発生後の再評価方法
+
 ## Stage 4: Ciel進化判定
 
 Status: 条件付き将来
@@ -104,11 +128,25 @@ Status: 条件付き将来
 - 開始条件
 - 完了条件
 - 依存関係
+- 優先度
 - 状態
 - 次の具体的行動
+- 所要時間
+- 集中作業か並行可能か
 - 成果物
 - 保存場所
 - レビュー担当
 - 承認状況
 
 状態は「現在実装中」「次に実装」「条件付き将来」「再検討」「完了」「却下」「禁止」を使用する。
+
+## 実装前チェック
+
+- `MASTER_SPEC.md`を確認する
+- `SPEC_TRACEABILITY.md`で対応漏れを確認する
+- 確定、暫定、保留を区別する
+- 権限と承認点を確認する
+- セキュリティ検査方法を確認する
+- 評価方法とログ保存先を決める
+- 変更は専用ブランチとDraft PRで行う
+- main反映前に隆之介の承認を得る
