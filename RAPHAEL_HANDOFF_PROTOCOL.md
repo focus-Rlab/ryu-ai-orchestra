@@ -1,6 +1,6 @@
 # Raphael Handoff Protocol
 
-Version: 0.1.0-draft
+Version: 0.2.0-draft
 Status: Stage 1 Working Draft
 Owner: Ryunosuke Matsumoto
 
@@ -54,8 +54,10 @@ For important design or source-of-truth work, normally include:
 - `README.md`
 - `MASTER_SPEC.md`
 - `SPEC_TRACEABILITY.md`
+- `VISION.md`
 - `ROADMAP.md`
 - `USER.md`
+- `RECONSIDER.md`
 - `GOVERNANCE.md`
 - `SECURITY.md`
 - `agents/raphael.md`
@@ -248,13 +250,17 @@ Review `RAPHAEL_INITIAL_DESIGN.md` to determine whether it faithfully captures R
 - `README.md`
 - `MASTER_SPEC.md`
 - `SPEC_TRACEABILITY.md`
+- `VISION.md`
 - `ROADMAP.md`
 - `USER.md`
+- `RECONSIDER.md`
 - `GOVERNANCE.md`
 - `SECURITY.md`
 - `agents/raphael.md`
 - `RAPHAEL_INITIAL_DESIGN.md`
 - `RAPHAEL_HANDOFF_PROTOCOL.md`
+- `RAPHAEL_TEST_PLAN.md`
+- `STAGE1_STATUS.md`
 
 ### Confirmed decisions to preserve
 
@@ -305,6 +311,29 @@ This handoff is used only after review points are integrated and the intended ch
 
 Claude Code Raphael is the default candidate when coordinated multi-file repository editing is materially more efficient than direct editing by the accountable integrator.
 
+### Required source-of-truth files
+
+Before implementation, the receiver must read:
+
+- `README.md`
+- `MASTER_SPEC.md`
+- `SPEC_TRACEABILITY.md`
+- `VISION.md`
+- `ROADMAP.md`
+- `USER.md`
+- `RECONSIDER.md`
+- `GOVERNANCE.md`
+- `SECURITY.md`
+- `agents/raphael.md`
+- `RAPHAEL_INITIAL_DESIGN.md`
+- `RAPHAEL_HANDOFF_PROTOCOL.md`
+- `RAPHAEL_TEST_PLAN.md`
+- `STAGE1_REVIEW_BRIEF.md`
+- `STAGE1_STATUS.md`
+- the latest review findings and resolution record
+
+The sender must state the exact branch, approved findings, rejected findings, files allowed to change, and expected completion checks. Repository connection alone does not count as reading these files.
+
 ### Assigned role
 
 Implement the approved design changes on the existing Stage 1 branch. Preserve synchronization across the master specification, traceability table, split source-of-truth files, and working design documents.
@@ -318,6 +347,14 @@ Implement the approved design changes on the existing Stage 1 branch. Preserve s
 - do not introduce unrelated automation platforms
 - do not reinterpret confirmed decisions
 - report any conflict before choosing one source over another
+
+### Completion conditions
+
+- every approved review finding is mapped to a concrete change or documented non-change
+- the complete master, traceability table, split source-of-truth files, and Stage 1 documents are synchronized
+- no unresolved blocking contradiction remains
+- changed files and checks are listed
+- main merge remains approval-gated
 
 ## 10. Handoff quality failure conditions
 
