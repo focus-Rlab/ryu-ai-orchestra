@@ -1,30 +1,30 @@
-# Stage 1 Review Resolution
+# Stage 1 レビュー対応記録
 
-Reviewer: Claude Raphael
-Integrator: ChatGPT Raphael
+Reviewer: Claude上のレビュー担当エージェント
+Integrator: Raphael
 Target: Draft PR #4
-Decision: Revise — blocking and important findings accepted
+Decision: 修正 — Blocking・重要指摘を採用
 
-## Blocking findings
+## Blocking指摘
 
-### B1 Branch policy contradiction
+### B1 ブランチ方針の矛盾
 
-Status: Resolved in branch.
+状態: ブランチ上で解消済み。
 
-Changes:
+変更:
 
-- `README.md` now permits direct-main commits only for meaning-preserving typo, link, formatting, and whitespace changes.
-- `MASTER_SPEC.md` contains the same exception and the important-change branch rule.
-- `SPEC_TRACEABILITY.md` maps the exception, ambiguity fallback, and audit reason.
-- `GOVERNANCE.md` and `agents/raphael.md` state that ambiguity defaults to a branch and Draft PR.
-- `OPERATING_GUIDE.md` was also updated after the final audit found stale branch-only wording.
-- Direct-main small changes must leave a one-line reason explaining why meaning is unchanged.
+- `README.md`では、意味を変えない誤字、リンク、表記、空白の変更だけmainへの直接コミットを許可
+- `MASTER_SPEC.md`にも同じ例外と、重要変更はブランチを使う規則を反映
+- `SPEC_TRACEABILITY.md`に例外、曖昧時の扱い、監査理由を対応付け
+- `GOVERNANCE.md`と`agents/raphael.md`に、意味変更が曖昧ならブランチとDraft PRを使うと明記
+- 最終監査で古い記述が見つかった`OPERATING_GUIDE.md`も同期
+- mainへの直接小変更には、意味が変わらないと判断した理由を一行残す
 
-### B2 Master and split-source synchronization
+### B2 統合仕様書と分割正本の同期
 
-Status: Resolved in branch.
+状態: ブランチ上で解消済み。
 
-Synchronized:
+同期対象:
 
 - `README.md`
 - `MASTER_SPEC.md`
@@ -34,78 +34,92 @@ Synchronized:
 - `GOVERNANCE.md`
 - `OPERATING_GUIDE.md`
 - `agents/raphael.md`
-- Stage 1 design, handoff, review, status, and test documents
+- Stage 1の設計、引き継ぎ、レビュー、状態、テスト文書
 
-`ROADMAP.md` now makes synchronization and review-blocker resolution explicit Stage 1 completion conditions.
+`ROADMAP.md`には、同期とBlocking解消をStage 1完了条件として明記した。
 
-## Important findings
+## 重要指摘
 
-### I1 Meaning-preserving judgment boundary
+### I1 意味を変えない変更の判断境界
 
-Status: Resolved.
+状態: 解消済み。
 
-Rule added: if there is doubt whether meaning changes, use a working branch and Draft PR. Direct-main changes leave a one-line audit reason.
+意味が変わるか迷う場合は作業ブランチとDraft PRを使う。mainへ直接反映する軽微変更には一行の監査理由を残す。
 
-### I2 Repository implementation handoff lacks required source list
+### I2 リポジトリ実装引き継ぎに必読一覧がない
 
-Status: Resolved.
+状態: 解消済み。
 
-`RAPHAEL_HANDOFF_PROTOCOL.md` Section 9 now includes the mandatory source-of-truth and working-document list, branch identity, approved/rejected findings, allowed files, and completion checks.
+`RAPHAEL_HANDOFF_PROTOCOL.md`第9章に、必読正本・作業文書、ブランチ、採用・却下指摘、変更可能ファイル、完了確認を追加した。
 
-### I3 Review brief omitted VISION and RECONSIDER
+### I3 レビュー要領にVISIONとRECONSIDERがない
 
-Status: Resolved.
+状態: 解消済み。
 
-Both files were added to the required reading order with the reason that Stage 1 is important design and organization work.
+Stage 1が重要設計・組織作業であるため、両方を必読順へ追加した。
 
-### I4 Domain coverage was subjective
+### I4 ドメイン網羅性が主観的
 
-Status: Resolved.
+状態: 解消済み。
 
-`RAPHAEL_TEST_PLAN.md` now requires:
+`RAPHAEL_TEST_PLAN.md`に以下を追加した。
 
-- at least 5 distinct domains in 10 qualifying tasks
-- no domain above 3 tasks
-- at least 2 cross-domain tasks
-- at least 3 cross-model comparison tasks
+- 10件中、最低5つの異なるドメイン
+- 1ドメインは最大3件
+- 最低2件の分野横断タスク
+- 最低3件の複数AI環境比較
 
-## Minor findings
+## 軽微指摘
 
-### M1 Repeated test-agent wording
+### M1 テスト用エージェントの説明が重複
 
-Status: Accepted as harmless controlled repetition.
+状態: 管理された無害な重複として許容。
 
-The detailed procedure remains in governance and the operational permission remains in the agent specification. They serve different reading contexts and are not contradictory.
+ガバナンスには詳細手順、エージェント仕様には運用権限を記載しており、読む目的が異なる。矛盾はない。
 
-### M2 Open test items not linked from roadmap
+### M2 未確定テスト項目がロードマップと接続されていない
 
-Status: Resolved.
+状態: 解消済み。
 
-`ROADMAP.md` now treats scoring weights, exchange definition, log format, similarity threshold, and major-error retest rules as formal prerequisites before Stage 3.
+`ROADMAP.md`に、採点重み、往復定義、ログ形式、再現性基準、重大ミス後の再テスト規則をStage 3開始前の正式前提として追加した。
 
-### M3 Inconsistent document versioning
+### M3 文書バージョン表記が不統一
 
-Status: Partially resolved.
+状態: 一部解消。
 
-Version markers were added or advanced on the principal changed specifications. A repository-wide document-versioning standard is not necessary for this PR and remains a future housekeeping decision.
+主要な変更仕様にはバージョン表記を追加・更新した。リポジトリ全体のバージョン規格はこのPRの必須範囲ではないため、将来の整理事項とした。
 
-## Final audit
+## 最終監査
 
-The final consistency audit checked the changed complete master, traceability matrix, split source-of-truth files, Stage 1 documents, and operating guide.
+変更された統合仕様書、対応表、分割正本、Stage 1文書、運用ガイドの整合性を確認した。
 
-Result:
+結果:
 
-- no unresolved blocking contradiction identified
-- branch policy is consistent across changed operational documents
-- review findings are mapped to concrete changes
-- main merge remains approval-gated
+- 未解決のBlocking矛盾なし
+- 変更対象文書間でブランチ方針が一致
+- レビュー指摘が具体的変更へ対応付け済み
+- mainマージは隆之介の承認対象として維持
 
-## Residual risks
+## 残存リスク
 
-- Cross-model reproducibility remains unverified until at least 3 real tasks are compared across two or more environments.
-- The final weighting of evaluation dimensions and final similarity threshold remain intentionally provisional until before formal evaluation.
-- Meaning-preserving direct-main changes remain a trust boundary, mitigated by branch-by-default under uncertainty and a one-line audit reason.
+- 最低3件を2環境以上で比較するまで、複数環境再現性は未検証
+- 評価項目の最終重みと再現性の最終数値基準は正式評価前まで暫定
+- 意味を変えないmain直接変更は信頼境界であり、曖昧時のブランチ利用と一行理由で軽減する
 
-## Merge boundary
+## その後に確定した訂正
 
-This resolution does not authorize main merge. Ryunosuke's explicit approval is still required.
+Stage 1マージ後、隆之介から以下が明確に訂正された。
+
+- Raphaelは秘書AIではない
+- RaphaelはAIオーケストラ全体を統括する最上位AIである
+- 秘書業務は機能の一部にすぎない
+- 仕事の委任・割り振り先はエージェントである
+- ChatGPT、Claude、Codex等は、エージェントが作業するためのAIモデル・実行環境である
+- Raphaelが各タスクに最適なAIモデル・環境を判断する
+- ロードマップと異なる計画を独断で導入せず、先に隆之介へ相談する
+
+これらは`stage2/role-language-roadmap-alignment`ブランチで関連正本へ同期する。
+
+## マージ境界
+
+この記録単独ではmainマージを許可しない。正本の意味を変更する修正には、隆之介の明示承認が必要。

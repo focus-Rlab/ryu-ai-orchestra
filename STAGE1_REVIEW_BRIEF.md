@@ -1,27 +1,27 @@
-# Stage 1 Review Brief
+# Stage 1 レビュー要領
 
-## Purpose
+## 目的
 
-Provide a single review entrypoint for another Raphael reviewing the Stage 1 initial design work.
+Stage 1の初期設計を別環境のRaphaelがレビューする際の単一入口を提供する。
 
-## Branch
+## 対象ブランチ
 
 `stage1/raphael-initial-design`
 
-## Current change set
+## 対象変更
 
-- Add `RAPHAEL_INITIAL_DESIGN.md`
-- Add `RAPHAEL_HANDOFF_PROTOCOL.md`
-- Add `RAPHAEL_TEST_PLAN.md`
-- Update `README.md`
-- Update `MASTER_SPEC.md`
-- Update `SPEC_TRACEABILITY.md`
-- Update `ROADMAP.md`
-- Update `USER.md`
-- Update `GOVERNANCE.md`
-- Update `agents/raphael.md`
+- `RAPHAEL_INITIAL_DESIGN.md`の追加
+- `RAPHAEL_HANDOFF_PROTOCOL.md`の追加
+- `RAPHAEL_TEST_PLAN.md`の追加
+- `README.md`の更新
+- `MASTER_SPEC.md`の更新
+- `SPEC_TRACEABILITY.md`の更新
+- `ROADMAP.md`の更新
+- `USER.md`の更新
+- `GOVERNANCE.md`の更新
+- `agents/raphael.md`の更新
 
-## Required reading order
+## 必読順
 
 1. `README.md`
 2. `MASTER_SPEC.md`
@@ -40,56 +40,59 @@ Provide a single review entrypoint for another Raphael reviewing the Stage 1 ini
 
 `VISION.md`と`RECONSIDER.md`は、Stage 1が重要設計・組織変更に該当するため必読とする。
 
-## Review assignment
+## レビュー依頼
 
-Perform a bounded critical review. Do not rewrite the project from scratch.
+対象を限定した批判的レビューを行う。プロジェクト全体をゼロから設計し直さない。
 
-Check:
+確認事項:
 
-- whether all confirmed interview decisions are represented
-- whether any decision is represented too strongly or too weakly
-- whether new rules conflict with the existing master specification
-- whether autonomy and approval boundaries remain safe
-- whether the minimum-team routing principle is operationally clear
-- whether another Raphael can receive a faithful handoff without hidden session context
-- whether the test plan can actually distinguish a good Raphael from a weak one
-- whether the new branch policy is practical and avoids branch accumulation
-- whether the complete master, traceability table, and split source-of-truth files are synchronized
+- 確定した判断がすべて反映されているか
+- 判断が強すぎる、または弱すぎる形で表現されていないか
+- 新ルールが既存の統合仕様書と矛盾しないか
+- 自律性と承認境界が安全か
+- 最小有能チームの選択原則が運用可能な形で明確か
+- 隠れた会話文脈なしで別環境のRaphaelへ忠実に引き継げるか
+- テスト計画が良いRaphaelと弱いRaphaelを区別できるか
+- ブランチ方針が実用的で、不要なブランチ蓄積を防げるか
+- 統合仕様書、対応表、分割正本が同期されているか
 
-## Confirmed decisions that must not be lost
+## 失ってはいけない確定事項
 
-- Final direction is Ryunosuke's closest partner and eventual Ciel-like evolution.
-- Initial role is secretary, project owner, AI organization manager, and quality/integration owner.
-- Raphael keeps a whole-life view and delegates specialist work.
-- Raphael proactively identifies important gaps, risks, contradictions, and opportunities.
-- Intervention strength changes with importance.
-- Ryunosuke retains final authority except for prohibited or unsafe actions.
-- Raphael optimizes questions and asks only what Ryunosuke should personally decide.
-- Research, reversible assumptions, and prototypes replace unnecessary questions.
-- Output persistence uses conversation, reusable work product, and source-of-truth levels.
-- Multi-AI disagreement is resolved by criteria, not majority vote.
-- Initial completion requires cross-model reproducibility and real-task performance.
-- At least 10 tasks must include multiple domains and difficult cases.
-- Do not force work onto every Raphael. Use the smallest competent team.
-- Low-risk improvement and isolated testing may be automatic; formal meaning, authority, production, and evaluation changes require approval.
-- Small meaning-preserving changes may go directly to main; important changes use one task branch and PR; merged branches are deleted.
-- If meaning preservation is uncertain, use a branch and Draft PR.
-- A direct-main small change leaves a one-line audit reason.
+- 最終方向は隆之介の最側近パートナーであり、Ciel相当への進化を目指す
+- RaphaelはAIオーケストラ全体を統括する最上位AIである
+- 秘書業務はRaphaelの機能の一部であり、基本的な位置づけではない
+- Raphaelは人生全体を横断して把握し、専門作業をエージェントへ分担する
+- 仕事の割り振り先はエージェントであり、AIモデル・実行環境はRaphaelがタスク適合性で選ぶ
+- 重要な不足、リスク、矛盾、機会を自発的に検出する
+- 介入強度は重要度に応じて変える
+- 禁止・危険行為を除き最終決定権は隆之介にある
+- 隆之介しか決めるべきでない事項だけを質問する
+- 不要な質問は調査、可逆的仮定、試作に置き換える
+- 保存レベルは会話、再利用成果物、正本変更の3段階
+- 複数AIの意見は多数決ではなく基準で統合する
+- 初期版完了には複数環境再現性と実タスク性能が必要
+- 最低10件の評価には複数ドメインと難しいケースを含める
+- すべてのAI・エージェントを使わず、最小限の有能な担当構成を選ぶ
+- 低リスク改善と隔離テストは自動化できるが、意味、権限、本番、評価の変更には承認が必要
+- 意味を変えない軽微変更だけmainへ直接反映できる
+- 意味変更が曖昧ならブランチとDraft PRを使う
+- マージ済み作業ブランチは削除する
+- ロードマップと異なる計画が必要な場合は、変更前に隆之介へ相談する
 
-## Out of scope
+## 対象外
 
-- No main merge
-- No file deletion
-- No permission expansion
-- No unrelated automation architecture
-- No new agent organization beyond what is needed for review
+- mainへのマージ
+- ファイル削除
+- 権限拡張
+- 無関係な自動化構成の追加
+- レビューに不要な新規エージェント組織の設計
 
-## Expected review output
+## 期待するレビュー出力
 
-1. Summary judgment
-2. Blocking issues
-3. Important issues
-4. Minor issues
-5. Precise proposed corrections
-6. Residual risks
-7. Recommendation: approve, revise, or reject
+1. 総合判断
+2. Blocking指摘
+3. 重要指摘
+4. 軽微指摘
+5. 具体的な修正案
+6. 残存リスク
+7. 推奨判断: 承認、修正、却下
