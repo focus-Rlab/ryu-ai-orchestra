@@ -1,6 +1,6 @@
 # Specification Traceability Matrix
 
-Version: 0.2.0-draft
+Version: 0.3.0-draft
 Owner: Ryunosuke Matsumoto
 
 ## 目的
@@ -36,14 +36,15 @@ Owner: Ryunosuke Matsumoto
 | 17. 確定・暫定・保留 | RECONSIDER.md / ROADMAP.md | 反映済み |
 | 18. 実装前チェック | ROADMAP.md / OPERATING_GUIDE.md | 反映済み |
 | 19. 実装順序 | ROADMAP.md | 反映済み |
-| READMEを唯一の入口とする | README.md / OPERATING_GUIDE.md | 反映済み・MASTER_SPEC追記候補 |
-| Codex・Copilot共通入口 | AGENTS.md / README.md | 反映済み・MASTER_SPEC追記候補 |
-| Claude自動入口 | CLAUDE.md / README.md | 反映済み・MASTER_SPEC追記候補 |
-| Gemini自動入口 | GEMINI.md / README.md | 反映済み・MASTER_SPEC追記候補 |
-| Copilot共通指示 | .github/copilot-instructions.md / README.md | 反映済み・MASTER_SPEC追記候補 |
-| GitHub custom Raphael | .github/agents/raphael.md / agents/raphael.md | 反映済み・MASTER_SPEC追記候補 |
-| AIツールの使い分け | OPERATING_GUIDE.md | 反映済み・MASTER_SPEC追記候補 |
-| セッション終了時の引き継ぎ | OPERATING_GUIDE.md / GOVERNANCE.md | 反映済み・MASTER_SPEC追記候補 |
+| 20.1 READMEを唯一の入口とする | README.md / OPERATING_GUIDE.md | 反映済み |
+| 20.2 Codex・Copilot共通入口 | AGENTS.md / README.md | 反映済み |
+| 20.2 Claude自動入口 | CLAUDE.md / README.md | 反映済み |
+| 20.2 Gemini自動入口 | GEMINI.md / README.md | 反映済み |
+| 20.2 Copilot共通指示 | .github/copilot-instructions.md / README.md | 反映済み |
+| 20.3 GitHub custom Raphael | .github/agents/raphael.md / agents/raphael.md | 反映済み |
+| 20.4 AIツールの使い分け | OPERATING_GUIDE.md | 反映済み |
+| 20.5 標準作業フロー | OPERATING_GUIDE.md / GOVERNANCE.md / ROADMAP.md | 反映済み |
+| 20.6 セッション引き継ぎ | OPERATING_GUIDE.md / GOVERNANCE.md | 反映済み |
 
 ## 完全性ルール
 
