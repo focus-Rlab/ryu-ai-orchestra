@@ -1,48 +1,62 @@
-# Stage 1 Status
+# Stage 1 状態記録
 
-Current state: Claude review integrated and final consistency audit completed; Ryunosuke approval remains.
+現在状態: 隆之介の承認後、PR #4はmainへマージ済み。作業ブランチも削除済み。
 
-## Completed
+## 完了済み
 
-- initial execution design
-- minimum-team routing rule
-- question optimization design
-- proactive disagreement levels
-- self-improvement approval model
-- cross-model handoff protocol
-- initial test plan
-- branch lifecycle rule
-- independent Claude critical review
-- integration of blocking and important review findings
-- synchronization into `README.md`, `MASTER_SPEC.md`, `SPEC_TRACEABILITY.md`, `ROADMAP.md`, `USER.md`, `GOVERNANCE.md`, `OPERATING_GUIDE.md`, and `agents/raphael.md`
-- review resolution record in `STAGE1_REVIEW_RESOLUTION.md`
-- final consistency audit of Draft PR #4
-- removal of stale branch-policy contradictions in README, master specification, governance, agent specification, roadmap, and operating guide
+- 初期実行設計
+- 最小有能チームの選択ルール
+- 質問最適化設計
+- 自発的な異論・介入レベル
+- 自己改善と承認境界
+- 複数環境間の引き継ぎ手順
+- 初期テスト計画
+- ブランチ運用ルール
+- Claudeによる独立批判レビュー
+- Blocking・重要指摘の統合
+- `README.md`、`MASTER_SPEC.md`、`SPEC_TRACEABILITY.md`、`ROADMAP.md`、`USER.md`、`GOVERNANCE.md`、`OPERATING_GUIDE.md`、`agents/raphael.md`への同期
+- `STAGE1_REVIEW_RESOLUTION.md`への対応記録
+- Draft PR #4の最終整合性監査
+- PR #4のmainマージ
+- `stage1/raphael-initial-design`ブランチの削除
 
-## Audit result
+## 監査結果
 
-- B1 branch-policy contradiction: resolved
-- B2 master and split-source synchronization: resolved
-- I1 ambiguity fallback and audit reason: resolved
-- I2 repository implementation handoff source list: resolved
-- I3 VISION and RECONSIDER reading requirement: resolved
-- I4 numeric domain distribution: resolved
-- no unresolved blocking contradiction identified in the changed source-of-truth set
+- B1 ブランチ方針の矛盾: 解消
+- B2 統合仕様書と分割正本の同期: 解消
+- I1 意味変更が曖昧な場合のブランチ利用: 解消
+- I2 リポジトリ実装引き継ぎの必読ファイル一覧: 解消
+- I3 VISION・RECONSIDERの確認要件: 解消
+- I4 数値化されたドメイン配分: 解消
+- 変更対象の正本に未解決Blocking矛盾なし
 
-## Not yet completed
+## Stage 1後に判明した修正事項
 
-- Ryunosuke approval for main merge
-- actual cross-model reproducibility tests and real-task evaluation, which occur after Stage 1 design approval
-- final scoring weights, official log location, final exchange definition, and final similarity threshold before Stage 3 begins
+- Raphaelを「秘書AI」と捉える表現が残っていた
+- 正しくは、RaphaelはAIオーケストラ全体を統括する最上位AIである
+- 秘書業務は機能の一部にすぎない
+- 仕事の割り振り先はAIモデルではなくエージェントである
+- AIモデル・実行環境は、各エージェントが仕事を行う基盤としてRaphaelが最適なものを選択する
+- Stage 2は既存ロードマップどおり「要求整理・構想具体化エージェント」であり、独断で別計画へ置き換えない
 
-## Current responsible roles
+上記は`stage2/role-language-roadmap-alignment`ブランチで修正中。
 
-- ChatGPT Raphael: accountable designer and integrator; review integration and audit completed
-- Claude Raphael: independent review completed
-- Claude Code Raphael: not used because direct integration was more efficient after the bounded review
-- Codex Raphael: not assigned because no separate bounded technical task justified the handoff cost
-- GitHub Raphael: not assigned because connector-based PR work was sufficient
+## 今後の評価で未確定の事項
 
-## Approval boundary
+- 正式な採点重み
+- 評価ログの正式保存先
+- 1往復の正式定義
+- 複数環境再現性の最終数値基準
+- 重大ミス後の再評価方法
 
-This branch must not be merged to main until Ryunosuke explicitly approves the merge.
+これらはStage 3開始前に確定する。
+
+## 現在の責任分担
+
+- Raphael: 統括、設計、担当エージェント選択、AIモデル・実行環境選択、統合、最終整合性確認
+- Claude上のレビュー担当エージェント: 独立レビュー完了
+- その他のAIモデル・環境: タスク適合性がある場合のみRaphaelが選択
+
+## 承認境界
+
+役割、権限、正本の意味、ロードマップを変更するmainマージには隆之介の承認が必要。ロードマップと異なる計画を提案する場合は、実装前に隆之介へ相談する。
