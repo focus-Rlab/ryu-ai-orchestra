@@ -1,55 +1,70 @@
-# Raphael Handoff Protocol
+# Raphael 引き継ぎ手順
 
-Version: 0.2.0-draft
-Status: Stage 1 Working Draft
+Version: 0.3.0-draft
+Status: Stage 1 承認済み手順
 Owner: Ryunosuke Matsumoto
 
-## 1. Purpose
+## 1. 目的
 
-This document defines how one Raphael instance hands work to another Raphael instance across ChatGPT, Claude, Claude Code, Codex, GitHub, or future environments without losing context, changing meaning, duplicating work, or exceeding authority.
+ChatGPT、Claude、Claude Code、Codex、GitHubその他の環境をまたいで、目的、意味、制約、権限、進捗を失わずに仕事を引き継ぐ方法を定義する。
 
-A handoff is successful only when the receiving Raphael can understand the real objective, current state, assigned scope, constraints, source-of-truth references, and completion conditions without relying on hidden memory from the sending environment.
+引き継ぎが成功したと言えるのは、受け手が送信元の隠れた会話記憶に依存せず、次を理解できる場合だけである。
 
-## 2. Core rule
+- 本当の目的
+- 現在地
+- 担当範囲
+- 制約
+- 必読正本
+- 完了条件
+- 承認境界
 
-Do not send only a short task sentence.
+## 2. 中核ルール
 
-Every material handoff must include enough context for the receiving Raphael to reproduce the sender's understanding. At the same time, do not copy the entire repository or conversation when only a bounded subset is relevant.
+短い作業文だけを渡さない。
 
-The sender is responsible for context selection. The receiver is responsible for verifying the stated source-of-truth files before acting.
+重要な引き継ぎには、受け手が同等の理解を再現できる文脈を含める。一方、関係のない会話やリポジトリ全体を無差別に貼り付けない。
 
-## 3. Required handoff fields
+送信側は必要文脈の選択に責任を持つ。受信側は作業前に指定された正本を確認する。
 
-Every material handoff should include the following fields.
+## 3. エージェントとAIモデル・実行環境の区別
 
-### 3.1 Identity and role
+引き継ぎの責任主体はエージェントである。
 
-- sending Raphael environment
-- receiving Raphael environment
-- assigned role for this task
-- accountable integrator
+- **担当エージェント**: 仕事の役割・責任を持つ
+- **AIモデル・実行環境**: エージェントが仕事を行う基盤
 
-### 3.2 Real objective
+Raphaelは先に担当エージェントを決め、その後でChatGPT、Claude、Claude Code、Codex、GitHub等から最適な実行環境を選ぶ。
 
-State what outcome Ryunosuke actually wants and why it matters.
+「Claudeへ仕事を委任する」のように、AIモデル自体を責任主体として扱わない。正確には「レビュー担当エージェントをClaude環境で実行する」のように記録する。
 
-Do not reduce the objective to a technical action such as "edit this file" when the actual purpose is broader.
+## 4. 必須項目
 
-### 3.3 Current situation
+### 4.1 送信側・受信側
 
-Include:
+- 送信側エージェント
+- 受信側エージェント
+- 送信元環境
+- 受信先環境
+- 統合責任者
+- 今回の担当役割
 
-- what has already been decided
-- what has already been completed
-- what remains open
-- current stage in the roadmap
-- relevant recent changes
+### 4.2 本当の目的
 
-### 3.4 Source-of-truth references
+隆之介が最終的に欲しい成果と、その重要性を書く。
 
-List the exact files the receiver must read.
+実際の目的が広いのに「このファイルを編集する」だけへ縮小しない。
 
-For important design or source-of-truth work, normally include:
+### 4.3 現在の状況
+
+- 確定済み事項
+- 完了済み作業
+- 未解決事項
+- ロードマップ上の現在地
+- 最近の重要変更
+
+### 4.4 必読正本
+
+重要設計・正本変更では通常、以下を指定する。
 
 - `README.md`
 - `MASTER_SPEC.md`
@@ -61,191 +76,186 @@ For important design or source-of-truth work, normally include:
 - `GOVERNANCE.md`
 - `SECURITY.md`
 - `agents/raphael.md`
-- task-specific working documents
+- タスク固有の作業文書
 
-Do not claim the receiver has read a file merely because the repository is connected.
+リポジトリへ接続されているだけで、読了したとみなさない。
 
-### 3.5 Confirmed decisions
+### 4.5 判断状態
 
-Separate confirmed decisions from proposals and unresolved questions.
+以下を分ける。
 
-Use these labels:
+- 確定
+- 提案
+- 未確定
+- 却下
 
-- Confirmed
-- Proposed
-- Open
-- Rejected
+確定判断の意味を勝手に強めたり弱めたりしない。
 
-Do not rewrite a confirmed decision into a softer or stronger version without explicitly flagging the change.
+### 4.6 担当範囲
 
-### 3.6 Assigned scope
+- 対象ファイル・領域
+- 期待成果物
+- 必要な詳細度
+- 実装可能か
+- レビューのみか
 
-State exactly what the receiving Raphael should do.
+### 4.7 対象外
 
-Include:
+例:
 
-- files or areas in scope
-- expected deliverable
-- expected level of detail
-- whether implementation is allowed
-- whether review only is requested
+- mainへマージしない
+- 権限を変更しない
+- ファイルを削除しない
+- 無関係な構成を再設計しない
+- 外部へ連絡しない
+- 理由を報告せずに範囲を広げない
+- ロードマップと異なる計画を独断で導入しない
 
-### 3.7 Out of scope
+### 4.8 完了条件
 
-State what the receiver must not do.
+観測可能な条件にする。
 
-Examples:
+例:
 
-- do not merge to main
-- do not change permissions
-- do not delete files
-- do not redesign unrelated architecture
-- do not contact external parties
-- do not expand the task without reporting the reason
+- すべての確定判断が反映されている
+- 矛盾が根拠付きで一覧化されている
+- 各提案に理由と影響がある
+- 正本変更を行っていない
+- 関連ファイルが同期している
 
-### 3.8 Completion conditions
+### 4.9 出力形式
 
-Define observable completion conditions.
+レビュー:
 
-Examples:
+1. 総合判断
+2. Blocking指摘
+3. 重要指摘
+4. 軽微指摘
+5. 修正案
+6. 残存リスク
 
-- every confirmed decision is represented
-- contradictions are listed with evidence
-- each recommendation has impact and rationale
-- no source-of-truth change is made
-- changed files remain synchronized
+実装:
 
-### 3.9 Output format
+1. 変更ファイル
+2. 実施内容
+3. テスト・確認
+4. 未解決事項
+5. 必要な承認
 
-Specify the response format expected from the receiver.
+### 4.10 権限・承認境界
 
-For reviews, use:
+自動でできることと承認が必要なことを明記する。
 
-1. summary judgment
-2. blocking issues
-3. important issues
-4. minor issues
-5. proposed corrections
-6. residual risks
+技術的に操作可能であることを、権限があることと解釈しない。
 
-For implementation, use:
+## 5. 文脈忠実性
 
-1. files changed
-2. changes made
-3. tests or checks performed
-4. unresolved items
-5. approval required
+### 5.1 文言だけでなく意味を保つ
 
-### 3.10 Authority and approval boundaries
+判断、ニュアンス、制約、理由を保存する。単語だけのコピーでは不十分。
 
-State what the receiver can do automatically and what requires approval.
+### 5.2 重要判断は正確に参照する
 
-The receiving Raphael must not infer expanded authority from technical capability.
+使命、権限、安全、評価、正本の意味に影響する判断は、可能な限りファイルと章を示す。
 
-## 4. Context fidelity rules
+### 5.3 仮定を記録する
 
-### 4.1 Preserve meaning, not wording alone
+引き継ぎ中に追加した仮定は仮定として明示し、可逆的に保つ。
 
-The goal is to preserve decisions, nuance, constraints, and reasons. Copying words without the surrounding decision logic is insufficient.
+### 5.4 不確実性を隠さない
 
-### 4.2 Prefer exact references for critical decisions
+送信側が不確実なら、その状態を確定事項として書き換えない。
 
-When a decision affects mission, authority, security, evaluation, or source-of-truth meaning, cite the exact file and section where possible.
+### 5.5 文脈過多を避ける
 
-### 4.3 Record assumptions
+成果に影響する情報だけを含める。余分な文脈で目的を埋もれさせない。
 
-Any assumption introduced during handoff must be labeled as an assumption and kept reversible.
+## 6. 最小有能チーム
 
-### 4.4 Do not hide uncertainty
+別エージェントへの引き継ぎは、品質、速度、安全性、独立検証の向上が調整コストを上回る場合だけ行う。
 
-If the sender is uncertain, the handoff must preserve that uncertainty rather than presenting it as settled.
+事前確認:
 
-### 4.5 Avoid context flooding
+1. 作業を明確に分離できるか
+2. 受け手エージェントに専門性・比較優位があるか
+3. 独立レビューの価値が調整コストを上回るか
+4. 成果物を客観的に確認できるか
+5. 統合責任者が一人に定まっているか
 
-Only include information that can materially affect the assigned task. Extra context that obscures the real objective reduces fidelity.
+多くが「いいえ」なら、現在の担当で継続する。
 
-## 5. Minimum-team routing
+## 7. 受信側チェックリスト
 
-A handoff should occur only when using another Raphael is expected to improve quality, speed, safety, or independent verification enough to justify coordination cost.
+作業開始前に確認する。
 
-Do not create handoffs for fairness, equal usage, or symbolic participation.
+- 本当の目的を理解した
+- 必読正本を読んだ
+- 確定・提案・未確定を区別できる
+- 対象と対象外が明確
+- 完了条件を検証できる
+- 承認境界を理解した
+- 指示の衝突を黙って無視していない
+- ロードマップとの整合を確認した
 
-Before handing off, the sender should check:
+Blocking矛盾がある場合、実装前に報告する。
 
-1. Is this work meaningfully separable?
-2. Does the receiver have a comparative advantage?
-3. Is independent review worth the added coordination?
-4. Can the expected output be objectively checked?
-5. Is one accountable integrator clearly designated?
-
-If the answer is mostly no, keep the work with the current Raphael.
-
-## 6. Receiver verification checklist
-
-Before beginning material work, the receiving Raphael should confirm:
-
-- the real objective is understood
-- the required source-of-truth files were read
-- confirmed decisions are distinguishable from proposals
-- assigned scope and out-of-scope boundaries are clear
-- completion conditions are testable
-- approval boundaries are understood
-- no conflicting instruction is being silently ignored
-
-If a blocking contradiction exists, report it before implementation.
-
-## 7. Standard handoff template
+## 8. 標準テンプレート
 
 ```markdown
-# Raphael Handoff
+# Raphael 引き継ぎ
 
-## Sender and receiver
-- Sender:
-- Receiver:
-- Accountable integrator:
-- Assigned role:
+## 送信・受信
+- 送信側エージェント:
+- 受信側エージェント:
+- 送信元環境:
+- 受信先環境:
+- 統合責任者:
+- 担当役割:
 
-## Real objective
+## 本当の目的
 
-## Why this matters
+## 重要な理由
 
-## Current situation
+## 現在の状況
 
-## Required source-of-truth files
+## 必読正本
 
-## Confirmed decisions
+## 確定事項
 
-## Proposed items
+## 提案事項
 
-## Open items
+## 未確定事項
 
-## Assigned scope
+## 担当範囲
 
-## Out of scope
+## 対象外
 
-## Completion conditions
+## 完了条件
 
-## Expected output format
+## 期待する出力形式
 
-## Authority and approval boundaries
+## 権限・承認境界
 
-## Known risks or contradictions
+## 既知のリスク・矛盾
+
+## ロードマップとの整合
 ```
 
-## 8. Stage 1 handoff: Claude critical review
+## 9. Stage 1 独立レビュー引き継ぎ
 
-### Sender and receiver
+### 担当
 
-- Sender: ChatGPT Raphael
-- Receiver: Claude Raphael
-- Accountable integrator: ChatGPT Raphael
-- Assigned role: bounded independent critical reviewer
+- 送信側エージェント: Raphael
+- 受信側エージェント: 独立レビュー担当
+- 受信先環境: Claude
+- 統合責任者: Raphael
+- 役割: 対象を限定した独立批判レビュー
 
-### Real objective
+### 本当の目的
 
-Review `RAPHAEL_INITIAL_DESIGN.md` to determine whether it faithfully captures Ryunosuke's confirmed decisions and whether the design contains omissions, contradictions, unsafe autonomy, unnecessary complexity, or unclear operating rules.
+`RAPHAEL_INITIAL_DESIGN.md`が隆之介の確定判断を忠実に反映し、抜け、矛盾、危険な自律性、過剰設計、不明確な運用規則がないか確認する。
 
-### Required source-of-truth files
+### 必読ファイル
 
 - `README.md`
 - `MASTER_SPEC.md`
@@ -262,58 +272,30 @@ Review `RAPHAEL_INITIAL_DESIGN.md` to determine whether it faithfully captures R
 - `RAPHAEL_TEST_PLAN.md`
 - `STAGE1_STATUS.md`
 
-### Confirmed decisions to preserve
+### 対象範囲
 
-- Final direction: Ryunosuke's closest partner, eventually Ciel-like.
-- Initial role: secretary, project owner, AI organization manager, integration and quality owner.
-- Whole-life scope with specialist delegation.
-- Proactive detection of problems, gaps, risks, and opportunities.
-- Intervention strength changes with importance.
-- Final authority remains with Ryunosuke except prohibited or unsafe actions.
-- Question, research, assumption, and prototype are selected by situation.
-- Ask Ryunosuke only for decisions he should personally own.
-- Question design itself must improve over time.
-- Output persistence has three levels.
-- Multi-AI disagreement is resolved by criteria, not majority vote.
-- Initial completion requires both cross-model reproducibility and real-task performance.
-- Minimum 10 tests must cover multiple domains and difficult cases.
-- Do not involve every Raphael by default; use the smallest competent team.
-- Initial self-improvement uses low-risk automatic changes and isolated experiments; formal meaning, role, authority, production, or evaluation changes require approval.
+- レビューのみ
+- Blocking・重要・軽微指摘の分類
+- 具体的修正案
+- 確定判断の過不足確認
+- 新しいRaphaelセッションが理解できるかの評価
 
-### Assigned scope
+### 対象外
 
-- Review only.
-- Identify blocking, important, and minor issues.
-- Propose precise corrections.
-- Flag any decision not represented or represented too strongly.
-- Evaluate whether the design is understandable to a new Raphael session.
+- ファイル変更
+- 無関係な新構成
+- 自律権限の拡張
+- mainマージ、削除、公開、外部連絡
 
-### Out of scope
+## 10. リポジトリ実装引き継ぎ
 
-- Do not modify files.
-- Do not create a new architecture unrelated to the confirmed decisions.
-- Do not expand autonomous authority.
-- Do not merge, delete, publish, or contact external parties.
+レビュー統合後、承認された変更をブランチ上へ実装するときに使う。
 
-### Completion conditions
+### 受け手
 
-- Every confirmed decision has been checked.
-- Contradictions with canonical files are listed.
-- Missing operational details are identified.
-- Each issue includes impact and a proposed correction.
-- Review clearly distinguishes blockers from optional improvements.
+Raphaelが、複数ファイル変更に最適な実装担当エージェントとAIモデル・実行環境を選ぶ。Claude Codeは候補の一つであり、固定の委任先ではない。
 
-## 9. Stage 1 handoff: repository implementation
-
-This handoff is used only after review points are integrated and the intended changes are approved for branch implementation.
-
-### Receiver
-
-Claude Code Raphael is the default candidate when coordinated multi-file repository editing is materially more efficient than direct editing by the accountable integrator.
-
-### Required source-of-truth files
-
-Before implementation, the receiver must read:
+### 必読ファイル
 
 - `README.md`
 - `MASTER_SPEC.md`
@@ -330,42 +312,33 @@ Before implementation, the receiver must read:
 - `RAPHAEL_TEST_PLAN.md`
 - `STAGE1_REVIEW_BRIEF.md`
 - `STAGE1_STATUS.md`
-- the latest review findings and resolution record
+- 最新のレビュー指摘と対応記録
 
-The sender must state the exact branch, approved findings, rejected findings, files allowed to change, and expected completion checks. Repository connection alone does not count as reading these files.
+送信側は、ブランチ、採用・却下指摘、変更可能ファイル、完了確認を明記する。
 
-### Assigned role
+### 制約
 
-Implement the approved design changes on the existing Stage 1 branch. Preserve synchronization across the master specification, traceability table, split source-of-truth files, and working design documents.
+- 同じ目的で別ブランチを増やさない
+- mainへマージしない
+- ファイルを削除しない
+- 権限を変更しない
+- 無関係な自動化基盤を追加しない
+- 確定判断を再解釈しない
+- 衝突時は独断で一方を優先しない
+- ロードマップと異なる変更は実装前に隆之介へ相談する
 
-### Mandatory restrictions
+## 11. 失敗条件
 
-- do not create another branch for the same Stage 1 objective
-- do not merge to main
-- do not delete files
-- do not change permissions
-- do not introduce unrelated automation platforms
-- do not reinterpret confirmed decisions
-- report any conflict before choosing one source over another
+次のいずれかがあれば引き継ぎ失敗とする。
 
-### Completion conditions
-
-- every approved review finding is mapped to a concrete change or documented non-change
-- the complete master, traceability table, split source-of-truth files, and Stage 1 documents are synchronized
-- no unresolved blocking contradiction remains
-- changed files and checks are listed
-- main merge remains approval-gated
-
-## 10. Handoff quality failure conditions
-
-A handoff fails if any of the following occurs:
-
-- receiver acts on a materially different objective
-- confirmed decisions are lost or altered
-- authority boundaries are omitted
-- work is duplicated without benefit
-- no accountable integrator exists
-- source-of-truth files are not identified
-- output cannot be objectively reviewed
-- unresolved uncertainty is hidden
-- receiver performs out-of-scope or approval-required action
+- 本当の目的が異なる形で実行された
+- 確定判断が失われた、または変更された
+- 権限境界が抜けた
+- 効果なく仕事が重複した
+- 統合責任者がいない
+- 必読正本が指定されていない
+- 成果物を客観的に確認できない
+- 不確実性を隠した
+- 対象外または承認必須の操作を行った
+- エージェントとAIモデルを混同した
+- ロードマップ変更を無断で行った
