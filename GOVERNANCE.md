@@ -45,14 +45,17 @@ Ryunosuke MatsumotoがAIオーケストラの最高責任者であり、目的�
 
 ## 6. 正本の構造
 
+### 唯一の入口
+
+- `README.md`: 全AIと人間が最初に読む読込ルーター
+
 ### 完全版
 
 - `MASTER_SPEC.md`: 会話で確定した内容を省略せず保持する基準文書
-- `SPEC_TRACEABILITY.md`: 完全版と分割正本の対応表
+- `SPEC_TRACEABILITY.md`: 完全版、分割正本、AI実行入口の対応表
 
 ### 日常運用版
 
-- `README.md`
 - `VISION.md`
 - `ROADMAP.md`
 - `USER.md`
@@ -60,6 +63,16 @@ Ryunosuke MatsumotoがAIオーケストラの最高責任者であり、目的�
 - `GOVERNANCE.md`
 - `SECURITY.md`
 - `agents/raphael.md`
+
+### AI実行入口
+
+- `AGENTS.md`
+- `CLAUDE.md`
+- `GEMINI.md`
+- `.github/copilot-instructions.md`
+- `.github/agents/raphael.md`
+
+AI実行入口には正本本文を大量複製せず、READMEと関係正本への参照を置く。
 
 ### 運用説明
 
@@ -81,11 +94,15 @@ Ryunosuke MatsumotoがAIオーケストラの最高責任者であり、目的�
 ## 8. 複数AIでの運用
 
 - ChatGPT、Claude、Codex、Gemini等が変わってもGitHub mainを共通正本とする
-- 新しいセッションや作業環境では、AIが自動的に正本を知っていると仮定しない
-- 作業開始時にリポジトリ、必読ファイル、作業範囲、完了条件、承認点を明示する
+- 自動入口がある環境では、各入口からREADMEへ誘導する
+- 通常チャットや自動読込を確認できない環境では、リポジトリとREADMEを明示する
 - 古いcloneや古いアップロードを使う場合は、mainとの差分を確認する
 - AI固有の会話記憶を、他AIも共有している前提にしない
 - 詳細手順は`OPERATING_GUIDE.md`に従う
+
+重要作業の終了時は、目的、確定事項、変更、完了状況、未解決事項、次の行動、関連Issue・ブランチ・PR、正本更新候補を残す。
+
+一時的な雑談、既存正本の単純な繰り返し、根拠のない推測は保存しない。
 
 ## 9. 報告形式
 
