@@ -17,22 +17,24 @@ Changes:
 - `MASTER_SPEC.md` contains the same exception and the important-change branch rule.
 - `SPEC_TRACEABILITY.md` maps the exception, ambiguity fallback, and audit reason.
 - `GOVERNANCE.md` and `agents/raphael.md` state that ambiguity defaults to a branch and Draft PR.
+- `OPERATING_GUIDE.md` was also updated after the final audit found stale branch-only wording.
 - Direct-main small changes must leave a one-line reason explaining why meaning is unchanged.
 
 ### B2 Master and split-source synchronization
 
-Status: Resolved in branch, pending final consistency audit.
+Status: Resolved in branch.
 
 Synchronized:
 
+- `README.md`
 - `MASTER_SPEC.md`
 - `SPEC_TRACEABILITY.md`
-- `README.md`
 - `ROADMAP.md`
 - `USER.md`
 - `GOVERNANCE.md`
+- `OPERATING_GUIDE.md`
 - `agents/raphael.md`
-- Stage 1 design, handoff, and test documents
+- Stage 1 design, handoff, review, status, and test documents
 
 `ROADMAP.md` now makes synchronization and review-blocker resolution explicit Stage 1 completion conditions.
 
@@ -87,6 +89,17 @@ Status: Partially resolved.
 
 Version markers were added or advanced on the principal changed specifications. A repository-wide document-versioning standard is not necessary for this PR and remains a future housekeeping decision.
 
+## Final audit
+
+The final consistency audit checked the changed complete master, traceability matrix, split source-of-truth files, Stage 1 documents, and operating guide.
+
+Result:
+
+- no unresolved blocking contradiction identified
+- branch policy is consistent across changed operational documents
+- review findings are mapped to concrete changes
+- main merge remains approval-gated
+
 ## Residual risks
 
 - Cross-model reproducibility remains unverified until at least 3 real tasks are compared across two or more environments.
@@ -95,4 +108,4 @@ Version markers were added or advanced on the principal changed specifications. 
 
 ## Merge boundary
 
-This resolution does not authorize main merge. Final consistency audit and Ryunosuke's explicit approval are still required.
+This resolution does not authorize main merge. Ryunosuke's explicit approval is still required.
