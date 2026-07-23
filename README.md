@@ -43,7 +43,7 @@ Codex、Claude Code、Gemini、GitHub Copilotでは、専用指示ファイル�
 | 権限、正本、重要設計の変更 | 上記＋`MASTER_SPEC.md`、`VISION.md`、`RECONSIDER.md`、`SPEC_TRACEABILITY.md` |
 | 過去の決定や情報落ちの確認 | `MASTER_SPEC.md`、`SPEC_TRACEABILITY.md`、関係する分割正本 |
 | AIツールごとの具体的な使い方 | `OPERATING_GUIDE.md` |
-| Stage 1の実行設計・引き継ぎ・評価 | `RAPHAEL_INITIAL_DESIGN.md`、`RAPHAEL_HANDOFF_PROTOCOL.md`、`RAPHAEL_TEST_PLAN.md` |
+| Stage 1の実行設計・引き継ぎ・評価 | `RAPHAEL_INITIAL_DESIGN.md`、`RAPHAEL_HANDOFF_PROTOCOL.md`、`RAPHAEL_TEST_PLAN.md`、`STAGE1_REVIEW_RESOLUTION.md` |
 
 必要以上に全ファイルを毎回読まず、作業に必要な範囲だけ読む。ただし、重要変更では完全版と対応表まで確認する。
 
@@ -69,6 +69,9 @@ Codex、Claude Code、Gemini、GitHub Copilotでは、専用指示ファイル�
 - `RAPHAEL_INITIAL_DESIGN.md`: Raphael初期版の実行フローと役割分担
 - `RAPHAEL_HANDOFF_PROTOCOL.md`: 複数環境間で文脈を忠実に渡す共通形式
 - `RAPHAEL_TEST_PLAN.md`: 初期版の実運用・クロスモデル評価計画
+- `STAGE1_REVIEW_BRIEF.md`: 独立レビューの入口
+- `STAGE1_REVIEW_RESOLUTION.md`: Claudeレビュー指摘と対応結果
+- `STAGE1_STATUS.md`: 現在の完了・未完了状態
 
 ### AI自動読込・実行入口
 
@@ -106,10 +109,7 @@ Codex、Claude Code、Gemini、GitHub Copilotでは、専用指示ファイル�
 
 ## 次の段階
 
-1. Raphael初期版の入力・出力・状態管理を定義する。
-2. 実行環境と各AIの責任分担を確定する。
-3. 質問管理、調査、実験、統合、品質検査の実行手順を設計する。
-4. 承認、セキュリティ、ログ、評価の保存形式を決める。
-5. 初期テストケースを作る。
-6. Stage 1正本同期と独立レビューを完了する。
-7. 隆之介の承認後、約1か月・最低10件の実運用評価へ進む。
+1. 隆之介がDraft PR #4のmainマージ可否を判断する。
+2. 承認後にStage 1設計をmainへ反映する。
+3. 正式評価前の残る暫定項目を確定または明示的に暫定化する。
+4. 約1か月・最低10件の実運用評価へ進む。
