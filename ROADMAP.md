@@ -2,11 +2,11 @@
 
 ## 現在地
 
-- 段階: Master Specification and Operating Model Review
-- 状態: 現在実装中
+- 段階: Master Specification and Cross-model Operating Model Review
+- 状態: 現在レビュー中
 - main基盤: Raphael Foundation反映済み
 - 作業ブランチ: `agent/master-spec-and-usage`
-- 現在の目的: 完全版保存、分割正本との対応確認、複数AIでの運用方法確立
+- 現在の目的: 完全版保存、分割正本との対応確認、複数AIでの自動入口と運用方法確立
 
 ## Stage 0: Raphael基盤整理
 
@@ -20,25 +20,38 @@ Status: 完了
 - `.gitignore`を安全装置として保持
 - 隆之介の承認後にPR #1をmainへマージ
 
-## Stage 0.5: 完全性監査と運用モデル
+## Stage 0.5: 完全性監査と複数AI運用モデル
 
-Status: 現在実装中
+Status: 現在レビュー中
 
-目的: 圧縮による情報落ちを防ぎ、複数AIから正しく再利用できる状態にする。
+目的: 圧縮による情報落ちを防ぎ、複数AIから正しく効率的に再利用できる状態にする。
 
 成果物:
 - `MASTER_SPEC.md`: 完全版基準文書
-- `SPEC_TRACEABILITY.md`: 完全版と分割正本の対応表
-- `OPERATING_GUIDE.md`: ChatGPT、Claude、Codex、Gemini等での運用方法
+- `SPEC_TRACEABILITY.md`: 完全版、分割正本、AI実行入口の対応表
+- `OPERATING_GUIDE.md`: ChatGPT、Claude、Codex、Gemini、GitHub Copilot等での運用方法
+- `README.md`: 唯一の入口・読込ルーター
+- `AGENTS.md`: Codex・Copilot等の共通入口
+- `CLAUDE.md`: Claude Code入口
+- `GEMINI.md`: Gemini入口
+- `.github/copilot-instructions.md`: Copilot共通指示
+- `.github/agents/raphael.md`: GitHub custom Raphael
 - 詳細を補強した分割正本
 
 完了条件:
 - 統合仕様書の主要決定が完全版に保存されている
-- 完全版の各項目に分割正本の対応先がある
+- 完全版の各項目に分割正本またはAI実行入口の対応先がある
 - 分割正本に運用必須の詳細が反映されている
-- READMEから完全版、対応表、運用ガイドへ到達できる
+- READMEから必要な正本を作業別に選択できる
+- 対応環境では専用入口からREADMEへ自動誘導される
+- 複数AI間の引き継ぎルールが定義される
+- リポジトリ全体の冗長性監査が完了する
 - 隆之介が内容を確認する
 - 承認後にmainへ反映する
+
+残る承認事項:
+- クロスモデル入口の決定を`MASTER_SPEC.md`本文へ追記するか
+- PR #2をmainへマージするか
 
 ## Stage 1: Raphael初期版の実装設計
 
@@ -52,7 +65,7 @@ Status: 次に実装
 - セキュリティ検査手順がある
 - 初期テストケースがある
 - ログ、評価、正本更新の保存形式がある
-- ChatGPT、Claude、Codex等のどの環境で何を実行するかが決まる
+- ChatGPT、Claude、Codex、GitHub Copilot等のどの環境で何を実行するかが決まる
 
 ## Stage 2: 要求整理・構想具体化エージェント
 
