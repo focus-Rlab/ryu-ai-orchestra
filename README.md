@@ -19,11 +19,11 @@
 - `SECURITY.md`: 外部アクセス、スキル、コード、成果物の安全基準
 - `agents/raphael.md`: Raphael初期版の正式仕様
 
-## 現行と旧構想の区別
+## 現行仕様
 
-`agents/meta-agent-builder/` は初期構想として残している旧設計であり、現在の中核・現行仕様ではありません。
+現在の中核・現行仕様はRaphaelである。
 
-現行の判断は、上記正本と `agents/raphael.md` を優先します。Meta Agent Builder関連ファイルは、将来Agent Builderを独立させるか再検討する際の参考資料としてのみ扱い、現行の権限・ロードマップ・実装判断に混同しません。
+旧Meta Agent Builder構想は削除済み。将来、独立したAgent Builderが必要になった場合は、`RECONSIDER.md`の条件に基づきRaphaelが新規設計案を作成し、隆之介の承認後に追加する。旧ファイルや旧仕様を現行判断へ流用しない。
 
 ## 基本原則
 
