@@ -13,22 +13,32 @@ Provide a single review entrypoint for another Raphael reviewing the Stage 1 ini
 - Add `RAPHAEL_INITIAL_DESIGN.md`
 - Add `RAPHAEL_HANDOFF_PROTOCOL.md`
 - Add `RAPHAEL_TEST_PLAN.md`
-- Update `agents/raphael.md`
+- Update `README.md`
+- Update `MASTER_SPEC.md`
+- Update `SPEC_TRACEABILITY.md`
+- Update `ROADMAP.md`
+- Update `USER.md`
 - Update `GOVERNANCE.md`
+- Update `agents/raphael.md`
 
 ## Required reading order
 
 1. `README.md`
 2. `MASTER_SPEC.md`
 3. `SPEC_TRACEABILITY.md`
-4. `ROADMAP.md`
-5. `USER.md`
-6. `GOVERNANCE.md`
-7. `SECURITY.md`
-8. `agents/raphael.md`
-9. `RAPHAEL_INITIAL_DESIGN.md`
-10. `RAPHAEL_HANDOFF_PROTOCOL.md`
-11. `RAPHAEL_TEST_PLAN.md`
+4. `VISION.md`
+5. `ROADMAP.md`
+6. `USER.md`
+7. `RECONSIDER.md`
+8. `GOVERNANCE.md`
+9. `SECURITY.md`
+10. `agents/raphael.md`
+11. `RAPHAEL_INITIAL_DESIGN.md`
+12. `RAPHAEL_HANDOFF_PROTOCOL.md`
+13. `RAPHAEL_TEST_PLAN.md`
+14. `STAGE1_STATUS.md`
+
+`VISION.md`と`RECONSIDER.md`は、Stage 1が重要設計・組織変更に該当するため必読とする。
 
 ## Review assignment
 
@@ -44,6 +54,7 @@ Check:
 - whether another Raphael can receive a faithful handoff without hidden session context
 - whether the test plan can actually distinguish a good Raphael from a weak one
 - whether the new branch policy is practical and avoids branch accumulation
+- whether the complete master, traceability table, and split source-of-truth files are synchronized
 
 ## Confirmed decisions that must not be lost
 
@@ -62,6 +73,8 @@ Check:
 - Do not force work onto every Raphael. Use the smallest competent team.
 - Low-risk improvement and isolated testing may be automatic; formal meaning, authority, production, and evaluation changes require approval.
 - Small meaning-preserving changes may go directly to main; important changes use one task branch and PR; merged branches are deleted.
+- If meaning preservation is uncertain, use a branch and Draft PR.
+- A direct-main small change leaves a one-line audit reason.
 
 ## Out of scope
 
