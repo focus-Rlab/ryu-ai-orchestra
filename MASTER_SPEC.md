@@ -1,7 +1,7 @@
 # AIオーケストラ 統合仕様書
 
-Version: 0.2.0-draft
-Status: Master Specification Draft
+Version: 0.3.0-draft
+Status: Master Specification and Cross-Model Operating Model Draft
 Owner: Ryunosuke Matsumoto
 
 ## 1. この文書の役割
@@ -266,7 +266,7 @@ Raphaelおよび他エージェントは、自分の権限を自己拡張でき�
 
 - `MASTER_SPEC.md`: 全決定を保持する完全版
 - `SPEC_TRACEABILITY.md`: 完全版と分割正本の対応表
-- `README.md`: 現在地と入口
+- `README.md`: 現在地と唯一の入口・読込ルーター
 - `VISION.md`: 北極星、長期ビジョン、価値観
 - `ROADMAP.md`: 実装順序、進捗、完了条件
 - `USER.md`: 隆之介の判断基準と進め方
@@ -274,6 +274,7 @@ Raphaelおよび他エージェントは、自分の権限を自己拡張でき�
 - `GOVERNANCE.md`: 権限、承認、変更管理
 - `SECURITY.md`: セキュリティ基準
 - `agents/raphael.md`: Raphaelの実行仕様
+- `OPERATING_GUIDE.md`: AI・作業環境ごとの具体的運用方法
 
 ### 14.2 更新方法
 
@@ -338,6 +339,9 @@ Ciel進化時に再検討するもの:
 - Raphaelを最初の中核とする
 - 人間承認型で進める
 - GitHubを正本とする
+- READMEを唯一の入口・読込ルーターにする
+- AI固有の自動入口からREADMEへ誘導する
+- GitHub版Raphaelをリポジトリ内作業用エージェントとして使う
 - 外部アクセスと成果物のセキュリティを徹底する
 - 約1か月、最低10件で初期評価する
 - 主観評価4項目を使う
@@ -390,3 +394,55 @@ Ciel進化時に再検討するもの:
 10. 初期版合否判定
 11. 要求整理エージェント設計
 12. Ciel相当への進化判定
+
+## 20. 複数AI・自動入口・GitHub Agent運用
+
+### 20.1 READMEを唯一の入口にする
+
+新しいAIセッションや作業環境では、最初に`README.md`を読み、READMEの作業別読込ルーターに従って必要な正本だけを追加で読む。
+
+READMEへ全仕様を集約せず、入口、現在地、必読ファイル、作業分類、承認フローを置く。詳細は専門正本へ分離する。
+
+### 20.2 AI固有の自動入口
+
+次のファイルは全文仕様の複製ではなく、READMEへ自動誘導する薄いアダプターとして扱う。
+
+- `AGENTS.md`: Codexおよび対応エージェント環境
+- `CLAUDE.md`: Claude Code
+- `GEMINI.md`: Gemini系環境
+- `.github/copilot-instructions.md`: GitHub Copilot
+
+これらへ共通仕様を重複記載しすぎず、README、GOVERNANCE、SECURITY、関連正本を参照させる。
+
+### 20.3 GitHub版Raphael
+
+`.github/agents/raphael.md`は、GitHub Issue、コード、正本、ブランチ、PRを扱うリポジトリ内作業用Raphaelである。
+
+上位Raphaelの全能力をGitHub Agentだけで代替するものではない。カレンダー、Gmail、複数サービス、人生計画などを含む横断調整は、接続可能な上位環境で扱う。
+
+### 20.4 ツールの基本的使い分け
+
+- ChatGPT: 全体相談、調査、正本管理、複数サービス横断
+- Claude通常チャット: 長文レビュー、構想比較、独立評価
+- Claude Code: ローカルの複数ファイル実装、テスト、デバッグ
+- Codex: 明確なIssueから実装、修正、テスト、Draft PR作成
+- GitHub Copilot: IDE・GitHub内の軽い質問、小規模修正、差分理解
+- GitHub版Raphael: Issue単位の分析、計画、正本整合性確認、PR作業
+- Gemini: 大量文脈の比較、Google系作業、セカンドオピニオン
+
+### 20.5 作業の標準フロー
+
+1. ChatGPTまたはClaudeで構想を整理する
+2. Raphaelが目的、要求、完了条件、リスク、セキュリティ、テストを明確化する
+3. 正式な作業単位をGitHub Issueへ保存する
+4. Codex、Claude Code、GitHub版Raphael等が専用ブランチで作業する
+5. Draft PRへ変更理由、影響範囲、検証結果、残存リスクを記録する
+6. Raphaelまたは別AIが正本整合性、抜け、過剰設計、セキュリティを独立レビューする
+7. 隆之介が最終承認する
+8. 承認後にmainへマージする
+
+### 20.6 セッション引き継ぎ
+
+AIやセッションを変更する場合、重要な未完了事項、確定判断、変更候補、次の一手をGitHub Issue、Draft PR、ROADMAP、または該当正本へ残す。
+
+チャット履歴だけを引き継ぎ手段にしない。古いcloneやアップロードを使う場合はmainとの差分を確認する。
