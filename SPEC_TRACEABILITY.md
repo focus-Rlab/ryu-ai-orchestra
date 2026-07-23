@@ -1,6 +1,6 @@
 # Specification Traceability Matrix
 
-Version: 0.3.0-draft
+Version: 0.4.0-draft
 Owner: Ryunosuke Matsumoto
 
 ## 目的
@@ -21,17 +21,20 @@ Owner: Ryunosuke Matsumoto
 | 4.3 統合・品質管理 | agents/raphael.md | 反映済み |
 | 4.4 ロードマップ・進捗 | ROADMAP.md / agents/raphael.md | 反映済み |
 | 4.5 エージェント組織管理 | GOVERNANCE.md / agents/raphael.md | 反映済み |
-| 5. 情報不足の分類 | agents/raphael.md | 反映済み |
-| 6. 質問管理 | USER.md / agents/raphael.md | 反映済み |
+| 5. 情報不足の分類 | agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |
+| 6. 質問管理 | USER.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |
 | 7. 調査 | SECURITY.md / agents/raphael.md | 反映済み |
-| 8. 実験 | agents/raphael.md | 反映済み |
+| 8. 実験 | agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |
 | 9. 権限 | GOVERNANCE.md / agents/raphael.md | 反映済み |
 | 10. 隆之介の役割 | GOVERNANCE.md / USER.md | 反映済み |
 | 11. 報告形式 | GOVERNANCE.md / agents/raphael.md | 反映済み |
-| 12. 重大ミス・再発防止 | GOVERNANCE.md / agents/raphael.md | 反映済み |
+| 12. 重大ミス・再発防止 | GOVERNANCE.md / agents/raphael.md / RAPHAEL_TEST_PLAN.md | 反映済み |
 | 13. セキュリティ | SECURITY.md / GOVERNANCE.md / agents/raphael.md | 反映済み |
 | 14. 正本管理 | README.md / GOVERNANCE.md / OPERATING_GUIDE.md | 反映済み |
-| 15. 初期版評価 | ROADMAP.md / agents/raphael.md | 反映済み |
+| 14.2 小変更のmain直接コミット例外 | README.md / GOVERNANCE.md / agents/raphael.md | 反映済み |
+| 14.2 判断に迷う場合のブランチ優先 | README.md / GOVERNANCE.md / agents/raphael.md | 反映済み |
+| 14.2 小変更の監査理由記録 | README.md / GOVERNANCE.md | 反映済み |
+| 15. 初期版評価 | ROADMAP.md / agents/raphael.md / RAPHAEL_TEST_PLAN.md | 反映済み |
 | 16. Ciel進化 | ROADMAP.md / RECONSIDER.md / agents/raphael.md | 反映済み |
 | 17. 確定・暫定・保留 | RECONSIDER.md / ROADMAP.md | 反映済み |
 | 18. 実装前チェック | ROADMAP.md / OPERATING_GUIDE.md | 反映済み |
@@ -42,9 +45,17 @@ Owner: Ryunosuke Matsumoto
 | 20.2 Gemini自動入口 | GEMINI.md / README.md | 反映済み |
 | 20.2 Copilot共通指示 | .github/copilot-instructions.md / README.md | 反映済み |
 | 20.3 GitHub custom Raphael | .github/agents/raphael.md / agents/raphael.md | 反映済み |
-| 20.4 AIツールの使い分け | OPERATING_GUIDE.md | 反映済み |
+| 20.4 AIツールの使い分け | OPERATING_GUIDE.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |
 | 20.5 標準作業フロー | OPERATING_GUIDE.md / GOVERNANCE.md / ROADMAP.md | 反映済み |
-| 20.6 セッション引き継ぎ | OPERATING_GUIDE.md / GOVERNANCE.md | 反映済み |
+| 20.6 セッション引き継ぎ | OPERATING_GUIDE.md / GOVERNANCE.md / RAPHAEL_HANDOFF_PROTOCOL.md | 反映済み |
+| 21. 全人生スコープ | USER.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |
+| 21. 自発性と反対強度 | USER.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |
+| 21. 最小有能チーム原則 | GOVERNANCE.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |
+| 21. 複数AI意見統合 | agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |
+| 21. 自己改善ループ | GOVERNANCE.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |
+| 21. 成果物保存3段階 | GOVERNANCE.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |
+| 21. 忠実な引き継ぎ | RAPHAEL_HANDOFF_PROTOCOL.md / OPERATING_GUIDE.md | 反映済み |
+| 21. クロスモデル再現性と10件評価 | ROADMAP.md / RAPHAEL_TEST_PLAN.md / agents/raphael.md | 反映済み |
 
 ## 完全性ルール
 
@@ -54,3 +65,4 @@ Owner: Ryunosuke Matsumoto
 - 完全版にしか存在しない運用必須事項を放置しない。
 - 分割正本や実行入口にしか存在しない重要事項が見つかった場合、完全版への追記候補として明示する。
 - 矛盾がある場合、AIは独断で統合せず差分と推奨案を報告する。
+- Stage 1を完了扱いにする前に、`MASTER_SPEC.md`、本表、`ROADMAP.md`、`USER.md`、`GOVERNANCE.md`、`agents/raphael.md`、Stage 1実行文書群の同期を再確認する。
