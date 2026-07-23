@@ -4,8 +4,8 @@
 
 ## 現在の段階
 
-- Version: 0.4.0-draft
-- Status: Cross-model entrypoints and operating model review
+- Version: 0.4.0
+- Status: Stage 1 — Raphael Initial Implementation Design
 - 現在の中核エージェント: Raphael
 - 運用方式: GitHub正本・人間承認型の段階的オーケストレーション
 
@@ -97,12 +97,10 @@ Codex、Claude Code、Gemini、GitHub Copilotでは、専用指示ファイル�
 
 ## 次の段階
 
-1. PR #2の内容とリポジトリ全体の冗長性監査
-2. クロスモデル入口の決定を`MASTER_SPEC.md`へ追記するか確認
-3. 隆之介の承認後にmainへ反映
-4. Raphael初期版の実装計画作成
-5. 実行環境、入出力、状態管理の決定
-6. セキュリティ・承認・評価機能を含む初期実装
-7. 約1か月・最低10件の実運用評価
-8. 要求整理・構想具体化エージェントの設計
-9. Ciel相当への進化判定
+1. Raphael初期版の入力・出力・状態管理を定義する。
+2. 実行環境と各AIの責任分担を確定する。
+3. 質問管理、調査、実験、統合、品質検査の実行手順を設計する。
+4. 承認、セキュリティ、ログ、評価の保存形式を決める。
+5. 初期テストケースを作る。
+6. 専用ブランチとDraft PRでStage 1の実装案を提出する。
+7. 約1か月・最低10件の実運用評価へ進む。

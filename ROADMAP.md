@@ -2,11 +2,10 @@
 
 ## 現在地
 
-- 段階: Master Specification and Cross-model Operating Model Review
-- 状態: 現在レビュー中
-- main基盤: Raphael Foundation反映済み
-- 作業ブランチ: `agent/master-spec-and-usage`
-- 現在の目的: 完全版保存、分割正本との対応確認、複数AIでの自動入口と運用方法確立
+- 段階: Stage 1 — Raphael Initial Implementation Design
+- 状態: 現在実装中
+- main基盤: Raphael FoundationとCross-model Operating Model反映済み
+- 現在の目的: Raphaelを実際に再現・実行できる入力、出力、状態管理、手順、評価へ落とす
 
 ## Stage 0: Raphael基盤整理
 
@@ -22,11 +21,11 @@ Status: 完了
 
 ## Stage 0.5: 完全性監査と複数AI運用モデル
 
-Status: 現在レビュー中
+Status: 完了
 
 目的: 圧縮による情報落ちを防ぎ、複数AIから正しく効率的に再利用できる状態にする。
 
-成果物:
+完了済み:
 - `MASTER_SPEC.md`: 完全版基準文書
 - `SPEC_TRACEABILITY.md`: 完全版、分割正本、AI実行入口の対応表
 - `OPERATING_GUIDE.md`: ChatGPT、Claude、Codex、Gemini、GitHub Copilot等での運用方法
@@ -37,27 +36,33 @@ Status: 現在レビュー中
 - `.github/copilot-instructions.md`: Copilot共通指示
 - `.github/agents/raphael.md`: GitHub custom Raphael
 - 詳細を補強した分割正本
-
-完了条件:
-- 統合仕様書の主要決定が完全版に保存されている
-- 完全版の各項目に分割正本またはAI実行入口の対応先がある
-- 分割正本に運用必須の詳細が反映されている
-- READMEから必要な正本を作業別に選択できる
-- 対応環境では専用入口からREADMEへ自動誘導される
-- 複数AI間の引き継ぎルールが定義される
-- リポジトリ全体の冗長性監査が完了する
-- 隆之介が内容を確認する
-- 承認後にmainへ反映する
-
-残る承認事項:
-- クロスモデル入口の決定を`MASTER_SPEC.md`本文へ追記するか
-- PR #2をmainへマージするか
+- 複数AI間の引き継ぎルール
+- リポジトリ全体の冗長性監査
+- クロスモデル入口を`MASTER_SPEC.md`第20章へ反映
+- 隆之介の承認後にPR #2をmainへマージ
 
 ## Stage 1: Raphael初期版の実装設計
 
-Status: 次に実装
+Status: 現在実装中
 
 目的: Raphaelを実際に再現・実行できる仕様と手順へ落とす。
+
+実装項目:
+1. 入力形式
+2. 出力形式
+3. 状態管理
+4. 使用ツールと環境別責任分担
+5. 正本確認フロー
+6. 情報不足の分類と質問管理
+7. 調査・実験手順
+8. タスク分解・計画形式
+9. 複数成果物の統合手順
+10. 品質検査
+11. 承認ゲート
+12. セキュリティ検査
+13. ログ・評価・正本更新の保存形式
+14. 初期テストケース
+15. 重大ミスの記録と再発防止
 
 完了条件:
 - 入力、出力、状態管理、使用ツール、権限境界が具体化される
@@ -66,6 +71,12 @@ Status: 次に実装
 - 初期テストケースがある
 - ログ、評価、正本更新の保存形式がある
 - ChatGPT、Claude、Codex、GitHub Copilot等のどの環境で何を実行するかが決まる
+- 隆之介が実装設計を承認する
+
+次の具体的行動:
+- Stage 1の設計用ブランチを作る
+- 実装設計書と初期テスト仕様を作る
+- Draft PRでレビューへ出す
 
 ## Stage 2: 要求整理・構想具体化エージェント
 
