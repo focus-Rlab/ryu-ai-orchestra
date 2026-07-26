@@ -1,6 +1,6 @@
 # Stage 2 Decision Log
 
-Version: 0.1.0-draft  
+Version: 0.1.1-draft  
 Owner: Ryunosuke Matsumoto  
 Status: Active decision record  
 Branch: `stage2/agent-governance`
@@ -260,18 +260,47 @@ Likely important categories include:
 
 The precise boundary between minor and important changes remains unresolved and must be designed later.
 
-## 8. Current unresolved topics
+## 8. Memory architecture
+
+### Decision M-01: Hierarchical reference model with selected automatic sharing
+
+Status: Confirmed
+
+The memory architecture uses a hierarchical reference model with selected automatic sharing.
+
+- Memory is separated by purpose and sensitivity rather than exposed as one unrestricted shared store.
+- Each specialist agent maintains specialist memory for its own responsibility.
+- Raphael governs shared organizational memory and the organization-wide change history.
+- Ryunosuke's judgment history is maintained as a separate protected memory domain.
+- Agents receive or reference only the memory needed for their role and current work.
+- A limited set of frequently needed organizational information is shared automatically to support normal coordination.
+
+The automatically shared set should include categories such as:
+
+- organizational goals;
+- current priorities;
+- common rules;
+- relevant project status;
+- urgent organization-wide risks.
+
+Specialist memory and Ryunosuke's protected judgment history are not automatically shared in full.
+
+This decision establishes the baseline structure only. Exact read, proposal, write, update, approval, correction, deletion, forgetting, retention, storage, and canonical-source rules remain unresolved.
+
+Reason:
+
+This model preserves specialist responsibility and protects sensitive judgment history while avoiding unnecessary dependence on Raphael for routine information distribution.
+
+## 9. Current unresolved topics
 
 The following matters have not yet been decided and must not be assumed:
 
-1. Memory architecture
-   - specialist agent memory;
-   - Raphael shared organizational memory;
-   - Ryunosuke judgment history;
-   - read/write/update/approval rights;
-   - temporary vs long-term memory;
-   - correction, deletion, and forgetting;
-   - storage location and canonical source.
+1. Detailed memory governance
+   - read, proposal, write, update, and approval rights;
+   - temporary working memory vs long-term canonical memory;
+   - correction, deletion, forgetting, and retention;
+   - storage location and canonical source;
+   - exact scope and delivery rules for automatically shared organizational memory.
 2. Exact trust/autonomy levels and promotion/demotion thresholds.
 3. Exact objection severity levels and mandatory stop conditions.
 4. Exact definition of an important change.
@@ -281,13 +310,13 @@ The following matters have not yet been decided and must not be assumed:
 8. Archive and retirement structure.
 9. Full synchronization targets after `AGENT_STANDARD.md` revision.
 
-## 9. Next design question
+## 10. Next design question
 
-The next discussion starts with memory architecture.
+The next discussion continues with detailed memory governance, beginning with who may read each memory domain.
 
-The next session must first explain the main memory categories and design trade-offs, then ask Ryunosuke for a decision. It must not write a final memory architecture into GitHub before that confirmation.
+The next session must explain the main access models and trade-offs, then ask Ryunosuke to choose from multiple options. It must not assume unresolved read, write, approval, correction, deletion, forgetting, retention, storage, or canonical-source rules.
 
-## 10. Revision target
+## 11. Revision target
 
 After enough foundational decisions are complete:
 
