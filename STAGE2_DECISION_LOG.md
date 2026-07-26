@@ -1,6 +1,6 @@
 # Stage 2 Decision Log
 
-Version: 0.1.1-draft  
+Version: 0.1.2-draft  
 Owner: Ryunosuke Matsumoto  
 Status: Active decision record  
 Branch: `stage2/agent-governance`
@@ -310,6 +310,25 @@ Reason:
 
 This preserves fast cross-agent coordination while reducing irrelevant context, privacy exposure, contamination of specialist judgment, and unnecessary processing cost.
 
+### Decision M-03: Agent-selected retrieval with Raphael supplementation
+
+Status: Confirmed
+
+Each agent primarily determines what information is necessary for its assigned work and retrieves that information itself. Raphael supplements the agent's context when Raphael identifies an important related fact, premise, dependency, contradiction, or risk that the agent has missed.
+
+- The default does not require Raphael to select or approve every retrieval.
+- Agents may retrieve task-relevant information using their own professional judgment, subject to the purpose limitation and protected-domain restrictions established in M-02.
+- Raphael may proactively provide missing information when doing so improves correctness, safety, coordination, or alignment with organizational priorities.
+- Raphael's supplementation is a safety and coordination backstop, not a requirement to mediate all routine retrieval.
+- Role-based fixed retrieval scopes are not the primary control model, though role, responsibility, sensitivity, and current assignment may still inform necessity and access decisions.
+- This decision does not grant unrestricted access to protected memory and does not settle write or update authority.
+
+The exact mechanism for necessity checks, excessive-retrieval detection, Raphael supplementation, and retrieval logging remains unresolved.
+
+Reason:
+
+This preserves agent initiative and speed while allowing Raphael to reduce important omissions across agents and domains.
+
 ## 9. Current unresolved topics
 
 The following matters have not yet been decided and must not be assumed:
@@ -331,7 +350,7 @@ The following matters have not yet been decided and must not be assumed:
 
 ## 10. Next design question
 
-The next discussion continues with detailed memory governance, beginning with who may read each memory domain.
+The next discussion continues with detailed memory governance, beginning with who may propose, write, and update long-term memory.
 
 The next session must explain the main access models and trade-offs, then ask Ryunosuke to choose from multiple options. It must not assume unresolved read, write, approval, correction, deletion, forgetting, retention, storage, or canonical-source rules.
 
