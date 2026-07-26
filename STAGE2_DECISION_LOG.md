@@ -1,6 +1,6 @@
 # Stage 2 Decision Log
 
-Version: 0.1.3-draft  
+Version: 0.1.4-draft  
 Owner: Ryunosuke Matsumoto  
 Status: Active decision record  
 Branch: `stage2/agent-governance`
@@ -362,12 +362,34 @@ Reason:
 
 This structure preserves specialist speed and ownership without allowing untested changes to silently replace long-term canonical memory. Comparing the candidate with the prior version makes “improvement” an evidence-based judgment rather than an assumption.
 
+
+### Decision M-05: Ryunosuke approval first, gradual delegation to Raphael
+
+Status: Confirmed
+
+Candidate long-term memory updates require Ryunosuke's approval at the beginning of operation. Approval authority may later be delegated gradually to Raphael as evidence of reliable judgment accumulates.
+
+- The initial default is that Ryunosuke approves promotion of candidate memory into canonical long-term memory.
+- Passing validation or outperforming the prior version does not by itself grant automatic promotion during the initial stage.
+- Raphael should prepare the evidence, comparison results, risks, affected scope, and recommendation so Ryunosuke can decide efficiently.
+- As Raphael demonstrates reliable memory-governance judgment, Ryunosuke may delegate approval for defined low-risk categories or bounded scopes.
+- Delegation is not permanent by default: it may be narrowed, suspended, or revoked after failures, changed conditions, insufficient confidence, or boundary violations.
+- Important, protected, organization-wide, high-impact, irreversible, privacy-sensitive, security-sensitive, value-defining, or novel updates remain subject to Ryunosuke approval unless he explicitly delegates them.
+- All promotions, whether approved by Ryunosuke or delegated to Raphael, remain visible and traceable under I-02 and must follow the staged validation process in M-04.
+
+This decision applies the gradual-autonomy principle in T-01 and D-01 specifically to canonical memory promotion. Exact evidence requirements, delegation levels, eligible low-risk categories, review cadence, and revocation thresholds remain unresolved.
+
+Reason:
+
+Early human approval allows Raphael to learn Ryunosuke's standards for evidence, trade-offs, and acceptable risk before receiving bounded proxy authority. Gradual delegation preserves the intended path toward autonomy without granting broad memory-control authority prematurely.
+
+
 ## 9. Current unresolved topics
 
 The following matters have not yet been decided and must not be assumed:
 
 1. Detailed memory governance
-   - detailed approval thresholds for memory updates;
+   - exact evidence requirements, delegation levels, eligible low-risk categories, review cadence, and revocation thresholds for memory-update approval;
    - temporary working memory vs long-term canonical memory;
    - correction, deletion, forgetting, and retention;
    - storage location and canonical source;
@@ -383,7 +405,7 @@ The following matters have not yet been decided and must not be assumed:
 
 ## 10. Next design question
 
-The next discussion continues with detailed memory governance, beginning with the exact promotion and approval conditions for candidate long-term memory updates.
+The next discussion continues with detailed memory governance, beginning with the conditions and evidence required before Raphael receives delegated approval authority for candidate long-term memory updates.
 
 The next session must explain the main access models and trade-offs, then ask Ryunosuke to choose from multiple options. It must not assume unresolved read, write, approval, correction, deletion, forgetting, retention, storage, or canonical-source rules.
 
