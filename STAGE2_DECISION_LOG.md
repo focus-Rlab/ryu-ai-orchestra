@@ -291,6 +291,25 @@ Reason:
 
 This model preserves specialist responsibility and protects sensitive judgment history while avoiding unnecessary dependence on Raphael for routine information distribution.
 
+### Decision M-02: Broad discoverability with task-necessary retrieval
+
+Status: Confirmed
+
+Agents may broadly discover that organizational memory exists, except for protected or restricted domains. However, an agent should retrieve and load only information that is necessary and relevant to its assigned role and current task.
+
+- Broad read eligibility does not mean loading all accessible memory into every task context.
+- Retrieval should be purpose-bound and limited to the minimum useful scope.
+- Specialist agents should not collect unrelated information merely because it is technically accessible.
+- Updates remain more restricted than reads and are governed separately.
+- Protected memories, including sensitive information and Ryunosuke's protected judgment history, are outside this broad-access default unless separately authorized.
+- Raphael must be able to trace material cross-domain retrieval when governance or risk requires it.
+
+The exact definition of "necessary information," enforcement method, protected-memory categories, and retrieval logging thresholds remain unresolved.
+
+Reason:
+
+This preserves fast cross-agent coordination while reducing irrelevant context, privacy exposure, contamination of specialist judgment, and unnecessary processing cost.
+
 ## 9. Current unresolved topics
 
 The following matters have not yet been decided and must not be assumed:
@@ -300,7 +319,7 @@ The following matters have not yet been decided and must not be assumed:
    - temporary working memory vs long-term canonical memory;
    - correction, deletion, forgetting, and retention;
    - storage location and canonical source;
-   - exact scope and delivery rules for automatically shared organizational memory.
+   - exact scope and delivery rules for automatically shared organizational memory;\n   - definition and enforcement of task-necessary retrieval;\n   - protected-memory categories and cross-domain retrieval logging thresholds.
 2. Exact trust/autonomy levels and promotion/demotion thresholds.
 3. Exact objection severity levels and mandatory stop conditions.
 4. Exact definition of an important change.
