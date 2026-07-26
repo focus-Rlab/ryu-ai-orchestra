@@ -1,6 +1,6 @@
 # Stage 2 Decision Log
 
-Version: 0.1.2-draft  
+Version: 0.1.3-draft  
 Owner: Ryunosuke Matsumoto  
 Status: Active decision record  
 Branch: `stage2/agent-governance`
@@ -329,12 +329,45 @@ Reason:
 
 This preserves agent initiative and speed while allowing Raphael to reduce important omissions across agents and domains.
 
+### Decision M-04: Domain-based write authority with staged validation
+
+Status: Confirmed
+
+Long-term memory write authority is divided by memory domain, while all updates use a staged validation process.
+
+Write responsibility:
+
+- Each specialist agent may propose and perform updates to its own specialist memory within its assigned responsibility.
+- Raphael updates and governs shared organizational memory, Ryunosuke's judgment history, and other important or cross-domain memory.
+- All memory changes must be visible to Raphael under Decision I-02.
+- A specialist agent may not directly rewrite protected, organization-wide, or another agent's specialist memory merely because it can read or discover it.
+
+Update process:
+
+1. Register the proposed update as a candidate rather than immediately treating it as canonical truth.
+2. Record the source, reason, proposer, affected scope, confidence or uncertainty, and rollback path.
+3. Test or otherwise verify the candidate using criteria appropriate to the memory and its intended use.
+4. Compare the candidate against the prior version to determine whether it actually improves correctness, usefulness, reliability, efficiency, safety, or another declared objective.
+5. Promote it to canonical memory only when the evidence supports improvement and the required approval has been obtained.
+6. Reject, revise, or roll back the candidate when it does not outperform the prior version, creates unacceptable trade-offs, or lacks sufficient evidence.
+7. Record the observed post-change effect so later reviews can confirm that the improvement persisted in real operation.
+
+Important, protected, organization-wide, high-risk, or value-defining updates require Raphael review and, where applicable under existing governance, Ryunosuke's approval.
+
+This decision extends the already confirmed change-control principles in I-02 and I-03: changes must disclose whether they were tested, whether rollback is possible, and what effect was observed. It also aligns with the earlier operating principle that procedures improve from recorded failures, confusion, and rework rather than from unverified assumptions.
+
+Exact test types, evaluation metrics, evidence thresholds, review periods, and low-risk automatic-promotion conditions remain unresolved.
+
+Reason:
+
+This structure preserves specialist speed and ownership without allowing untested changes to silently replace long-term canonical memory. Comparing the candidate with the prior version makes “improvement” an evidence-based judgment rather than an assumption.
+
 ## 9. Current unresolved topics
 
 The following matters have not yet been decided and must not be assumed:
 
 1. Detailed memory governance
-   - read, proposal, write, update, and approval rights;
+   - detailed approval thresholds for memory updates;
    - temporary working memory vs long-term canonical memory;
    - correction, deletion, forgetting, and retention;
    - storage location and canonical source;
@@ -350,7 +383,7 @@ The following matters have not yet been decided and must not be assumed:
 
 ## 10. Next design question
 
-The next discussion continues with detailed memory governance, beginning with who may propose, write, and update long-term memory.
+The next discussion continues with detailed memory governance, beginning with the exact promotion and approval conditions for candidate long-term memory updates.
 
 The next session must explain the main access models and trade-offs, then ask Ryunosuke to choose from multiple options. It must not assume unresolved read, write, approval, correction, deletion, forgetting, retention, storage, or canonical-source rules.
 
