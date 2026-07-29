@@ -3,6 +3,7 @@
 from .models import (
     ApprovalRecord,
     BudgetDecision,
+    CostKind,
     ImprovementCandidate,
     Request,
     RunRecord,
@@ -13,6 +14,7 @@ from .orchestrator import Orchestrator
 __all__ = [
     "ApprovalRecord",
     "BudgetDecision",
+    "CostKind",
     "ImprovementCandidate",
     "Orchestrator",
     "Request",
