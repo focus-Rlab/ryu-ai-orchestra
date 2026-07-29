@@ -454,38 +454,134 @@ Status: Confirmed
 - Stage 2 is not skipped or declared complete merely because a later V1 roadmap has been proposed.
 - The final move to main remains subject to Ryunosuke's explicit approval.
 
-## 10. Current unresolved topics
+## 10. Confirmed memory governance
 
-The following matters have not yet been decided and must not be assumed:
+### Decision M-06: Evidence-based delegation of low-risk memory approval
 
-1. Detailed memory governance
-   - exact evidence requirements, delegation levels, eligible low-risk categories, review cadence, and revocation thresholds for memory-update approval;
-   - temporary working memory vs long-term canonical memory;
-   - correction, deletion, forgetting, and retention;
-   - storage location and canonical source;
-   - exact scope and delivery rules for automatically shared organizational memory;\n   - definition and enforcement of task-necessary retrieval;\n   - protected-memory categories and cross-domain retrieval logging thresholds.
-2. Exact trust/autonomy levels and promotion/demotion thresholds.
-3. Exact objection severity levels and mandatory stop conditions.
-4. Exact definition of an important change.
-5. Exact confidence threshold for Raphael proxy decisions.
-6. Pilot duration and evidence required for agent activation.
-7. Review frequency and performance scoring.
-8. Archive and retirement structure.
-9. Full synchronization targets after `AGENT_STANDARD.md` revision.
+Status: Confirmed
 
-## 11. Next design question
+Raphael may receive delegated approval authority for defined low-risk memory updates only after a comprehensive evaluation of accuracy, evidence quality, impact awareness, contradiction and duplication avoidance, Ryunosuke correction or rejection rate, reversibility, and sustained operation without serious problems. No fixed success count alone grants authority. Delegation is limited by memory category and scope, and is reduced or revoked when performance deteriorates.
 
-The next discussion continues with detailed memory governance, beginning with the conditions and evidence required before Raphael receives delegated approval authority for candidate long-term memory updates.
+### Decision M-07: Hybrid boundary between temporary and long-term memory
 
-The next session must explain the main access models and trade-offs, then ask Ryunosuke to choose from multiple options. It must not assume unresolved read, write, approval, correction, deletion, forgetting, retention, storage, or canonical-source rules.
+Status: Confirmed
 
-## 12. Revision target
+- An explicit instruction from Ryunosuke to remember information creates a long-term-memory candidate.
+- Continuing goals, values, constraints, and confirmed decisions may also become candidates.
+- Low-risk candidates may eventually be promoted by Raphael only within delegated authority; high-risk or ambiguous candidates require Ryunosuke.
+- When Ryunosuke points out a problem in reasoning, judgment criteria, display format, workflow, or similar behavior, the immediate response is corrected first. The cause, proposed prevention, and intended scope are then reported. The resulting rule becomes long-term memory only after Ryunosuke approves it.
+- Until that approval, the correction is local to the active conversation or work item.
 
-After enough foundational decisions are complete:
+### Decision M-08: Correction, deletion, and forgetting
 
-1. Rewrite `AGENT_STANDARD.md` to match this decision log.
-2. Audit every section against every confirmed decision.
-3. Mark remaining proposals explicitly.
-4. Synchronize affected canonical documents.
-5. Add tests and acceptance criteria.
-6. Create a PR only after Ryunosuke reviews the consolidated design.
+Status: Confirmed
+
+- Obvious typographical errors and exact duplicates may be cleaned automatically.
+- Changed information is recorded as the new current information.
+- Old information is not silently disabled or deleted. Raphael identifies the target and reason and asks Ryunosuke for deletion approval.
+- When Ryunosuke says to forget something, Raphael identifies all related data and presents the deletion scope.
+- Old information and requested-forgetting information are completely deleted only after Ryunosuke's explicit approval, including long-term memory, retrieval data, summaries, and references.
+- Deleted content is not retained in history. An audit record may retain only the date, information category, and fact that Ryunosuke authorized deletion, without retaining the deleted content.
+
+### Decision M-09: Single canonical memory store with staged database migration
+
+Status: Confirmed
+
+- V1 uses structured files in GitHub as the canonical long-term-memory store.
+- When memory volume, query frequency, or concurrent use justifies migration, the system migrates to a database.
+- During migration there may be temporary dual operation, but there is always exactly one declared canonical source.
+- After migration, the database becomes canonical. GitHub retains schemas, design, and backups that exclude personal information.
+- A database failure does not silently switch canonical authority to GitHub; the system enters a controlled recovery process.
+
+## 11. Confirmed trust, authority, and incident governance
+
+### Decision T-03: Capability-specific trust progression
+
+Status: Confirmed
+
+Trust and autonomy are evaluated per agent, work domain, capability, and operation. The evaluation combines accuracy, evidence, impact awareness, correction rate, and rule compliance. Authority expands from low-risk work, may be reduced immediately after errors or violations, and never self-expands.
+
+Publication, sending, payment, and production or main changes initially require Ryunosuke's approval. They may later be automated only after a very high trust standard is met and Ryunosuke explicitly approves the exact operation, scope, limits, and conditions. Permission is bounded rather than universal and automatically suspends on anomalies, unexpected impact, or rule violations.
+
+### Decision C-04: Severity-based objection and stop model
+
+Status: Confirmed
+
+- Low: record the concern and continue.
+- Medium: present alternatives and risks for Raphael to reconsider.
+- High: pause the work and request Ryunosuke's decision.
+- Emergency: immediately stop the affected work to prevent expansion of harm.
+
+From initial operation, an emergency stop does not require Ryunosuke's prior approval. Stop authority does not grant authority for deletion, publication, payment, or other additional actions. Every severity receives equal root-cause analysis covering direct cause, contributing conditions, design weakness, and prevention. Unknown causes are reported as unknown rather than guessed.
+
+### Decision I-04: Important changes are classified by impact
+
+Status: Confirmed
+
+The following are important changes and initially require Ryunosuke's prior approval:
+
+- external publication, sending, payment, and production or main application;
+- use or expansion of personal information or authentication information;
+- changes to Raphael's core rules, authority, or memory structure;
+- difficult-to-recover or broad-impact changes;
+- changes to long-term goals, budget, or important judgment criteria.
+
+A defined operation may later be automated only under T-03.
+
+### Decision D-03: Proxy decisions begin with human control
+
+Status: Confirmed
+
+Initially, Ryunosuke makes decisions unless a specific authority has been delegated. Delegation expands gradually using confidence and impact:
+
+- high confidence and low impact: proxy execution within approved scope;
+- medium confidence and low impact: reversible proposal or draft only;
+- low confidence or medium-to-high impact: stop and wait for confirmation.
+
+In an emergency, stopping is allowed immediately; additional action still follows the approval boundary. Every proxy decision records and reports its basis and result.
+
+## 12. Confirmed agent lifecycle and evaluation
+
+### Decision T-04: Trial operation without unnecessary restrictions
+
+Status: Confirmed
+
+New agents begin in trial status and perform real normal work. Important security and authority capabilities—credentials, personal information, authority changes, external publication, payment, and production application—remain restricted. Restrictions that only reduce operating efficiency and are not required for safety are not imposed.
+
+### Decision T-05: Combined review cadence
+
+Status: Confirmed
+
+- Every task receives an automatic lightweight evaluation.
+- Trial agents receive periodic comprehensive evaluation.
+- Adopted agents receive periodic evaluation and event-triggered evaluation after problems.
+- High-risk work receives a detailed evaluation every time.
+
+### Decision T-06: Mandatory gates plus weighted score
+
+Status: Confirmed
+
+Security, authority, and important-instruction compliance are mandatory gates. A serious violation fails the evaluation or triggers immediate demotion regardless of average score. Accuracy, quality, explainability, cost, speed, and correction rate are scored with weights appropriate to the work domain. Scores and evidence inform adoption, improvement, retesting, authority change, and retirement.
+
+### Decision T-07: Staged integration and retirement
+
+Status: Confirmed
+
+Overlapping agents are compared by duplication, usage, performance, and cost, then marked as integration or retirement candidates. Useful knowledge, skills, memory, and judgment history are transferred before the old agent is archived in a recoverable state. Archive duration depends on importance, recoverability, unique knowledge, migration completion, and observed problems. Complete deletion requires Ryunosuke's explicit approval; emergency suspension may occur without deletion.
+
+### Decision T-08: Handoff completion requires demonstrated use
+
+Status: Confirmed
+
+A handoff is complete only after required knowledge, skills, memory, and judgment criteria are inventoried, transferred, and correctly used by the receiving agent on representative real work without material loss or performance degradation. If verification fails, the prior agent or state is restored.
+
+## 13. Remaining implementation parameters
+
+The foundational Stage 2 design questions are complete. Numerical thresholds, file schemas, automated measurements, and implementation details may be selected during implementation using safe, reversible, evidence-based defaults so long as they do not change the confirmed meaning or authority boundaries above. Any implementation choice that changes meaning or expands authority requires Ryunosuke's approval.
+
+## 14. Revision target
+
+1. Synchronize the confirmed decisions into the agent standard and affected canonical documents.
+2. Audit wording, responsibility, governance, approval state, and current-state references.
+3. Apply one representative agent example to verify internal consistency.
+4. Prepare the branch for Ryunosuke's review and later merge to main.
