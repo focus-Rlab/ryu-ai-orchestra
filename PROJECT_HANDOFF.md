@@ -2,7 +2,7 @@
 
 Version: 0.6.0-draft  
 Owner: Ryunosuke Matsumoto  
-Current working branch: `agent/roadmap-and-canonical-audit`
+Current working branch: `agent/v1-week1-general-core`
 
 ## 1. この文書の目的
 
@@ -33,19 +33,19 @@ V1は、汎用コア、ドメインパック、ツールコネクタ、分野別
 
 - Repository: `focus-Rlab/ryu-ai-orchestra`
 - Default branch: `main`
-- `main`最新確認済みマージ: PR #9
-- PR #9: 隆之介がmainへマージ済み
-- Current working branch: `agent/roadmap-and-canonical-audit`
-- Current Stage: V1 Week 0「正本完全性回復と実行基盤確定」
+- `main`最新確認済みマージ: PR #10
+- PR #10: 隆之介がmainへマージ済み。マージ後の起動経路と正本反映を再確認済み
+- Current working branch: `agent/v1-week1-general-core`
+- Current Stage: V1 Week 1「汎用コア最小実装」
 - Stage 2作業ブランチ `stage2/agent-governance`: main統合済み
-- 現在の修正: 会話で確定済みのV1再編がmainのROADMAP等へ同期されなかった事故の横断監査
+- 現在の作業: Issue #11に基づく、分野非依存の最小実行ループ・予算・承認・検証・ロールバックの実装
 
 ## 4. 完了済み
 
 - Stage 0: Raphael基盤整理
 - Stage 0.5: 完全性監査と複数AI運用モデル
 - Stage 1: Raphael初期版の実装設計
-- PR #1〜#9を`main`へマージ
+- PR #1〜#10を`main`へマージ
 - README / ROADMAP / GOVERNANCE / MASTER_SPEC / PROJECT_HANDOFF等の横断同期
 - 次の共通運用原則を導入
   - 実行可能な依頼では説明を繰り返さず作業へ移る
@@ -63,7 +63,7 @@ V1確定条件:
 - API月額上限10,000円（7,000円警告、9,000円制限、10,000円停止）
 - 最初の案件はRaphael自身のコード・設計改善、その後に小規模新規アプリ
 - アプリは転用性検証であり最終目的ではない
-- 正式承認チャネルは現段階ではChatGPT
+- 正式承認は、隆之介本人がChatGPT、Gemini、Claude、Codex、Claude Codeのいずれかを通じて明示した場合に有効。AI自身の判断、他人の承認、GitHub上のPR操作だけでは無効
 - 汎用コア、ドメインパック、ツールコネクタ、分野別評価パックを分離
 
 ### Stage 2実施済み
@@ -153,3 +153,12 @@ V1確定条件:
 - 隆之介の発言を自動肯定しない。同意目的の「正しい」「その通り」は禁止し、根拠・前提・反例・不確実性・既存決定との整合性から評価する。
 - 今回の変更は既存の`agent/roadmap-and-canonical-audit`とDraft PR #10に追加する。mainへは未反映。
 - PR #10の完了条件には、全AI入口からの起動時到達性、新規セッション復元テスト、類似ケース再テスト、完全版・分割正本・対応表の意味照合を含む。
+
+## 12. 2026-07-29 Week 1仕上げ更新
+
+- PR #12で汎用コアの実装、12件の単体・総合テスト、Python構文確認が完了した。
+- 無料・ローカル模擬案件は、受理→理解→計画→担当→実行→検証→記録→完了の全状態を通過した。
+- 費用1円以上、課金可能、料金不明のサービスは、対象リクエストの`paid_service`事前承認がなければ実行前に停止する。
+- `budget_override`は`paid_service`承認を代替しない。月額ゲートは承認後の二次制限である。
+- ロールバックは予算値だけでなく、登録された復元処理を呼び出して模擬成果物を削除できることを確認した。
+- 現在地はWeek 1実装・検証完了、隆之介のPRレビューとmainマージ判断待ち。mainへの反映後にWeek 2を開始する。

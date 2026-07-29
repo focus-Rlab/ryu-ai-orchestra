@@ -121,3 +121,5 @@ Stage 2の確定設計を追加同期し、決定ログ、Agent Standard、完�
 | 重要変更の全正本伝播 | `MASTER_SPEC.md` | `STARTUP_CONTEXT.md`、`GOVERNANCE.md`、`PROJECT_HANDOFF.md` | `OPERATING_GUIDE.md` | 完全版・分割正本・対応表・入口の意味照合 |
 | ユーザー発言の批判的評価 | `MASTER_SPEC.md` | `USER.md`、`STARTUP_CONTEXT.md`、`GOVERNANCE.md` | 全AI入口→STARTUP_CONTEXT | 自動肯定・禁止表現・根拠説明のケーステスト |
 | ミス発生時の必須手順 | `MASTER_SPEC.md` | `GOVERNANCE.md`、`STARTUP_CONTEXT.md`、`INCIDENT_LOG.md` | `README.md`、`OPERATING_GUIDE.md` | 根本原因、横断監査、一般化、成功/失敗、類似ケース再テスト |
+
+| 有料API・従量課金・課金可能・料金不明サービスの事前明示承認 | `MASTER_SPEC.md` §25 | `STARTUP_CONTEXT.md` §10、`GOVERNANCE.md`、`SECURITY.md`、`ROADMAP.md`、`PROJECT_HANDOFF.md` | 全AI入口→STARTUP_CONTEXT、README | 1円、課金可能0円、料金不明、予算超過承認のみ、正式5窓口のテスト |

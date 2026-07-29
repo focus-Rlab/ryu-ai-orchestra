@@ -3,11 +3,11 @@
 Copy and paste the block below into a new session.
 
 ```text
-GitHubの`focus-Rlab/ryu-ai-orchestra`を開き、`agent/roadmap-and-canonical-audit`を作業ブランチとして扱ってください。
+GitHubの`focus-Rlab/ryu-ai-orchestra`を開き、`agent/v1-week1-general-core`を作業ブランチとして扱ってください。
 
 最初にSTARTUP_CONTEXT.mdを読み、読了を確認してからREADME.md、PROJECT_HANDOFF.md、GOVERNANCE.md、SECURITY.md、ROADMAP.md、STAGE2_DECISION_LOG.md、AGENT_STANDARD.md、MASTER_SPEC.md、SPEC_TRACEABILITY.md、INCIDENT_LOG.md、docs/CANONICAL_AUDIT_2026-07-29.mdを確認してください。
 
-現在はV1 Week 0「正本完全性回復と実行基盤確定」です。Stage 2とPR #9は完了済みですが、会話で確定したV1ロードマップ再編がmainの正本群へ伝播していなかったため、専用ブランチで横断監査・修正しています。
+現在はV1 Week 1「汎用コア最小実装」です。PR #10はmainへマージ済みで、Week 0のマージ後検証も完了しています。Issue #11に従い、分野非依存の実行ループ、予算、承認、検証、改善候補、ロールバックを実装・検証してください。
 
 再質問しない確定事項:
 - 最終目標は自己改善型・分野適応型の汎用オーケストレーターRaphael
@@ -16,14 +16,15 @@ GitHubの`focus-Rlab/ryu-ai-orchestra`を開き、`agent/roadmap-and-canonical-a
 - 週14時間、初月約56時間、API上限10,000円
 - 7,000円警告、9,000円高性能モデル制限、10,000円自動停止
 - 最初の案件はRaphael自身のコード・設計改善、その後に小規模新規アプリ
-- 正式承認チャネルは現段階ではChatGPTのみ
+- 正式承認は隆之介本人がChatGPT、Gemini、Claude、Codex、Claude Codeのいずれかで明示した場合のみ有効
+- 有料API・従量課金・課金可能・料金不明の外部機能は、1円でも事前明示承認なしに導入・実行禁止。月額ゲートは承認後の二次制限
 - mainマージは隆之介が行う
 
 次に行うこと:
-1. 監査報告の全項目が実ファイルと一致するか再検証する。
-2. 古いPR、ブランチ、Stage、未決定表記が残っていないか検索する。
-3. V1確定事項が完全版・分割正本・入口・引き継ぎ・対応表で意味一致するか確認する。
+1. Issue #11とWeek 1の完了条件を確認する。
+2. PR #12の有料サービス事前承認ゲート、12件のテスト、無料ローカル総合検証、ロールバック検証をレビューする。
+3. 分野固有ロジックがコアへ混入していないか最終監査する。
 4. 未承認の評価基準を勝手に承認済みにしない。
-5. Draft PRの最終差分と残存リスクを隆之介へ報告する。
+5. Draft PRで差分、テスト、残存リスクを隆之介へ報告する。
 6. mainへのマージは行わない。
 ```
