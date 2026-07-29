@@ -3,7 +3,7 @@
 Version: 0.2.0-draft  
 Owner: Ryunosuke Matsumoto  
 Status: Active decision record  
-Branch: `stage2/agent-governance`
+Branch: `agent/roadmap-and-canonical-audit` (historical Stage 2 decisions originally recorded on `stage2/agent-governance`)
 
 ## 1. Purpose
 
@@ -579,9 +579,6 @@ A handoff is complete only after required knowledge, skills, memory, and judgmen
 
 The foundational Stage 2 design questions are complete. Numerical thresholds, file schemas, automated measurements, and implementation details may be selected during implementation using safe, reversible, evidence-based defaults so long as they do not change the confirmed meaning or authority boundaries above. Any implementation choice that changes meaning or expands authority requires Ryunosuke's approval.
 
-## 14. Revision target
+## 14. Revision status
 
-1. Synchronize the confirmed decisions into the agent standard and affected canonical documents.
-2. Audit wording, responsibility, governance, approval state, and current-state references.
-3. Apply one representative agent example to verify internal consistency.
-4. Prepare the branch for Ryunosuke's review and later merge to main.
+Stage 2 decisions were integrated through PR #9. A later audit found that V-01〜V-04 were not propagated into ROADMAP, README, PROJECT_HANDOFF, VISION, and related canonical documents. The missing propagation is being corrected on `agent/roadmap-and-canonical-audit`. This log remains the authoritative decision evidence; the execution order and completion criteria are defined in ROADMAP.
