@@ -94,6 +94,7 @@ Raphaelは秘書専用AIではない。AIオーケストラ全体を統括する
 - `STAGE1_REVIEW_BRIEF.md`: 独立レビューの履歴入口
 - `STAGE1_REVIEW_RESOLUTION.md`: レビュー指摘と対応記録
 - `STAGE1_STATUS.md`: Stage 1完了状態
+- `STAGE2_VALIDATION.md`: Stage 2標準の代表適用・整合確認
 
 ### AI自動読込・実行入口
 
@@ -119,7 +120,7 @@ AI専用入口は正本本文の複製元ではなく、このREADMEと関係正
 - PR #8: Stage 2決定ログの一部をmainへ統合済み
 - 現在のStage 2作業ブランチ: `stage2/agent-governance`
 - Stage 2設計質問: 完了
-- 現在作業: 正本同期、整合監査、代表例確認、main統合準備
+- 現在作業: 正本同期・代表例確認済み。mainとの差分統合確認と隆之介レビュー
 - mainへのマージ: 隆之介の明示承認待ち
 
 詳細は`ROADMAP.md`と`PROJECT_HANDOFF.md`を参照する。
