@@ -1,8 +1,8 @@
 # Project Handoff
 
-Version: 0.6.0-draft  
-Owner: Ryunosuke Matsumoto  
-Current working branch: `agent/v1-week1-general-core`
+Version: 0.7.0-draft
+Owner: Ryunosuke Matsumoto
+Current working branch: `agent/v1-week2-software-domain`
 
 ## 1. この文書の目的
 
@@ -33,12 +33,12 @@ V1は、汎用コア、ドメインパック、ツールコネクタ、分野別
 
 - Repository: `focus-Rlab/ryu-ai-orchestra`
 - Default branch: `main`
-- `main`最新確認済みマージ: PR #10
-- PR #10: 隆之介がmainへマージ済み。マージ後の起動経路と正本反映を再確認済み
-- Current working branch: `agent/v1-week1-general-core`
-- Current Stage: V1 Week 1「汎用コア最小実装」
+- `main`最新確認済みマージ: PR #12
+- PR #12: 隆之介がmainへマージ済み。汎用コア、課金禁止ゲート、12件のテストをmain上で再確認済み
+- Current working branch: `agent/v1-week2-software-domain`
+- Current Stage: V1 Week 2「Softwareドメインパックと自己改善案件」
 - Stage 2作業ブランチ `stage2/agent-governance`: main統合済み
-- 現在の作業: Issue #11に基づく、分野非依存の最小実行ループ・予算・承認・検証・ロールバックの実装
+- 現在の作業: Issue #13に基づくSoftwareドメインパック、開発ツール接続定義、software評価パック、Raphael自己改善案件
 
 ## 4. 完了済み
 
@@ -46,6 +46,7 @@ V1は、汎用コア、ドメインパック、ツールコネクタ、分野別
 - Stage 0.5: 完全性監査と複数AI運用モデル
 - Stage 1: Raphael初期版の実装設計
 - PR #1〜#10を`main`へマージ
+- PR #11〜#12を`main`へマージし、V1 Week 1の汎用コアを統合
 - README / ROADMAP / GOVERNANCE / MASTER_SPEC / PROJECT_HANDOFF等の横断同期
 - 次の共通運用原則を導入
   - 実行可能な依頼では説明を繰り返さず作業へ移る
@@ -120,19 +121,18 @@ V1確定条件:
 
 ## 8. 現在の状態
 
-- Stage 2とPR #9のmain統合は完了。
-- V1確定事項はSTAGE2_DECISION_LOGに記録済みだったが、ROADMAP、README、PROJECT_HANDOFF、VISION等への伝播が不完全だった。
-- 専用ブランチ `agent/roadmap-and-canonical-audit` で全正本を監査・修正中。
-- SPEC_TRACEABILITYとRAPHAEL_INITIAL_DESIGNに、PR #6・評価ログ・採点重みに関する古い未決定表記が残っていた。
+- Stage 0〜Stage 2、V1 Week 0〜Week 1、PR #1〜#12のmain統合は完了。
+- `agent/v1-week2-software-domain`でIssue #13のWeek 2実装を進めている。
+- Software固有処理は`software_domain`に分離し、`v1_core`を変更しない。
 - INCIDENT_LOGの評価基準正式承認は未決定のまま維持する。
 
 ## 9. 次の具体的作業
 
-1. V1確定事項とStage 2全決定を全正本へ同期する。
-2. 古いPR、ブランチ、Stage、未決定表記を横断除去する。
-3. 確定事項×反映先の監査表と事故記録を同じブランチへ保存する。
+1. Softwareドメインパック、ツール定義、software評価パックのテストを完了する。
+2. Raphael自己改善案件の改善前後と証拠を記録する。
+3. 汎用コア無変更、無料ローカル手段限定、未承認評価基準不使用を監査する。
 4. Draft PRで隆之介へ全差分を提示する。
-5. 隆之介のmainマージ後、V1 Week 1「汎用コア最小実装」へ進む。
+5. 隆之介のレビューとmainマージ判断を待つ。
 
 ## 10. 現在の禁止事項
 
@@ -143,7 +143,7 @@ V1確定条件:
 
 ## 11. 新しいセッションへの開始指示
 
-> `focus-Rlab/ryu-ai-orchestra`の`agent/roadmap-and-canonical-audit`を開き、STARTUP_CONTEXTを最初に読み、読了後にREADME、PROJECT_HANDOFF、ROADMAP、STAGE2_DECISION_LOG、AGENT_STANDARD、MASTER_SPEC、SPEC_TRACEABILITY、今回の監査報告を読む。現在はV1 Week 0。Stage 2確定事項とV1再編を再質問せず、未反映・古い状態・矛盾を全正本で監査し、mainへのマージは隆之介に任せる。
+> `focus-Rlab/ryu-ai-orchestra`の`agent/v1-week2-software-domain`を開き、STARTUP_CONTEXTを最初に読み、読了後にREADME、PROJECT_HANDOFF、ROADMAP、GOVERNANCE、SECURITY、MASTER_SPEC、SPEC_TRACEABILITY、agents/raphael.md、Issue #13を読む。現在はV1 Week 2。Software固有処理を汎用コアから分離し、未承認評価基準を使わず、mainへのマージは隆之介に任せる。
 
 
 ## 2026-07-29 追加確定事項
@@ -162,3 +162,12 @@ V1確定条件:
 - `budget_override`は`paid_service`承認を代替しない。月額ゲートは承認後の二次制限である。
 - ロールバックは予算値だけでなく、登録された復元処理を呼び出して模擬成果物を削除できることを確認した。
 - 現在地はWeek 1実装・検証完了、隆之介のPRレビューとmainマージ判断待ち。mainへの反映後にWeek 2を開始する。
+
+## 13. 2026-07-29 Week 2開始更新
+
+- 隆之介がPR #12をmainへマージし、main上の汎用コア、課金禁止ゲート、12件のテストを再確認した。
+- Issue #13と`agent/v1-week2-software-domain`を作成し、Week 2を開始した。
+- 現在はSoftware固有の能力、無料ローカルツール定義、分野別評価を、`v1_core`を変更せず注入する実装を進めている。
+- 最初の自己改善案件は、Raphael自身へSoftwareドメインパックを追加し、改善前後を証拠で比較すること。
+- 未承認の重み付き評価基準は使用せず、Issue #13の完了条件を名前付き必須チェックとして検証する。
+- mainへのマージは隆之介の承認待ちとして分離する。

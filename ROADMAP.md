@@ -1,13 +1,13 @@
 # ロードマップ
 
-Version: 0.8.0-draft
+Version: 0.9.0-draft
 
 ## 現在地
 
-- 段階: V1 Week 1 — 汎用コア最小実装
-- 状態: PR #10のマージ後検証を完了し、Issue #11で汎用コアを実装中
-- main基盤: Stage 0〜Stage 2、V1 Week 0およびPR #1〜#10を統合済み
-- 現在の作業先: `agent/v1-week1-general-core`
+- 段階: V1 Week 2 — Softwareドメインパックと自己改善案件
+- 状態: PR #12のmainマージ後検証を完了し、Issue #13でSoftwareドメインパックを実装中
+- main基盤: Stage 0〜Stage 2、V1 Week 0〜Week 1およびPR #1〜#12を統合済み
+- 現在の作業先: `agent/v1-week2-software-domain`
 - 最終目標: 自己改善型・分野適応型の汎用オーケストレーターRaphael
 - 初期検証領域: ソフトウェア／アプリ開発。最終目的ではなく、YouTube・小説・事業・学習等への転用性を検証する最初の領域
 
@@ -90,7 +90,7 @@ Status: 完了（PR #10マージ、main上のマージ後検証済み）
 
 ### Week 1: 汎用コア最小実装
 
-Status: PR #12で実装・12件のテスト・無料ローカル総合検証まで完了。レビューとmainマージ判断待ち
+Status: 完了（PR #12マージ、main上のマージ後検証済み）
 
 目的: 特定分野に依存しないRaphael V1の最小実行ループを作る。
 
@@ -111,7 +111,7 @@ Status: PR #12で実装・12件のテスト・無料ローカル総合検証ま�
 
 ### Week 2: Softwareドメインパックと自己改善案件
 
-Status: Week 1完了後
+Status: 実装中（Issue #13、`agent/v1-week2-software-domain`）
 
 目的: software分野の能力・ツール・評価を汎用コアから分離し、Raphael自身のコード・設計改善を最初の実案件として通す。
 
