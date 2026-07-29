@@ -28,12 +28,12 @@ Raphaelは秘書専用AIではない。AIオーケストラ全体を統括する
 
 新しいセッションでは原則、次の一文で開始する。
 
-> `focus-Rlab/ryu-ai-orchestra`の`README.md`と`PROJECT_HANDOFF.md`を最初に読み、現在の作業ブランチ・PRと今回必要な正本を確認してから作業して。
+> `focus-Rlab/ryu-ai-orchestra`の`README.md`、`STARTUP_CONTEXT.md`、`PROJECT_HANDOFF.md`を最初に読み、現在の作業ブランチ・PRと今回必要な正本を確認してから作業して。
 
 ## 最低限の共通ルール
 
 1. 会話履歴だけを正本にしない。
-2. 新しいセッションは`README.md`の次に`PROJECT_HANDOFF.md`を読む。
+2. 新しいセッションは`README.md`の次に`STARTUP_CONTEXT.md`と`PROJECT_HANDOFF.md`を読む。
 3. 重要提案前に関係する正本を確認する。
 4. 全作業で`GOVERNANCE.md`と`SECURITY.md`を適用する。
 5. 新しいStage、文書、機能、エージェント、ルールを作る前に既存責任との重複を確認する。
@@ -47,12 +47,14 @@ Raphaelは秘書専用AIではない。AIオーケストラ全体を統括する
 13. 必要ツールへの接続、権限、読取・書込可否に問題が起きた場合、その時点で制約、実行済み、未実行を報告する。
 14. PRマージ、ブランチ変更、作業完了など現在地が変わった直後に`README.md`、`PROJECT_HANDOFF.md`、`ROADMAP.md`、関係PR説明を同期する。
 15. 完了時は、参照した正本、変更点、検証、未解決事項、承認待ちを報告する。
+16. 重要な長期記憶、決定、禁止、必須手順、承認境界、重大ミスと再発防止、その他後続AIの判断を変える内容は、最初の実装段階で正本へ分類・伝播し、全AIの起動時必読セットから到達可能にする。
+17. 隆之介の発言を自動肯定せず、事実・前提・反例・不確実性・既存決定との整合性から評価する。同意目的の「正しい」「その通り」は使用しない。
 
 ## 作業別の読込ルーター
 
 | 作業 | 必ず読むもの |
 |---|---|
-| すべての作業 | `README.md`、`PROJECT_HANDOFF.md`、`GOVERNANCE.md`、`SECURITY.md` |
+| すべての作業 | `README.md`、`STARTUP_CONTEXT.md`、`PROJECT_HANDOFF.md`、`GOVERNANCE.md`、`SECURITY.md` |
 | 隆之介の希望・判断基準が重要 | 上記＋`USER.md` |
 | Raphaelとして作業 | 上記＋`USER.md`、`agents/raphael.md` |
 | 計画、進捗、実装順序 | 上記＋`ROADMAP.md` |
@@ -66,6 +68,10 @@ Raphaelは秘書専用AIではない。AIオーケストラ全体を統括する
 必要以上に全ファイルを毎回読まない。ただし、重要変更では完全版と対応表まで確認する。
 
 ## 文書構造
+
+### 起動時共通文脈
+
+- `STARTUP_CONTEXT.md`: 全AIが作業開始時に共有する重要情報の分類、必読セット、伝播・検証手順
 
 ### 現在状態・引き継ぎ
 
