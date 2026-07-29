@@ -5,12 +5,12 @@
 ## 現在の段階
 
 - Version: 0.9.0-draft
-- Stage: V1 Week 0「正本完全性回復と実行基盤確定」
-- Status: Stage 2・PR #9完了後に判明したV1ロードマップ反映漏れを専用ブランチで監査・修正中
+- Stage: V1 Week 1「汎用コア最小実装」
+- Status: PR #10のマージ後検証を完了し、Issue #11で汎用コアを実装中
 - 現在の中核エージェント: Raphael
 - 運用方式: GitHub正本・人間承認型の段階的オーケストレーション
-- 完了済み: Stage 0〜Stage 2、PR #1〜#9をmainへマージ
-- 現在の作業先: `agent/roadmap-and-canonical-audit`
+- 完了済み: Stage 0〜Stage 2、V1 Week 0、PR #1〜#10をmainへマージ
+- 現在の作業先: `agent/v1-week1-general-core`（Issue #11）
 
 ## Raphaelの確定した位置づけ
 
