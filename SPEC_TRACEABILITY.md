@@ -110,3 +110,14 @@ Stage 2の確定設計を追加同期し、決定ログ、Agent Standard、完�
 - 「現在地だけ更新」では同期完了としない。
 - 反映済み判定はキーワードの存在ではなく、目的・範囲・条件・承認状態・順序の意味一致で行う。
 - 未承認事項と実装済み事項を分離し、「実装済みだが正式承認未決定」を表現できるようにする。
+
+
+## 起動時共通文脈・重要情報伝播
+
+| 要求 | 完全版 | 分割正本 | AI入口・実行入口 | 検証 |
+|---|---|---|---|---|
+| 全AIの起動時必読セット | `MASTER_SPEC.md` | `STARTUP_CONTEXT.md`、`GOVERNANCE.md`、`OPERATING_GUIDE.md` | `README.md`、`AGENTS.md`、`CLAUDE.md`、`GEMINI.md`、`.github/copilot-instructions.md`、`.github/agents/raphael.md` | 全入口からREADME・STARTUP_CONTEXTへ到達 |
+| 重要な長期記憶・決定・禁止・必須手順の保存判定 | `MASTER_SPEC.md` | `STARTUP_CONTEXT.md`、内容別の分割正本 | `README.md` | 分類、旧表現検索、復元テスト |
+| 重要変更の全正本伝播 | `MASTER_SPEC.md` | `STARTUP_CONTEXT.md`、`GOVERNANCE.md`、`PROJECT_HANDOFF.md` | `OPERATING_GUIDE.md` | 完全版・分割正本・対応表・入口の意味照合 |
+| ユーザー発言の批判的評価 | `MASTER_SPEC.md` | `USER.md`、`STARTUP_CONTEXT.md`、`GOVERNANCE.md` | 全AI入口→STARTUP_CONTEXT | 自動肯定・禁止表現・根拠説明のケーステスト |
+| ミス発生時の必須手順 | `MASTER_SPEC.md` | `GOVERNANCE.md`、`STARTUP_CONTEXT.md`、`INCIDENT_LOG.md` | `README.md`、`OPERATING_GUIDE.md` | 根本原因、横断監査、一般化、成功/失敗、類似ケース再テスト |
