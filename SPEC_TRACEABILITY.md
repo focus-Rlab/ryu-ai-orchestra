@@ -49,6 +49,9 @@ Owner: Ryunosuke Matsumoto
 | Stage 2は既存設計の監査と責任境界確定 | MASTER_SPEC.md / ROADMAP.md / README.md / PROJECT_HANDOFF.md / STAGE1_STATUS.md / STAGE1_REVIEW_RESOLUTION.md | 反映済み |
 | 旧Stage 2要求整理エージェントをStage 3へ移動 | MASTER_SPEC.md / ROADMAP.md / README.md / PROJECT_HANDOFF.md / STAGE1_STATUS.md / STAGE1_REVIEW_RESOLUTION.md | 反映済み |
 | クロスモデル再現性と10件評価 | MASTER_SPEC.md / ROADMAP.md / RAPHAEL_TEST_PLAN.md / agents/raphael.md | 反映済み |
+| V1汎用オーケストレーター方向 | STAGE2_DECISION_LOG.md V-01 / MASTER_SPEC.md §24 / VISION.md / ROADMAP.md / README.md / PROJECT_HANDOFF.md | 反映済み |
+| V1資源・費用ゲート・初期案件 | STAGE2_DECISION_LOG.md V-02 / MASTER_SPEC.md §24 / ROADMAP.md / README.md / PROJECT_HANDOFF.md | 反映済み |
+| V1承認境界・ChatGPT承認 | STAGE2_DECISION_LOG.md V-03〜V-04 / MASTER_SPEC.md §24 / GOVERNANCE.md / ROADMAP.md / README.md | 反映済み |
 | Ciel進化 | MASTER_SPEC.md / ROADMAP.md / RECONSIDER.md / agents/raphael.md | 反映済み |
 | 確定・暫定・保留 | RECONSIDER.md / ROADMAP.md / RAPHAEL_TEST_PLAN.md / PROJECT_HANDOFF.md | 反映済み |
 | Stage 1完了・後続訂正 | ROADMAP.md / STAGE1_STATUS.md / STAGE1_REVIEW_RESOLUTION.md | 反映済み |
@@ -82,11 +85,12 @@ Owner: Ryunosuke Matsumoto
 
 Stage 2の確定設計を追加同期し、決定ログ、Agent Standard、完全版、ガバナンス、Raphael仕様の意味対応を確認した。
 
-残存事項:
+過去の残存事項は再監査により次の状態へ更新した。
 
-- Draft PR #6はmain未反映であり、隆之介の承認が必要
-- Stage 2本体の新規エージェント追加標準・監査成果物はPR #6マージ後に実装する
-- 正式評価ログ保存先、採点重み等は引き続き未確定
+- PR #6およびPR #9はmainへマージ済み
+- Stage 2のエージェント追加標準・監査・代表適用は完了済み
+- 正式評価ログ保存先と採点重みはRAPHAEL_TEST_PLAN、RAPHAEL_TEST_LOG、evaluations/raphael/TEMPLATEに実装済み。ただしINCIDENT_LOGにより正式承認状態は未決定
+- V1再編のROADMAP・README・PROJECT_HANDOFF・MASTER_SPEC・VISIONへの反映漏れを2026-07-29監査で検出し、このブランチで修正中
 
 ## 完全性ルール
 
@@ -98,3 +102,22 @@ Stage 2の確定設計を追加同期し、決定ログ、Agent Standard、完�
 - 矛盾がある場合、独断で統合せず差分と推奨案を報告する。
 - 現在地が変わった場合は、`README.md`、`PROJECT_HANDOFF.md`、`ROADMAP.md`、関係PR説明を同時に確認する。
 - 重要なStage完了前に、完全版、対応表、分割正本、実行入口、Stage文書群の同期を再確認する。
+
+
+## 2026-07-29完全性監査の追加ゲート
+
+- Stage・Week・目的・順序・成果物の変更では、会話決定→決定ログ→完全版→分割正本→README→PROJECT_HANDOFFの順に追跡する。
+- 「現在地だけ更新」では同期完了としない。
+- 反映済み判定はキーワードの存在ではなく、目的・範囲・条件・承認状態・順序の意味一致で行う。
+- 未承認事項と実装済み事項を分離し、「実装済みだが正式承認未決定」を表現できるようにする。
+
+
+## 起動時共通文脈・重要情報伝播
+
+| 要求 | 完全版 | 分割正本 | AI入口・実行入口 | 検証 |
+|---|---|---|---|---|
+| 全AIの起動時必読セット | `MASTER_SPEC.md` | `STARTUP_CONTEXT.md`、`GOVERNANCE.md`、`OPERATING_GUIDE.md` | `README.md`、`AGENTS.md`、`CLAUDE.md`、`GEMINI.md`、`.github/copilot-instructions.md`、`.github/agents/raphael.md` | 全入口からREADME・STARTUP_CONTEXTへ到達 |
+| 重要な長期記憶・決定・禁止・必須手順の保存判定 | `MASTER_SPEC.md` | `STARTUP_CONTEXT.md`、内容別の分割正本 | `README.md` | 分類、旧表現検索、復元テスト |
+| 重要変更の全正本伝播 | `MASTER_SPEC.md` | `STARTUP_CONTEXT.md`、`GOVERNANCE.md`、`PROJECT_HANDOFF.md` | `OPERATING_GUIDE.md` | 完全版・分割正本・対応表・入口の意味照合 |
+| ユーザー発言の批判的評価 | `MASTER_SPEC.md` | `USER.md`、`STARTUP_CONTEXT.md`、`GOVERNANCE.md` | 全AI入口→STARTUP_CONTEXT | 自動肯定・禁止表現・根拠説明のケーステスト |
+| ミス発生時の必須手順 | `MASTER_SPEC.md` | `GOVERNANCE.md`、`STARTUP_CONTEXT.md`、`INCIDENT_LOG.md` | `README.md`、`OPERATING_GUIDE.md` | 根本原因、横断監査、一般化、成功/失敗、類似ケース再テスト |

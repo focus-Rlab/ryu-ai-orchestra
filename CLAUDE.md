@@ -1,7 +1,8 @@
 # Claude Project Instructions
 
-Claude CodeおよびClaudeのリポジトリ作業では、最初に`README.md`を読み、その読込ルーターに従う。
+Claude CodeおよびClaudeのリポジトリ作業では、`CLAUDE.md`の自動読込後、最初に`STARTUP_CONTEXT.md`を読み、読了を確認してから`README.md`の読込ルーターに従う。読了前に分析・提案・変更を開始しない。
 
+@STARTUP_CONTEXT.md
 @README.md
 @GOVERNANCE.md
 @SECURITY.md

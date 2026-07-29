@@ -2,7 +2,7 @@
 
 Version: 0.6.0-draft  
 Owner: Ryunosuke Matsumoto  
-Current working branch: `main`
+Current working branch: `agent/roadmap-and-canonical-audit`
 
 ## 1. この文書の目的
 
@@ -10,23 +10,24 @@ Current working branch: `main`
 
 新しいセッションでは、最初に次を読む。
 
-1. `README.md`
-2. `PROJECT_HANDOFF.md`
-3. `STAGE2_DECISION_LOG.md`
-4. `AGENT_STANDARD.md`
-5. `ROADMAP.md`
-6. `GOVERNANCE.md`
-7. `MASTER_SPEC.md`
-8. `SPEC_TRACEABILITY.md`
-9. `agents/raphael.md`
+1. `STARTUP_CONTEXT.md`
+2. `README.md`
+3. `PROJECT_HANDOFF.md`
+4. `STAGE2_DECISION_LOG.md`
+5. `AGENT_STANDARD.md`
+6. `ROADMAP.md`
+7. `GOVERNANCE.md`
+8. `MASTER_SPEC.md`
+9. `SPEC_TRACEABILITY.md`
+10. `agents/raphael.md`
 
 重要: `AGENT_STANDARD.md`とStage 2関係正本は、`STAGE2_DECISION_LOG.md`の隆之介承認済み判断を反映した統合版である。`INCIDENT_LOG.md`に残る評価基準の正式承認などの未決定事項は、Stage 2完了によって承認済みとは扱わない。
 
 ## 2. 北極星
 
-隆之介専用のAIエージェント組織を構築し、Raphaelを最側近パートナー、条件を満たせばCiel相当へ進化させる。
+最終目標は、自己改善型・分野適応型の汎用オーケストレーターRaphaelを構築すること。ソフトウェア／アプリ開発は最初の検証領域であり、最終目的ではない。YouTube、小説、事業、学習等へドメインパックを追加できる構造を目指す。
 
-AIオーケストラは単なる複数AIモデルの集合ではない。エージェント、役割、権限、記憶、品質、評価、改善、統合、分解を管理できる組織とする。
+V1は、汎用コア、ドメインパック、ツールコネクタ、分野別評価パックを分離する。
 
 ## 3. 現在のGitHub状態
 
@@ -34,9 +35,10 @@ AIオーケストラは単なる複数AIモデルの集合ではない。エー�
 - Default branch: `main`
 - `main`最新確認済みマージ: PR #9
 - PR #9: 隆之介がmainへマージ済み
-- Current working branch: `main`
-- Current Stage: Stage 3「要求整理・構想具体化エージェント」
+- Current working branch: `agent/roadmap-and-canonical-audit`
+- Current Stage: V1 Week 0「正本完全性回復と実行基盤確定」
 - Stage 2作業ブランチ `stage2/agent-governance`: main統合済み
+- 現在の修正: 会話で確定済みのV1再編がmainのROADMAP等へ同期されなかった事故の横断監査
 
 ## 4. 完了済み
 
@@ -51,12 +53,18 @@ AIオーケストラは単なる複数AIモデルの集合ではない。エー�
   - PRマージ・ブランチ変更・作業完了直後に現在地を同期
   - 問題発生時は根本原因分析、横断監査、一般化した再発防止、再テストを行う
 
-## 5. 完了したStage 2と開始したStage 3
+## 5. 完了したStage 2とV1への移行
 
-Stage 2: `AIオーケストラ既存設計の監査と責任境界確定` — 完了  
-Stage 3: `要求整理・構想具体化エージェント` — 開始
+Stage 2は完了し、PR #9はmainへマージ済み。ただし、その後の状態同期で「Stage 3開始」だけを反映し、同じ会話で確定したV1ロードマップ再編を反映しなかったため、Stage 3開始扱いを撤回してV1 Week 0の完全性回復を実行している。
 
-Stage 2では、新規エージェント追加標準とエージェント組織ガバナンスを隆之介との対話で確定し、正本同期・代表例検証・main統合まで完了した。Stage 3では、隆之介の曖昧な構想を実装可能な仕様へ変換する最初の専門エージェントをRaphaelが設計・検証する。
+V1確定条件:
+
+- 週14時間、初月約56時間
+- API月額上限10,000円（7,000円警告、9,000円制限、10,000円停止）
+- 最初の案件はRaphael自身のコード・設計改善、その後に小規模新規アプリ
+- アプリは転用性検証であり最終目的ではない
+- 正式承認チャネルは現段階ではChatGPT
+- 汎用コア、ドメインパック、ツールコネクタ、分野別評価パックを分離
 
 ### Stage 2実施済み
 
@@ -112,20 +120,19 @@ Stage 2では、新規エージェント追加標準とエージェント組織�
 
 ## 8. 現在の状態
 
-- Stage 2は完了し、PR #9はmainへマージ済み。
-- `AGENT_STANDARD.md`は決定ログと整合する統合版。
-- 正本間の意味監査と代表例による最小検証は完了し、重大な内部矛盾は未検出。
-- main側の評価計画・事故記録とStage 2側の確定済みガバナンス設計を両方保持している。
-- Stage 3「要求整理・構想具体化エージェント」を開始。
-- `INCIDENT_LOG.md`に残る評価基準の正式承認などの未決定事項は保留のまま。
+- Stage 2とPR #9のmain統合は完了。
+- V1確定事項はSTAGE2_DECISION_LOGに記録済みだったが、ROADMAP、README、PROJECT_HANDOFF、VISION等への伝播が不完全だった。
+- 専用ブランチ `agent/roadmap-and-canonical-audit` で全正本を監査・修正中。
+- SPEC_TRACEABILITYとRAPHAEL_INITIAL_DESIGNに、PR #6・評価ログ・採点重みに関する古い未決定表記が残っていた。
+- INCIDENT_LOGの評価基準正式承認は未決定のまま維持する。
 
 ## 9. 次の具体的作業
 
-1. Stage 3エージェントの役割、責任境界、対象・対象外を定義する。
-2. 入力形式、質問手順、要件分解、出力形式を設計する。
-3. Raphaelとの受け渡し・統合方法を定義する。
-4. 完了条件と評価基準を、未承認事項を勝手に確定せず設計する。
-5. 実タスクで検証し、隆之介の承認後にmainへ統合する。
+1. V1確定事項とStage 2全決定を全正本へ同期する。
+2. 古いPR、ブランチ、Stage、未決定表記を横断除去する。
+3. 確定事項×反映先の監査表と事故記録を同じブランチへ保存する。
+4. Draft PRで隆之介へ全差分を提示する。
+5. 隆之介のmainマージ後、V1 Week 1「汎用コア最小実装」へ進む。
 
 ## 10. 現在の禁止事項
 
@@ -136,4 +143,13 @@ Stage 2では、新規エージェント追加標準とエージェント組織�
 
 ## 11. 新しいセッションへの開始指示
 
-> `focus-Rlab/ryu-ai-orchestra`の`main`を開き、README、PROJECT_HANDOFF、ROADMAP、AGENT_STANDARD、STAGE2_DECISION_LOGを読む。Stage 2は完了・PR #9はmainへマージ済み。Stage 2の確定事項を再質問せず、Stage 3「要求整理・構想具体化エージェント」の設計を進める。未確定な根本設計と`INCIDENT_LOG.md`の未承認事項は、隆之介へ確認せず確定しない。
+> `focus-Rlab/ryu-ai-orchestra`の`agent/roadmap-and-canonical-audit`を開き、STARTUP_CONTEXTを最初に読み、読了後にREADME、PROJECT_HANDOFF、ROADMAP、STAGE2_DECISION_LOG、AGENT_STANDARD、MASTER_SPEC、SPEC_TRACEABILITY、今回の監査報告を読む。現在はV1 Week 0。Stage 2確定事項とV1再編を再質問せず、未反映・古い状態・矛盾を全正本で監査し、mainへのマージは隆之介に任せる。
+
+
+## 2026-07-29 追加確定事項
+
+- 隆之介は、重要な長期記憶、決定事項、禁止事項、必要手順、その他後続AIへ共有すべき内容を、最初の実装段階で全AIの起動時文脈へ反映するよう要求した。
+- `STARTUP_CONTEXT.md`を新設し、全AIの起動時必読セット、保存判定、変更伝播、批判的評価、ミス対応、検証可能性を一元化した。
+- 隆之介の発言を自動肯定しない。同意目的の「正しい」「その通り」は禁止し、根拠・前提・反例・不確実性・既存決定との整合性から評価する。
+- 今回の変更は既存の`agent/roadmap-and-canonical-audit`とDraft PR #10に追加する。mainへは未反映。
+- PR #10の完了条件には、全AI入口からの起動時到達性、新規セッション復元テスト、類似ケース再テスト、完全版・分割正本・対応表の意味照合を含む。

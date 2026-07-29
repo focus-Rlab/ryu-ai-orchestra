@@ -1,6 +1,6 @@
 # Operating Guide
 
-Version: 0.4.0-draft
+Version: 0.5.0-draft
 Owner: Ryunosuke Matsumoto
 
 ## 1. このリポジトリの使い方
@@ -13,13 +13,16 @@ ChatGPT、Claude、Codex、Gemini、GitHub Copilot等、使用するAIモデル�
 
 新しいセッションまたはAI環境では、最初に次を読む。
 
-1. `README.md`
-2. `PROJECT_HANDOFF.md`
-3. 今回の作業に必要な正本
+1. `STARTUP_CONTEXT.md`
+2. `README.md`
+3. `PROJECT_HANDOFF.md`
+4. `GOVERNANCE.md`
+5. `SECURITY.md`
+6. 今回の作業に必要な正本
 
 通常チャットでの開始例:
 
-> `focus-Rlab/ryu-ai-orchestra`の`README.md`と`PROJECT_HANDOFF.md`を最初に読み、現在の作業ブランチ・PRと今回必要な正本を確認してから作業して。
+> `focus-Rlab/ryu-ai-orchestra`の`STARTUP_CONTEXT.md`を最初に読み、読了後に`README.md`と`PROJECT_HANDOFF.md`を読み、現在の作業ブランチ・PRと今回必要な正本を確認してから作業して。
 
 自動入口:
 
@@ -29,7 +32,7 @@ ChatGPT、Claude、Codex、Gemini、GitHub Copilot等、使用するAIモデル�
 - GitHub Copilot: `.github/copilot-instructions.md`
 - GitHub custom Raphael: `.github/agents/raphael.md`
 
-自動入口があっても、全正本を自動で読了したとは仮定しない。
+自動入口があっても、参照先を自動で読了したとは仮定しない。`STARTUP_CONTEXT.md`の読了確認前に分析・提案・変更を開始しない。予約入口を認識しないAI環境では、開始プロンプトで明示しない限り自動共有済みと判定しない。
 
 ## 3. 接続・権限・書込可否
 
@@ -55,6 +58,7 @@ ChatGPT、Claude、Codex、Gemini、GitHub Copilot等、使用するAIモデル�
 
 ### すべての作業
 
+- `STARTUP_CONTEXT.md`
 - `README.md`
 - `PROJECT_HANDOFF.md`
 - `GOVERNANCE.md`
@@ -113,7 +117,7 @@ Raphaelは先に担当エージェントを決め、その後でモデル・環�
 ## 7. 標準作業フロー
 
 1. 隆之介が相談または依頼を出す
-2. READMEとPROJECT_HANDOFFから現在地を確認する
+2. STARTUP_CONTEXTとPROJECT_HANDOFFから共通ルール・現在地を確認する
 3. 関係正本を読む
 4. 必要ツールの接続、権限、読取・書込可否を確認する
 5. 問題があれば、その時点で報告する
@@ -214,6 +218,11 @@ Raphaelは先に担当エージェントを決め、その後でモデル・環�
 
 ## 12. 現在の運用段階
 
-Stage 2「AIオーケストラ既存設計の監査と責任境界確定」を実施する。
+V1 Week 0「正本完全性回復と実行基盤確定」。
 
-既存設計をゼロから作り直さず、重複、矛盾、古い表現、同期漏れ、責任境界の曖昧さ、不足だけを監査・修正する。
+Stage 2完了後に判明したロードマップ・正本伝播漏れを、`agent/roadmap-and-canonical-audit`とDraft PR #10で監査・修正中。`STARTUP_CONTEXT.md`を含む起動時共有と変更伝播の検証が完了するまでWeek 1へ進まない。
+
+
+## 13. 重要情報を受け取った時
+
+重要な長期記憶、決定、禁止、必須手順、承認境界、事故・再発防止、現在地、その他後続AIの判断を変える内容を受け取った場合は、`STARTUP_CONTEXT.md`の保存判定と伝播手順を最初の実装段階で適用する。会話だけに保存したり、一つの文書だけ更新したりしない。
