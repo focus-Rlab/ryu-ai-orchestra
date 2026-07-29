@@ -58,10 +58,10 @@ This is a canonical-integrity failure, not a cosmetic omission.
 | AGENT_STANDARD.md | Stage 2 lifecycle rules present | No semantic change required |
 | GOVERNANCE.md | General sync gate present but no decision-inventory proof | Strengthened through this audit's completeness controls |
 | SECURITY.md | No V1-specific contradiction found | No change required |
-| USER.md | General goals and Raphael role consistent | No change required |
+| USER.md | Automatic-affirmation prohibition and critical-evaluation detail were incomplete | Added evidence, counterexample, uncertainty, and prohibited-phrase rules |
 | RECONSIDER.md | Ciel and technical items remain conditional | No change required; evaluation approval remains unresolved |
 | RAPHAEL_TEST_PLAN.md | Weights/log structure implemented | Kept; formal approval remains unresolved in INCIDENT_LOG |
-| agents/raphael.md | Stage 2 governance integrated | No V1 roadmap duplication required; follows README/ROADMAP |
+| agents/raphael.md | Followed README but did not state the critical-evaluation rule | Added STARTUP_CONTEXT loading and evidence-based evaluation rule |
 
 ## 6. Additional omissions found
 
@@ -101,7 +101,7 @@ A roadmap or Stage/Week change is complete only when:
 - Main not modified.
 - V1 roadmap and primary canonical propagation completed on this branch.
 - Known stale-state findings corrected.
-- Final branch-to-main diff and fresh-session reconstruction still require final verification before the Draft PR is considered ready.
+- Final branch-to-main diff reviewed; fresh-session reconstruction and similar-case retest passed; GitHub reports the Draft PR mergeable.
 
 
 ## Additional audit: mandatory startup sharing
@@ -132,4 +132,4 @@ Do not mark the audit complete until entry reachability, stale-language search, 
   - New AI entry with README + STARTUP_CONTEXT: PASS.
   - New AI entry with README only: correctly rejected as incomplete.
   - New AI entry relying on conversation memory only: correctly rejected as incomplete.
-- Remaining closure conditions: review the complete PR diff and GitHub mergeability; obtain Ryunosuke's review and merge decision.
+- Complete PR diff reviewed and GitHub mergeability confirmed. Remaining closure conditions: Ryunosuke's review, merge decision, and post-merge verification.
