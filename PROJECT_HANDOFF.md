@@ -1,8 +1,8 @@
 # Project Handoff
 
-Version: 0.5.0-draft  
+Version: 0.6.0-draft  
 Owner: Ryunosuke Matsumoto  
-Current working branch: `stage2/agent-governance`
+Current working branch: `main`
 
 ## 1. この文書の目的
 
@@ -20,7 +20,7 @@ Current working branch: `stage2/agent-governance`
 8. `SPEC_TRACEABILITY.md`
 9. `agents/raphael.md`
 
-重要: `AGENT_STANDARD.md`は現在も初期ドラフトであり、`STAGE2_DECISION_LOG.md`に記録された隆之介承認済み判断をまだ全面反映していない。新しいセッションは、現在のドラフトを確定仕様として扱ってはならない。
+重要: `AGENT_STANDARD.md`とStage 2関係正本は、`STAGE2_DECISION_LOG.md`の隆之介承認済み判断を反映した統合版である。`INCIDENT_LOG.md`に残る評価基準の正式承認などの未決定事項は、Stage 2完了によって承認済みとは扱わない。
 
 ## 2. 北極星
 
@@ -32,19 +32,18 @@ AIオーケストラは単なる複数AIモデルの集合ではない。エー�
 
 - Repository: `focus-Rlab/ryu-ai-orchestra`
 - Default branch: `main`
-- `main`最新確認済みマージ: PR #6
-- PR #6 merge commit: `fa5c0cb52ad68d4afd4089af85e9fc78dc6609a2`
-- Current working branch: `stage2/agent-governance`
-- Current Stage 2 draft commit: `097d1e0a9dbd973af9e2c1118fddeafaeed30958`
-- Current draft file: `AGENT_STANDARD.md`
-- `stage2/agent-governance`に対するPRはまだ作成していない
+- `main`最新確認済みマージ: PR #9
+- PR #9: 隆之介がmainへマージ済み
+- Current working branch: `main`
+- Current Stage: Stage 3「要求整理・構想具体化エージェント」
+- Stage 2作業ブランチ `stage2/agent-governance`: main統合済み
 
 ## 4. 完了済み
 
 - Stage 0: Raphael基盤整理
 - Stage 0.5: 完全性監査と複数AI運用モデル
 - Stage 1: Raphael初期版の実装設計
-- PR #4、PR #5、PR #6を`main`へマージ
+- PR #1〜#9を`main`へマージ
 - README / ROADMAP / GOVERNANCE / MASTER_SPEC / PROJECT_HANDOFF等の横断同期
 - 次の共通運用原則を導入
   - 実行可能な依頼では説明を繰り返さず作業へ移る
@@ -52,19 +51,24 @@ AIオーケストラは単なる複数AIモデルの集合ではない。エー�
   - PRマージ・ブランチ変更・作業完了直後に現在地を同期
   - 問題発生時は根本原因分析、横断監査、一般化した再発防止、再テストを行う
 
-## 5. 現在のStage 2
+## 5. 完了したStage 2と開始したStage 3
 
-Stage 2: `AIオーケストラ既存設計の監査と責任境界確定`
+Stage 2: `AIオーケストラ既存設計の監査と責任境界確定` — 完了  
+Stage 3: `要求整理・構想具体化エージェント` — 開始
 
-現在は、新規エージェント追加標準とエージェント組織ガバナンスを、隆之介との対話で根本から設計している。
+Stage 2では、新規エージェント追加標準とエージェント組織ガバナンスを隆之介との対話で確定し、正本同期・代表例検証・main統合まで完了した。Stage 3では、隆之介の曖昧な構想を実装可能な仕様へ変換する最初の専門エージェントをRaphaelが設計・検証する。
 
-### 実施済み
+### Stage 2実施済み
 
 - `stage2/agent-governance`ブランチを作成
 - `AGENT_STANDARD.md`初期ドラフトを作成
 - 初期ドラフト作成後、隆之介から「不明点を確認せず、想定で設計した」プロセス上の問題を指摘された
 - 以降は、既存ファイルを削除せず、隆之介と項目ごとに再設計して修正する方針へ変更
 - 確定した設計判断を`STAGE2_DECISION_LOG.md`へ集約
+- 記憶、信頼・権限、停止、重要変更、代理判断、試用・評価、退役・引き継ぎを正本文書へ統合
+- 代表エージェントへの最小検証で重大な内部矛盾がないことを確認
+- main後続13コミットを取り込み、唯一のファイル競合を解消
+- Draft PR #9を作成し、隆之介がmainへマージ
 
 ## 6. 重要なプロセス上の教訓
 
@@ -108,29 +112,28 @@ Stage 2: `AIオーケストラ既存設計の監査と責任境界確定`
 
 ## 8. 現在の状態
 
-- Stage 2の予定設計質問は完了。
-- 記憶、信頼・権限、異論・停止、重要変更、代理判断、試用、評価、統合、退役、アーカイブ、引き継ぎの確定事項を正本文書へ統合済み。
-- `AGENT_STANDARD.md`は決定ログと整合する統合版へ更新済み。
+- Stage 2は完了し、PR #9はmainへマージ済み。
+- `AGENT_STANDARD.md`は決定ログと整合する統合版。
 - 正本間の意味監査と代表例による最小検証は完了し、重大な内部矛盾は未検出。
-- mainの後続13コミットを取り込み、ファイル競合1件を解消済み。main側の評価計画・事故記録とStage 2側の確定済みガバナンス設計を両方保持している。
-- `INCIDENT_LOG.md`に残る評価基準の正式承認などの未決定事項は、今回の技術的な競合解消によって承認済みとは扱わない。
-- 残作業は、統合後の最終検証と隆之介によるmainマージ承認。
+- main側の評価計画・事故記録とStage 2側の確定済みガバナンス設計を両方保持している。
+- Stage 3「要求整理・構想具体化エージェント」を開始。
+- `INCIDENT_LOG.md`に残る評価基準の正式承認などの未決定事項は保留のまま。
 
 ## 9. 次の具体的作業
 
-1. Stage 2確定事項が各正本で同じ意味・責任・承認状態になっているか最終監査する。
-2. 新規エージェント1件の代表例へ標準を適用し、矛盾・不足を確認する。
-3. main側の後続変更と衝突する現在地記述を統合する。
-4. 隆之介へ最終差分、残存リスク、マージ可否を報告する。
-5. 隆之介の明示承認後にmainへマージする。
+1. Stage 3エージェントの役割、責任境界、対象・対象外を定義する。
+2. 入力形式、質問手順、要件分解、出力形式を設計する。
+3. Raphaelとの受け渡し・統合方法を定義する。
+4. 完了条件と評価基準を、未承認事項を勝手に確定せず設計する。
+5. 実タスクで検証し、隆之介の承認後にmainへ統合する。
 
 ## 10. 現在の禁止事項
 
 - Stage 2の確定設計を未決定として再質問しない。
-- mainへ自動マージしない。
+- 今回の3文書同期に対する直接main反映許可を、今後の別変更への包括許可として扱わない。
 - 数値閾値や技術詳細を、意味・権限変更を伴う確定設計として勝手に追加しない。
-- branchとmainのどちらか一方を無条件に捨てない。
+- `INCIDENT_LOG.md`の未承認事項をStage 2完了だけで承認済みにしない。
 
 ## 11. 新しいセッションへの開始指示
 
-> `focus-Rlab/ryu-ai-orchestra`の`stage2/agent-governance`を開き、README、PROJECT_HANDOFF、STAGE2_DECISION_LOG、AGENT_STANDARDを読む。Stage 2の設計質問は完了済み。確定事項を再質問せず、正本整合監査、代表例の最小検証、mainとの差分統合準備を進める。mainへのマージは隆之介の明示承認後にのみ行う。
+> `focus-Rlab/ryu-ai-orchestra`の`main`を開き、README、PROJECT_HANDOFF、ROADMAP、AGENT_STANDARD、STAGE2_DECISION_LOGを読む。Stage 2は完了・PR #9はmainへマージ済み。Stage 2の確定事項を再質問せず、Stage 3「要求整理・構想具体化エージェント」の設計を進める。未確定な根本設計と`INCIDENT_LOG.md`の未承認事項は、隆之介へ確認せず確定しない。
