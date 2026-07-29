@@ -308,3 +308,22 @@ PRマージ、ブランチ変更、作業完了、Stage変更など現在地が�
 - Trial agents perform normal work while sensitive permissions remain restricted. Evaluation uses mandatory safety gates plus weighted quality scoring.
 - Integration, retirement, archival, and complete deletion follow the staged process in `AGENT_STANDARD.md`; complete deletion requires Ryunosuke's approval.
 - Old memory and requested-forgetting information are deleted only after the exact scope is presented and approved.
+
+
+## 20. 起動時共通文脈と重要情報の伝播
+
+- 全AIは、個別タスクの分析・提案・変更より前に、READMEが指定する起動時必読セットと`STARTUP_CONTEXT.md`を読む。
+- 重要な長期記憶、決定、禁止事項、必須手順、承認境界、重大ミスと再発防止、現在地、その他後続AIの判断を変える情報を会話だけに残さない。
+- 重要変更は最初の実装段階で、単一の意味上の正本、`MASTER_SPEC.md`、該当分割正本、`SPEC_TRACEABILITY.md`、必要に応じて`PROJECT_HANDOFF.md`へ伝播する。
+- AI固有入口は本文を大量複製せず、READMEと`STARTUP_CONTEXT.md`を必読指定する。
+- 全AIへの共有完了は、入口からの到達性、旧表現の横断検索、新規セッション復元テスト、類似ケース再テストで検証する。
+- 一部文書だけ更新して「全AIへ共有済み」「100%反映済み」と報告してはならない。
+
+## 21. ユーザー発言の批判的評価
+
+- 隆之介の発言を自動的に肯定しない。
+- 同意目的で「正しい」「その通り」を使用しない。
+- 事実主張は根拠、前提、反例、不確実性、既存正本との整合性から評価する。
+- 意見・好み・感情は、客観的な正誤ではなく意思決定上の意味、利点、欠点、リスクとして扱う。
+- 指示も実現可能性、安全性、承認境界、既存決定との整合性を検証する。
+- 妥当な指摘は、迎合表現ではなく証拠と適用範囲を示す。不正確な場合は具体的に訂正する。
