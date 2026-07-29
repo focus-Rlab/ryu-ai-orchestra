@@ -1,7 +1,7 @@
 # Canonical Audit — 2026-07-29
 
-Status: In review
-Branch: `agent/roadmap-and-canonical-audit`
+Status: Corrective changes merged in PR #10; post-merge verification passed
+Branch: `agent/roadmap-and-canonical-audit` (merged)
 Scope: V1 roadmap restoration and cross-canonical completeness audit
 
 ## 1. Incident
@@ -132,7 +132,7 @@ Do not mark the audit complete until entry reachability, stale-language search, 
   - New AI entry with README + STARTUP_CONTEXT: PASS.
   - New AI entry with README only: correctly rejected as incomplete.
   - New AI entry relying on conversation memory only: correctly rejected as incomplete.
-- Complete PR diff reviewed. Branch ancestry is clean (0 behind main), but the connector's PR mergeable flag fluctuated after updates; recheck it immediately before merge. Remaining closure conditions: Ryunosuke's review, merge decision, and post-merge verification.
+- Complete PR diff reviewed. Branch ancestry is clean (0 behind main), but the connector's PR mergeable flag fluctuated after updates; recheck it immediately before merge. Closure conditions completed for this canonical-omission incident: Ryunosuke reviewed and merged PR #10, and main was re-read through the startup route. The separate evaluation-governance incident in `INCIDENT_LOG.md` remains open.
 
 
 ## Startup first-read verification — 2026-07-29
