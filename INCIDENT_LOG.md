@@ -207,3 +207,38 @@ This incident may be marked closed only after:
 5. the authority-model relationship is resolved or explicitly deferred with a documented boundary;
 6. corrective controls are implemented and tested;
 7. Ryunosuke approves the closure record.
+
+
+---
+
+# Incident: paid-service approval gate omitted from initial Week 1 core
+
+Incident date: 2026-07-29  
+Record branch: `agent/v1-week1-general-core`
+
+## Summary
+
+The initial Week 1 implementation treated the 7,000/9,000/10,000 JPY monthly budget thresholds as the primary cost control. It did not separately enforce Ryunosuke's higher-priority rule that any paid, billable, or cost-uncertain service requires prior explicit approval even below the monthly thresholds.
+
+## Root cause
+
+The implementation conflated two different decisions: permission to use a paid service and permission to exceed or approach a monthly budget limit. Cost amount was modeled, but billing-risk classification and a separate `paid_service` approval scope were absent.
+
+## Impact and similar-case audit
+
+Without correction, a request estimated at 1 JPY could execute without prior approval. A zero-estimate service with automatic billing risk or unknown pricing could also pass. README, ROADMAP, NEXT_SESSION_PROMPT, SECURITY, GOVERNANCE, MASTER_SPEC, PROJECT_HANDOFF, and SPEC_TRACEABILITY were audited because stale wording could reproduce the same mistake in another AI session.
+
+## Correction and prevention
+
+- Added `CostKind` with local-free, guaranteed-free, paid-or-billable, and unknown classifications.
+- Added a fail-closed pre-execution `paid_service` approval gate.
+- Kept `budget_override` separate so monthly-limit approval cannot authorize the underlying paid service.
+- Added startup, governance, security, roadmap, handoff, traceability, and session-entry rules.
+- Added success, failure, and similar-case tests for 1 JPY, zero-estimate billable, unknown pricing, budget-only approval, five accepted AI windows, invalid approvers, end-to-end flow, verification failure, and side-effect rollback.
+
+## Verification
+
+`python -m unittest discover -s tests -v`: 12 tests passed.  
+`python -m compileall -q v1_core tests`: passed.
+
+Status: corrective implementation complete in Draft PR #12; main merge remains Ryunosuke's decision.
