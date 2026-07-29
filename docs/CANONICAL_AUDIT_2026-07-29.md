@@ -133,3 +133,31 @@ Do not mark the audit complete until entry reachability, stale-language search, 
   - New AI entry with README only: correctly rejected as incomplete.
   - New AI entry relying on conversation memory only: correctly rejected as incomplete.
 - Complete PR diff reviewed. Branch ancestry is clean (0 behind main), but the connector's PR mergeable flag fluctuated after updates; recheck it immediately before merge. Remaining closure conditions: Ryunosuke's review, merge decision, and post-merge verification.
+
+
+## Startup first-read verification — 2026-07-29
+
+### Finding before correction
+
+The repository had supported automatic entry files, but their instructions generally placed `README.md` before `STARTUP_CONTEXT.md`. Therefore the prior claim that startup context was the first read was not supported. A reference from an auto-loaded entry also did not prove that the referenced file had actually been read.
+
+### Corrective change
+
+- Codex: root `AGENTS.md`
+- Claude Code: root `CLAUDE.md`
+- Gemini-supported environments: root `GEMINI.md`
+- GitHub Copilot: `.github/copilot-instructions.md`
+- GitHub custom Raphael: `.github/agents/raphael.md`
+
+Each supported entry now requires `STARTUP_CONTEXT.md` as the first repository file read, `README.md` second, and prohibits analysis, proposals, or changes before startup-context read confirmation. Manual session prompts and handoff order use the same sequence.
+
+### Guarantee boundary
+
+GitHub cannot force an arbitrary AI or ordinary chat client to load an arbitrary Markdown file. An environment that does not recognize one of the supported reserved entry files is not classified as startup-complete unless its launch prompt explicitly names `STARTUP_CONTEXT.md` first.
+
+### Retest result
+
+- PASS: all five supported automatic entry files name `STARTUP_CONTEXT.md` before `README.md`.
+- PASS: all five prohibit work before startup-context read confirmation.
+- PASS: operating guide, next-session prompt, handoff, README router, and startup contract use startup-first order.
+- PASS: unsupported-entry environments fail the automatic-sharing gate instead of being treated as complete.
