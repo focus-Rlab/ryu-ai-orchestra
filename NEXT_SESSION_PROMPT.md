@@ -3,11 +3,11 @@
 Copy and paste the block below into a new session.
 
 ```text
-GitHubの`focus-Rlab/ryu-ai-orchestra`を開き、`agent/roadmap-and-canonical-audit`を作業ブランチとして扱ってください。
+GitHubの`focus-Rlab/ryu-ai-orchestra`を開き、`agent/v1-week1-general-core`を作業ブランチとして扱ってください。
 
 最初にSTARTUP_CONTEXT.mdを読み、読了を確認してからREADME.md、PROJECT_HANDOFF.md、GOVERNANCE.md、SECURITY.md、ROADMAP.md、STAGE2_DECISION_LOG.md、AGENT_STANDARD.md、MASTER_SPEC.md、SPEC_TRACEABILITY.md、INCIDENT_LOG.md、docs/CANONICAL_AUDIT_2026-07-29.mdを確認してください。
 
-現在はV1 Week 0「正本完全性回復と実行基盤確定」です。Stage 2とPR #9は完了済みですが、会話で確定したV1ロードマップ再編がmainの正本群へ伝播していなかったため、専用ブランチで横断監査・修正しています。
+現在はV1 Week 1「汎用コア最小実装」です。PR #10はmainへマージ済みで、Week 0のマージ後検証も完了しています。Issue #11に従い、分野非依存の実行ループ、予算、承認、検証、改善候補、ロールバックを実装・検証してください。
 
 再質問しない確定事項:
 - 最終目標は自己改善型・分野適応型の汎用オーケストレーターRaphael
@@ -20,10 +20,10 @@ GitHubの`focus-Rlab/ryu-ai-orchestra`を開き、`agent/roadmap-and-canonical-a
 - mainマージは隆之介が行う
 
 次に行うこと:
-1. 監査報告の全項目が実ファイルと一致するか再検証する。
-2. 古いPR、ブランチ、Stage、未決定表記が残っていないか検索する。
-3. V1確定事項が完全版・分割正本・入口・引き継ぎ・対応表で意味一致するか確認する。
+1. Issue #11とWeek 1の完了条件を確認する。
+2. `v1_core/`と`tests/test_v1_core.py`を確認し、模擬案件の状態遷移・承認・予算・ロールバックを検証する。
+3. 分野固有ロジックがコアへ混入していないか監査する。
 4. 未承認の評価基準を勝手に承認済みにしない。
-5. Draft PRの最終差分と残存リスクを隆之介へ報告する。
+5. Draft PRで差分、テスト、残存リスクを隆之介へ報告する。
 6. mainへのマージは行わない。
 ```
