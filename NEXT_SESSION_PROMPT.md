@@ -27,3 +27,8 @@ GitHubの`focus-Rlab/ryu-ai-orchestra`を開き、`agent/roadmap-and-canonical-a
 5. Draft PRの最終差分と残存リスクを隆之介へ報告する。
 6. mainへのマージは行わない。
 ```
+
+
+## Mandatory startup addition
+
+Before any analysis or change, read `README.md`, `STARTUP_CONTEXT.md`, `PROJECT_HANDOFF.md`, `GOVERNANCE.md`, and `SECURITY.md`. Treat Draft PR #10 and branch `agent/roadmap-and-canonical-audit` as the current work state until GitHub confirms otherwise.
