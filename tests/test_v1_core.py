@@ -180,5 +180,38 @@ class OrchestratorTest(unittest.TestCase):
         self.assertEqual(record.state, RunState.ROLLED_BACK)
 
 
+    def test_rollback_handler_failure_does_not_claim_success(self):
+        core = Orchestrator(spent_jpy=100)
+        request = Request(objective="reversible", estimated_cost_jpy=50)
+        approve(core, request, "paid_service")
+        caps = capabilities()
+        caps["undo"] = lambda result: (_ for _ in ()).throw(RuntimeError("undo failed"))
+        record = core.run(request, **caps)
+        core.rollback(request.id)
+        self.assertEqual(record.state, RunState.ROLLBACK_FAILED)
+        self.assertIn("RuntimeError", record.rollback_error)
+        self.assertEqual(core.spent_jpy, 150)
+
+    def test_missing_rollback_handler_does_not_claim_reversal(self):
+        core = Orchestrator()
+        request = Request(objective="produces result")
+        record = core.run(request, **capabilities())
+        with self.assertRaisesRegex(ValueError, "No rollback handler"):
+            core.rollback(request.id)
+        self.assertEqual(record.state, RunState.COMPLETED)
+
+    def test_double_rollback_is_rejected(self):
+        artifacts = []
+        core = Orchestrator()
+        request = Request(objective="reversible")
+        caps = capabilities(artifacts)
+        caps["undo"] = lambda result: artifacts.remove(result)
+        record = core.run(request, **caps)
+        core.rollback(request.id)
+        self.assertEqual(record.state, RunState.ROLLED_BACK)
+        with self.assertRaisesRegex(ValueError, "already completed"):
+            core.rollback(request.id)
+
+
 if __name__ == "__main__":
     unittest.main()

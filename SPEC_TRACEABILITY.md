@@ -40,7 +40,7 @@ Owner: Ryunosuke Matsumoto
 | 権限 | MASTER_SPEC.md / GOVERNANCE.md / agents/raphael.md | 反映済み |
 | 隆之介の役割 | MASTER_SPEC.md / GOVERNANCE.md / USER.md | 反映済み |
 | 成果物保存3段階 | MASTER_SPEC.md / GOVERNANCE.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |
-| PROJECT_HANDOFFを現在地・セッション引き継ぎ正本とする | MASTER_SPEC.md / README.md / GOVERNANCE.md / PROJECT_HANDOFF.md / OPERATING_GUIDE.md / RAPHAEL_HANDOFF_PROTOCOL.md | 反映済み |
+| PROJECT_STATE.jsonを変動する現在地の唯一の正本とする | MASTER_SPEC.md / README.md / GOVERNANCE.md / PROJECT_HANDOFF.md / ROADMAP.md / STARTUP_CONTEXT.md / scripts/check_project_state.py | 作業ブランチで実装・検証中 |
 | 小変更のmain直接コミット例外 | MASTER_SPEC.md / README.md / GOVERNANCE.md / OPERATING_GUIDE.md / agents/raphael.md | 反映済み |
 | 判断に迷う場合のブランチ優先 | MASTER_SPEC.md / README.md / GOVERNANCE.md / OPERATING_GUIDE.md / agents/raphael.md | 反映済み |
 | 小変更の監査理由記録 | MASTER_SPEC.md / README.md / GOVERNANCE.md / OPERATING_GUIDE.md / agents/raphael.md | 反映済み |
@@ -101,7 +101,7 @@ Stage 2の確定設計を追加同期し、決定ログ、Agent Standard、完�
 - 完全版にしか存在しない運用必須事項を放置しない。
 - 分割正本や実行入口にしか存在しない重要事項が見つかった場合、完全版への追記候補として明示する。
 - 矛盾がある場合、独断で統合せず差分と推奨案を報告する。
-- 現在地が変わった場合は、`README.md`、`PROJECT_HANDOFF.md`、`ROADMAP.md`、関係PR説明を同時に確認する。
+- 現在地が変わった場合は`PROJECT_STATE.json`だけを更新し、参照文書への可変値再複製とmain不一致を自動検査する。
 - 重要なStage完了前に、完全版、対応表、分割正本、実行入口、Stage文書群の同期を再確認する。
 
 

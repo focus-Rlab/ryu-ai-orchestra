@@ -153,7 +153,8 @@ Raphaelは作業を担当エージェントへ割り振る。ChatGPT、Claude、
 
 ### 現在状態・セッション引き継ぎ
 
-- `PROJECT_HANDOFF.md`: 新しいセッションが現在地、確定事項、保留事項、作業中PRを復元するための引き継ぎ正本
+- `PROJECT_STATE.json`: 変動する現在地の唯一の正本
+- `PROJECT_HANDOFF.md`: 安定した引き継ぎ規則、確定事項、保留事項
 
 ### 完全版
 
@@ -206,15 +207,7 @@ AI実行入口には正本本文を大量複製せず、READMEと関係正本へ
 
 ### 現在地同期ゲート
 
-PRマージ、ブランチ変更、作業完了、Stage変更など現在地が変わった直後に、少なくとも次を確認・同期する。
-
-- `README.md`
-- `PROJECT_HANDOFF.md`
-- `ROADMAP.md`
-- 関係するPR説明
-- 必要に応じて`STAGE*_STATUS.md`
-
-現在地同期が終わるまで、後続作業を「完全に開始済み」と扱わない。
+現在地変更直後は`PROJECT_STATE.json`だけを`scripts/sync_project_state.py`で更新し、`scripts/check_project_state.py`で可変状態の再複製、必須項目欠落、明示入力されたmain HEAD・merged PRとの不一致を検出する。GitHub未接続時はローカル整合だけを保証し、main一致を保証しない。同期と検査まで後続作業を完全開始済みと扱わない。
 
 ## 13. ブランチ運用
 

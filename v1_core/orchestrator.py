@@ -130,14 +130,31 @@ class Orchestrator:
 
     def rollback(self, request_id: str) -> RunRecord:
         record = self.runs[request_id]
+        if record.state in {RunState.ROLLED_BACK, RunState.ROLLING_BACK}:
+            raise ValueError("Rollback already completed or in progress")
         if record.rollback_snapshot is None:
             raise ValueError("No rollback snapshot exists")
         handler = self._rollback_handlers.get(request_id)
-        if handler is not None and record.result is not None:
-            record.rollback_result = handler(record.result)
+        if record.result is not None and handler is None:
+            raise ValueError("No rollback handler registered for produced result")
+
+        record.transition(RunState.ROLLING_BACK, "Registered rollback started")
+        try:
+            if handler is not None:
+                record.rollback_result = handler(record.result)
+        except Exception as exc:
+            record.rollback_error = repr(exc)
+            record.transition(
+                RunState.ROLLBACK_FAILED,
+                "Rollback handler failed; no success claim or budget restoration",
+            )
+            return record
+
+        # Only simulated/reserved budget state is restored. Real external charges
+        # are irreversible and must remain accounted for outside this V1 value.
         self.spent_jpy = int(record.rollback_snapshot["spent_jpy"])
         record.transition(
             RunState.ROLLED_BACK,
-            "Registered side effects reversed and budget state restored",
+            "Registered side effects reversed and simulated budget state restored",
         )
         return record

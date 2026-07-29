@@ -4,12 +4,7 @@ Version: 0.9.0-draft
 
 ## 現在地
 
-- 段階: V1 Week 2 — Softwareドメインパックと自己改善案件
-- 状態: PR #12のmainマージ後検証を完了し、Issue #13でSoftwareドメインパックを実装中
-- main基盤: Stage 0〜Stage 2、V1 Week 0〜Week 1およびPR #1〜#12を統合済み
-- 現在の作業先: `agent/v1-week2-software-domain`
-- 最終目標: 自己改善型・分野適応型の汎用オーケストレーターRaphael
-- 初期検証領域: ソフトウェア／アプリ開発。最終目的ではなく、YouTube・小説・事業・学習等への転用性を検証する最初の領域
+変動する現在地は`PROJECT_STATE.json`を参照する。本書はStage/Weekの目的、順序、成果物、完了条件だけを正本とし、active PR・Issue・branch・main SHA・次の一手を保持しない。
 
 ## 確定したV1設計原則
 
@@ -111,7 +106,7 @@ Status: 完了（PR #12マージ、main上のマージ後検証済み）
 
 ### Week 2: Softwareドメインパックと自己改善案件
 
-Status: 実装中（Issue #13、`agent/v1-week2-software-domain`）
+Status: 完了（PR #14マージ、main上のマージ後検証済み）
 
 目的: software分野の能力・ツール・評価を汎用コアから分離し、Raphael自身のコード・設計改善を最初の実案件として通す。
 
@@ -131,7 +126,7 @@ Status: 実装中（Issue #13、`agent/v1-week2-software-domain`）
 
 ### Week 3: 小規模新規アプリによる転用性検証
 
-Status: Week 2完了後
+Status: 現在の実行状態は`PROJECT_STATE.json`を参照
 
 目的: 既存自己改善だけでなく、新規案件をゼロから完了できるか検証する。
 

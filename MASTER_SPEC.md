@@ -616,3 +616,11 @@ Week 0で正本完全性を回復し、Week 1で汎用コア、Week 2でSoftware
 - API月額上限10,000円と7,000円・9,000円・10,000円ゲートは承認後の二次制限であり、`budget_override`は`paid_service`承認を代替しない。
 - 正式承認者は隆之介本人のみ。ChatGPT、Gemini、Claude、Codex、Claude Codeは承認窓口であって承認主体ではない。
 - 不明な場合は有料・課金可能として停止する、fail-closedを適用する。
+
+
+## 26. 現在地の単一正本と検証
+
+- 変動する現在地は`PROJECT_STATE.json`だけを正本とする。
+- READMEは唯一の入口、PROJECT_HANDOFFは安定した引き継ぎ、ROADMAPは段階定義を保持し、可変状態を複製しない。
+- マージ後はmain HEADとmerged PRを確認し、同期スクリプトへ明示入力する。GitHub未接続時にmain一致を推測しない。
+- 実支出はロールバックで消えない。V1の予算復元は模擬・予約状態に限り、復元失敗、handler未登録、二重実行を成功扱いしない。

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "phase": "V1 Week 3",
+  "status": "reliability_fixes_before_week3_implementation",
+  "latest_merged_pr": 14,
+  "verified_main_commit": "526384c",
+  "active_issue": 16,
+  "active_branch": "agent/v1-governance-reliability-fixes",
+  "paused_issue": 15,
+  "next_action": "Review and merge the reliability fixes, then resume AI development request tracker requirements",
+  "verified_at": "2026-07-29",
+  "evidence": "GitHub connector: PR #14 merged and main files inspected"
+}
