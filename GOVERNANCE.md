@@ -296,3 +296,15 @@ PRマージ、ブランチ変更、作業完了、Stage変更など現在地が�
 ## 18. セキュリティ
 
 `SECURITY.md`を全エージェント、全成果物、全外部アクセスに適用する。安全性が確認できない場合はアクセス、実行、導入、公開を停止し報告する。
+
+
+## 19. Stage 2 trust, stop, and lifecycle governance
+
+- Initial authority is human-controlled and expands only by explicit, operation-specific delegation.
+- Trust is evaluated per capability and domain, not as one universal agent score.
+- Important changes are classified by external impact, sensitive access, core governance, recoverability, breadth, long-term goals, budget, and judgment criteria.
+- Very-high-trust automation remains bounded by Ryunosuke-approved targets, limits, and conditions and suspends on anomalies.
+- Every incident severity receives root-cause analysis. Emergency stopping is allowed without prior approval; further action follows normal approval rules.
+- Trial agents perform normal work while sensitive permissions remain restricted. Evaluation uses mandatory safety gates plus weighted quality scoring.
+- Integration, retirement, archival, and complete deletion follow the staged process in `AGENT_STANDARD.md`; complete deletion requires Ryunosuke's approval.
+- Old memory and requested-forgetting information are deleted only after the exact scope is presented and approved.
