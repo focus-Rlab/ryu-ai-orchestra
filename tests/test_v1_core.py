@@ -40,7 +40,7 @@ class OrchestratorTest(unittest.TestCase):
         self.assertEqual(record.agent, "worker-agent")
         self.assertEqual(core.spent_jpy, 10)
 
-    def test_budget_stop_requires_chatgpt_approval(self):
+    def test_budget_stop_requires_ryunosuke_approval(self):
         core = Orchestrator(spent_jpy=9_500)
         request = Request(objective="expensive task", estimated_cost_jpy=500)
         blocked = core.run(request, **capabilities())
@@ -79,7 +79,26 @@ class OrchestratorTest(unittest.TestCase):
             record.verification["budget_decision"], "restrict_high_performance"
         )
 
-    def test_other_channel_is_not_formal_approval(self):
+    def test_each_supported_ai_channel_accepts_ryunosuke_approval(self):
+        for channel in ("chatgpt", "gemini", "claude", "codex", "claude code"):
+            with self.subTest(channel=channel):
+                core = Orchestrator()
+                request = Request(
+                    objective="protected task", requires_approval=True
+                )
+                core.record_approval(
+                    ApprovalRecord(
+                        request_id=request.id,
+                        channel=channel,
+                        approved=True,
+                        approver="Ryunosuke Matsumoto",
+                        scope="execution",
+                    )
+                )
+                record = core.run(request, **capabilities())
+                self.assertEqual(record.state, RunState.COMPLETED)
+
+    def test_unaccepted_channel_is_not_formal_approval(self):
         core = Orchestrator()
         request = Request(objective="protected task", requires_approval=True)
         core.record_approval(
@@ -87,12 +106,31 @@ class OrchestratorTest(unittest.TestCase):
                 request_id=request.id,
                 channel="github",
                 approved=True,
-                approver="focus-Rlab",
+                approver="Ryunosuke Matsumoto",
                 scope="execution",
             )
         )
         record = core.run(request, **capabilities())
         self.assertEqual(record.state, RunState.BLOCKED)
+
+    def test_ai_or_other_person_cannot_approve_for_ryunosuke(self):
+        for approver in ("Claude", "Raphael", "focus-RLab"):
+            with self.subTest(approver=approver):
+                core = Orchestrator()
+                request = Request(
+                    objective="protected task", requires_approval=True
+                )
+                core.record_approval(
+                    ApprovalRecord(
+                        request_id=request.id,
+                        channel="claude",
+                        approved=True,
+                        approver=approver,
+                        scope="execution",
+                    )
+                )
+                record = core.run(request, **capabilities())
+                self.assertEqual(record.state, RunState.BLOCKED)
 
     def test_failed_verification_records_improvement(self):
         core = Orchestrator()
