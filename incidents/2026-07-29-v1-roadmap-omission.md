@@ -42,3 +42,10 @@ The canonical repository is designed to replace fragile conversation memory. If 
 3. No stale active reference to merged branches/PRs remains.
 4. Every V1 decision has traceable canonical destinations.
 5. The user reviews the Draft PR and performs the main merge.
+
+
+## Follow-up control: startup context propagation
+
+Ryunosuke required all important long-term memory, decisions, prohibitions, required procedures, and other share-worthy information to reach every AI at the start of work. The repository now uses `STARTUP_CONTEXT.md` as the shared startup contract, referenced by all supported AI entry files.
+
+The incident remains open until the startup recovery tests, similar-case retest, full diff review, and Ryunosuke's closure approval are complete.
