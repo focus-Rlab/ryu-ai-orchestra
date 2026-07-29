@@ -6,11 +6,11 @@
 
 - Version: 0.8.0-draft
 - Stage: Stage 2「AIオーケストラ既存設計の監査と責任境界確定」
-- Status: PR #5マージ後の横断再監査・同期漏れ修正を完了し、Draft PR #6の承認待ち
+- Status: Stage 2の設計質問・正本同期・代表検証を完了し、Draft PR #9でmain後続変更との統合を確認中
 - 現在の中核エージェント: Raphael
 - 運用方式: GitHub正本・人間承認型の段階的オーケストレーション
-- 完了済み: PR #5をmainへマージ
-- 作業中: Draft PR #6 / `stage2/post-merge-audit-fix`
+- 完了済み: PR #5〜#8をmainへマージ
+- 作業中: Draft PR #9 / `stage2/agent-governance`
 
 ## Raphaelの確定した位置づけ
 
@@ -94,6 +94,7 @@ Raphaelは秘書専用AIではない。AIオーケストラ全体を統括する
 - `STAGE1_REVIEW_BRIEF.md`: 独立レビューの履歴入口
 - `STAGE1_REVIEW_RESOLUTION.md`: レビュー指摘と対応記録
 - `STAGE1_STATUS.md`: Stage 1完了状態
+- `STAGE2_VALIDATION.md`: Stage 2標準の代表適用・整合確認
 
 ### AI自動読込・実行入口
 
@@ -114,6 +115,12 @@ AI専用入口は正本本文の複製元ではなく、このREADMEと関係正
 - 旧Stage 2「要求整理・構想具体化エージェント」: Stage 3へ移動
 - Stage 3の専門エージェント設計主体: Raphael
 - PR #5: mainへマージ済み
-- PR #6: 横断再監査・同期漏れ修正のDraft PR。承認待ち
+- PR #6: 過去の横断再監査・同期漏れ修正。main側の現在状態を基準に扱う
+- PR #7: incident logをmainへ統合済み
+- PR #8: Stage 2決定ログの一部をmainへ統合済み
+- 現在のStage 2作業ブランチ: `stage2/agent-governance`
+- Stage 2設計質問: 完了
+- 現在作業: 正本同期・代表例確認済み。mainとの差分統合確認と隆之介レビュー
+- mainへのマージ: 隆之介の明示承認待ち
 
 詳細は`ROADMAP.md`と`PROJECT_HANDOFF.md`を参照する。
