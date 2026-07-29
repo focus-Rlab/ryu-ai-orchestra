@@ -102,3 +102,22 @@ A roadmap or Stage/Week change is complete only when:
 - V1 roadmap and primary canonical propagation completed on this branch.
 - Known stale-state findings corrected.
 - Final branch-to-main diff and fresh-session reconstruction still require final verification before the Draft PR is considered ready.
+
+
+## Additional audit: mandatory startup sharing
+
+### Gap
+
+The repository had an entry router, but no single startup contract that classified long-term memory, decisions, prohibitions, required procedures, approval boundaries, incidents, and other information that changes downstream AI judgment. Model-specific entry files could therefore reach only part of the required context.
+
+### Remediation
+
+- Added `STARTUP_CONTEXT.md`.
+- Routed README, AGENTS, Claude, Gemini, Copilot, and GitHub Raphael through it.
+- Synchronized USER, GOVERNANCE, OPERATING_GUIDE, MASTER_SPEC, SPEC_TRACEABILITY, and PROJECT_HANDOFF.
+- Added the rule that Ryunosuke's claims and instructions are evaluated critically rather than automatically affirmed.
+- Corrected OPERATING_GUIDE's stale Stage 2 state to V1 Week 0 / PR #10 audit state.
+
+### Closure gate
+
+Do not mark the audit complete until entry reachability, stale-language search, fresh-session recovery, a similar-but-not-identical case, PR diff, and mergeability have been checked.
