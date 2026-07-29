@@ -58,6 +58,27 @@ class OrchestratorTest(unittest.TestCase):
         completed = core.run(request, **capabilities())
         self.assertEqual(completed.state, RunState.COMPLETED)
 
+    def test_warning_is_recorded_without_blocking(self):
+        core = Orchestrator(spent_jpy=6_900)
+        request = Request(objective="warning task", estimated_cost_jpy=100)
+        record = core.run(request, **capabilities())
+        self.assertEqual(record.state, RunState.COMPLETED)
+        self.assertEqual(record.verification["budget_decision"], "warn")
+
+    def test_high_performance_environment_is_restricted_at_9000(self):
+        core = Orchestrator(spent_jpy=8_900)
+        request = Request(objective="restricted task", estimated_cost_jpy=100)
+        caps = capabilities()
+        caps["select"] = lambda understood, plan: (
+            "worker-agent",
+            "high-performance",
+        )
+        record = core.run(request, **caps)
+        self.assertEqual(record.state, RunState.BLOCKED)
+        self.assertEqual(
+            record.verification["budget_decision"], "restrict_high_performance"
+        )
+
     def test_other_channel_is_not_formal_approval(self):
         core = Orchestrator()
         request = Request(objective="protected task", requires_approval=True)
