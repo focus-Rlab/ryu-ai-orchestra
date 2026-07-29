@@ -101,7 +101,7 @@ A roadmap or Stage/Week change is complete only when:
 - Main not modified.
 - V1 roadmap and primary canonical propagation completed on this branch.
 - Known stale-state findings corrected.
-- Final branch-to-main diff reviewed; fresh-session reconstruction and similar-case retest passed; GitHub reports the Draft PR mergeable.
+- Final branch-to-main diff reviewed; fresh-session reconstruction and similar-case retest passed. Compare reports the branch 0 behind main with main as merge base. The PR mergeable flag returned both true and false across successive connector reads after updates, so mergeability must be rechecked immediately before merge.
 
 
 ## Additional audit: mandatory startup sharing
@@ -132,4 +132,4 @@ Do not mark the audit complete until entry reachability, stale-language search, 
   - New AI entry with README + STARTUP_CONTEXT: PASS.
   - New AI entry with README only: correctly rejected as incomplete.
   - New AI entry relying on conversation memory only: correctly rejected as incomplete.
-- Complete PR diff reviewed and GitHub mergeability confirmed. Remaining closure conditions: Ryunosuke's review, merge decision, and post-merge verification.
+- Complete PR diff reviewed. Branch ancestry is clean (0 behind main), but the connector's PR mergeable flag fluctuated after updates; recheck it immediately before merge. Remaining closure conditions: Ryunosuke's review, merge decision, and post-merge verification.
