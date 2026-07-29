@@ -59,6 +59,10 @@ Owner: Ryunosuke Matsumoto
 | Copilot共通指示 | .github/copilot-instructions.md / README.md | 反映済み |
 | GitHub custom Raphael | .github/agents/raphael.md / agents/raphael.md | 反映済み |
 
+| Stage 2記憶ガバナンス | STAGE2_DECISION_LOG.md M-06〜M-09 / AGENT_STANDARD.md §§11,14 / GOVERNANCE.md §19 / MASTER_SPEC.md §23 | 反映済み |
+| 信頼・代理判断・重要変更・緊急停止 | STAGE2_DECISION_LOG.md T-03,C-04,I-04,D-03 / AGENT_STANDARD.md §12 / GOVERNANCE.md §19 / MASTER_SPEC.md §23 | 反映済み |
+| 試用・評価・統合・退役・引き継ぎ | STAGE2_DECISION_LOG.md T-04〜T-08 / AGENT_STANDARD.md §13 / agents/raphael.md / MASTER_SPEC.md §23 | 反映済み |
+
 ## 今回の横断監査結果
 
 接続が途切れた可能性が高い会話区間まで遡り、PR #5変更対象、主要正本、Stage 1設計・引き継ぎ・評価文書を再監査した。
@@ -75,7 +79,7 @@ Owner: Ryunosuke Matsumoto
 - PRマージ後の現在地同期ゲート不足
 - 接続障害・現在地同期・実行優先の評価テスト不足
 
-現在の監査範囲では、未解決の重大な意味矛盾または同期漏れは確認されていない。
+Stage 2の確定設計を追加同期し、決定ログ、Agent Standard、完全版、ガバナンス、Raphael仕様の意味対応を確認した。
 
 残存事項:
 
