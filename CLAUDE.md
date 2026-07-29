@@ -3,6 +3,7 @@
 Claude CodeおよびClaudeのリポジトリ作業では、最初に`README.md`と`STARTUP_CONTEXT.md`を読み、その読込ルーターに従う。
 
 @README.md
+@STARTUP_CONTEXT.md
 @GOVERNANCE.md
 @SECURITY.md
 
@@ -16,5 +17,3 @@ Claude CodeおよびClaudeのリポジトリ作業では、最初に`README.md`�
 - 作業終了時に、変更、根拠、テスト、未解決事項、承認待ちを報告する。
 
 詳細は`OPERATING_GUIDE.md`を参照する。
-
-- `STARTUP_CONTEXT.md`を起動時必読として扱う。
