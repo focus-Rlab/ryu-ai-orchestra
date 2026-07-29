@@ -6,11 +6,11 @@
 
 - Version: 0.8.0-draft
 - Stage: Stage 2「AIオーケストラ既存設計の監査と責任境界確定」
-- Status: PR #5マージ後の横断再監査・同期漏れ修正を完了し、Draft PR #6の承認待ち
+- Status: Stage 2の設計質問・正本同期・代表検証を完了し、Draft PR #9でmain後続変更との統合を確認中
 - 現在の中核エージェント: Raphael
 - 運用方式: GitHub正本・人間承認型の段階的オーケストレーション
-- 完了済み: PR #5をmainへマージ
-- 作業中: Draft PR #6 / `stage2/post-merge-audit-fix`
+- 完了済み: PR #5〜#8をmainへマージ
+- 作業中: Draft PR #9 / `stage2/agent-governance`
 
 ## Raphaelの確定した位置づけ
 

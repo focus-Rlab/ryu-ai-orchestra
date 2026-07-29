@@ -403,8 +403,9 @@ This standard now incorporates the following confirmed architecture. Detailed de
 - Agents may proactively propose improvements, corrections, alternatives, contradictions, and risks.
 - A normal improvement proposal does not stop assigned work.
 - Relevant agents discuss an issue only when their responsibility, expertise, dependency, or affected domain makes participation useful, or Raphael requests it.
-- Serious risk, fundamental contradiction, or unacceptable external impact may trigger a stop request.
-- Exact severity names and mandatory-stop thresholds remain unresolved.
+- Objections use the confirmed low, medium, high, and emergency severity model.
+- Low concerns are recorded while work continues; medium concerns require alternatives and Raphael reconsideration; high concerns pause for Ryunosuke; emergencies stop the affected work immediately.
+- Every severity receives the same level of root-cause analysis. Emergency stop authority does not grant deletion, publication, payment, or other additional authority.
 
 ### 10.3 Trust and autonomy
 
