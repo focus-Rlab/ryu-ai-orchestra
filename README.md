@@ -114,6 +114,12 @@ AI専用入口は正本本文の複製元ではなく、このREADMEと関係正
 - 旧Stage 2「要求整理・構想具体化エージェント」: Stage 3へ移動
 - Stage 3の専門エージェント設計主体: Raphael
 - PR #5: mainへマージ済み
-- PR #6: 横断再監査・同期漏れ修正のDraft PR。承認待ち
+- PR #6: 過去の横断再監査・同期漏れ修正。main側の現在状態を基準に扱う
+- PR #7: incident logをmainへ統合済み
+- PR #8: Stage 2決定ログの一部をmainへ統合済み
+- 現在のStage 2作業ブランチ: `stage2/agent-governance`
+- Stage 2設計質問: 完了
+- 現在作業: 正本同期、整合監査、代表例確認、main統合準備
+- mainへのマージ: 隆之介の明示承認待ち
 
 詳細は`ROADMAP.md`と`PROJECT_HANDOFF.md`を参照する。
