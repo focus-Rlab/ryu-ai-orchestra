@@ -22,7 +22,9 @@ class RunState(str, Enum):
     RECORDED = "recorded"
     COMPLETED = "completed"
     FAILED = "failed"
+    ROLLING_BACK = "rolling_back"
     ROLLED_BACK = "rolled_back"
+    ROLLBACK_FAILED = "rollback_failed"
 
 
 class BudgetDecision(str, Enum):
@@ -80,6 +82,7 @@ class RunRecord:
     history: list[dict[str, str]] = field(default_factory=list)
     rollback_snapshot: dict[str, Any] | None = None
     rollback_result: Any = None
+    rollback_error: str | None = None
 
     def transition(self, state: RunState, note: str) -> None:
         self.state = state
