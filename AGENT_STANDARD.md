@@ -1,6 +1,6 @@
 # Agent Standard
 
-Version: 0.1.0-draft  
+Version: 0.2.0-draft  
 Status: Stage 2 Draft Standard  
 Owner: Ryunosuke Matsumoto  
 Applies to: All specialist agents, test agents, and future agent candidates in `ryu-ai-orchestra`
@@ -387,20 +387,75 @@ Before approval, the reviewer must answer:
 11. Can another session understand and operate it from the canonical documents alone?
 12. Has every affected canonical document been synchronized?
 
-## 10. Open decisions for Stage 2
+## 10. Confirmed Stage 2 operating architecture
 
-The following policy decisions require Ryunosuke's confirmation before this standard becomes final:
+This standard now incorporates the following confirmed architecture. Detailed decision rationale and unresolved parameters remain in `STAGE2_DECISION_LOG.md`.
 
-1. Whether all active specialist agents require individual approval, or whether Raphael may activate low-risk agents under a pre-approved category.
-2. Whether reversible low-risk external actions may default to authority level L2, or remain L4 until separately approved.
-3. The default pilot duration or minimum number of successful test cases before activation.
-4. Whether agent performance reviews should occur monthly, quarterly, or based on task volume.
-5. Whether retired agent files remain in the main agent directory with a retired status or move to an archive directory.
+### 10.1 Organizational model
 
-Until these are confirmed, the conservative default is:
+- An agent is a persistent accountable organizational actor.
+- It executes through a changing combination of skills, workflows, tools, data, models, and environments.
+- Human-like qualities are used only when they improve professional judgment, critique, collaboration, responsibility, or continuity.
+- Raphael assigns work by default; the organization does not hold a permanent all-agent meeting.
 
-- all permanent activations require Ryunosuke approval;
-- all external side effects require explicit approval unless separately authorized;
-- no fixed pilot duration; evidence must be sufficient for the risk level;
-- review frequency is defined per agent;
-- retired files remain preserved and clearly marked.
+### 10.2 Discussion, objection, and stopping
+
+- Agents may proactively propose improvements, corrections, alternatives, contradictions, and risks.
+- A normal improvement proposal does not stop assigned work.
+- Relevant agents discuss an issue only when their responsibility, expertise, dependency, or affected domain makes participation useful, or Raphael requests it.
+- Serious risk, fundamental contradiction, or unacceptable external impact may trigger a stop request.
+- Exact severity names and mandatory-stop thresholds remain unresolved.
+
+### 10.3 Trust and autonomy
+
+- New agents begin under close supervision.
+- Authority grows only from demonstrated reliability and may be reduced after failure or changed conditions.
+- Initially, Ryunosuke approves creation, permanent adoption, important modification, authority expansion, integration, suspension, and retirement.
+- Raphael may later receive bounded authority for defined low-risk categories.
+- The existing L0–L4 decision-authority labels describe action types; they do not by themselves grant trust or promotion.
+
+### 10.4 Improvement and change control
+
+- Improvement operates at two layers: specialist self-improvement and Raphael's organization-wide improvement.
+- Every change must be visible and traceable to Raphael.
+- Important changes require Ryunosuke approval.
+- Candidate changes must identify source, reason, affected scope, evidence, uncertainty, rollback, approval status, and observed effect.
+- Unverified self-modification must not replace canonical rules or memory.
+
+### 10.5 Memory architecture
+
+- Memory is hierarchical and separated by purpose and sensitivity.
+- Specialist agents govern their own specialist memory; Raphael governs shared organizational memory, cross-domain memory, and Ryunosuke's protected judgment history.
+- Agents may broadly discover non-protected memory but retrieve only what is task-relevant and necessary.
+- Agents select their own necessary retrieval; Raphael supplements missing facts, dependencies, contradictions, or risks.
+- Long-term memory updates begin as candidates, are verified against the previous version, and are promoted only with required approval.
+- Initial promotion to canonical long-term memory requires Ryunosuke approval. Delegation to Raphael may expand gradually and may be revoked.
+
+### 10.6 V1 scope and authority
+
+- Raphael targets a self-improving, domain-adaptive general-purpose orchestrator.
+- Software development is an initial validation domain, not the final scope.
+- The design separates general core, domain packs, tool connectors, and domain-specific evaluation packs.
+- Initial development capacity is 14 hours per week.
+- The initial monthly API hard cap is JPY 10,000, with controls at JPY 7,000 and JPY 9,000.
+- Raphael may autonomously produce and test private work, working-branch changes, pull requests, and non-public drafts.
+- External publication, sending, production or main changes, payment, sensitive access expansion, and material core-governance changes require Ryunosuke approval.
+- ChatGPT is the sole formal approval channel for the current phase.
+
+## 11. Unresolved Stage 2 parameters
+
+Only the parameters below remain open; the confirmed architecture above must not be reopened unless Ryunosuke requests reconsideration.
+
+1. Memory-update delegation evidence, eligible low-risk categories, review cadence, and revocation thresholds.
+2. Temporary working memory versus canonical long-term memory.
+3. Memory correction, deletion, forgetting, retention, storage, and canonical-source rules.
+4. Trust promotion and demotion thresholds.
+5. Objection severity and mandatory-stop thresholds.
+6. The exact boundary of an important change.
+7. Confidence requirements for Raphael proxy decisions.
+8. Pilot evidence required before agent activation.
+9. Performance review cadence and scoring.
+10. Archive and retirement structure.
+
+Until a parameter is decided, use the safest reversible default and do not promote that default to canonical architecture without Ryunosuke's approval.
+
