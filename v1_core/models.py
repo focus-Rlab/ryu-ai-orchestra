@@ -32,12 +32,20 @@ class BudgetDecision(str, Enum):
     STOP_FOR_APPROVAL = "stop_for_approval"
 
 
+class CostKind(str, Enum):
+    LOCAL_FREE = "local_free"
+    GUARANTEED_FREE = "guaranteed_free"
+    PAID_OR_BILLABLE = "paid_or_billable"
+    UNKNOWN = "unknown"
+
+
 @dataclass(frozen=True)
 class Request:
     objective: str
     constraints: tuple[str, ...] = ()
     domain: str | None = None
     estimated_cost_jpy: int = 0
+    cost_kind: CostKind = CostKind.LOCAL_FREE
     requires_approval: bool = False
     id: str = field(default_factory=lambda: str(uuid4()))
 
@@ -71,6 +79,7 @@ class RunRecord:
     improvements: list[ImprovementCandidate] = field(default_factory=list)
     history: list[dict[str, str]] = field(default_factory=list)
     rollback_snapshot: dict[str, Any] | None = None
+    rollback_result: Any = None
 
     def transition(self, state: RunState, note: str) -> None:
         self.state = state
