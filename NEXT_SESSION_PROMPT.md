@@ -5,7 +5,7 @@ Copy and paste the block below into a new session.
 ```text
 GitHubの`focus-Rlab/ryu-ai-orchestra`を開き、`agent/roadmap-and-canonical-audit`を作業ブランチとして扱ってください。
 
-最初にREADME.md、PROJECT_HANDOFF.md、ROADMAP.md、STAGE2_DECISION_LOG.md、AGENT_STANDARD.md、MASTER_SPEC.md、SPEC_TRACEABILITY.md、INCIDENT_LOG.md、docs/CANONICAL_AUDIT_2026-07-29.mdを確認してください。
+最初にREADME.md、STARTUP_CONTEXT.md、PROJECT_HANDOFF.md、GOVERNANCE.md、SECURITY.md、ROADMAP.md、STAGE2_DECISION_LOG.md、AGENT_STANDARD.md、MASTER_SPEC.md、SPEC_TRACEABILITY.md、INCIDENT_LOG.md、docs/CANONICAL_AUDIT_2026-07-29.mdを確認してください。
 
 現在はV1 Week 0「正本完全性回復と実行基盤確定」です。Stage 2とPR #9は完了済みですが、会話で確定したV1ロードマップ再編がmainの正本群へ伝播していなかったため、専用ブランチで横断監査・修正しています。
 
@@ -27,8 +27,3 @@ GitHubの`focus-Rlab/ryu-ai-orchestra`を開き、`agent/roadmap-and-canonical-a
 5. Draft PRの最終差分と残存リスクを隆之介へ報告する。
 6. mainへのマージは行わない。
 ```
-
-
-## Mandatory startup addition
-
-Before any analysis or change, read `README.md`, `STARTUP_CONTEXT.md`, `PROJECT_HANDOFF.md`, `GOVERNANCE.md`, and `SECURITY.md`. Treat Draft PR #10 and branch `agent/roadmap-and-canonical-audit` as the current work state until GitHub confirms otherwise.
