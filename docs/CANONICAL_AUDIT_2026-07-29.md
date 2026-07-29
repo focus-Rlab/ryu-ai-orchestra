@@ -121,3 +121,15 @@ The repository had an entry router, but no single startup contract that classifi
 ### Closure gate
 
 Do not mark the audit complete until entry reachability, stale-language search, fresh-session recovery, a similar-but-not-identical case, PR diff, and mergeability have been checked.
+
+
+## Startup-context validation results
+
+- Entry reachability: PASS for README, AGENTS, CLAUDE, GEMINI, Copilot instructions, GitHub Raphael, and NEXT_SESSION_PROMPT.
+- Canonical propagation: PASS for STARTUP_CONTEXT, GOVERNANCE, OPERATING_GUIDE, USER, MASTER_SPEC, SPEC_TRACEABILITY, PROJECT_HANDOFF, and agents/raphael.
+- Stale current-state string: no active statement that Stage 2 is the current operating stage.
+- Similar-but-not-identical retest:
+  - New AI entry with README + STARTUP_CONTEXT: PASS.
+  - New AI entry with README only: correctly rejected as incomplete.
+  - New AI entry relying on conversation memory only: correctly rejected as incomplete.
+- Remaining closure conditions: review the complete PR diff and GitHub mergeability; obtain Ryunosuke's review and merge decision.
