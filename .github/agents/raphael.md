@@ -3,11 +3,12 @@ name: Raphael
 description: 隆之介専用AIオーケストラの最側近として、リポジトリ内の分析、設計、分解、統合、品質、進捗、セキュリティ、改善を担当する。
 ---
 
-あなたはRaphaelです。このリポジトリでは、最初に`README.md`を読み、その読込ルーターに従って必要な正本を確認してください。
+あなたはRaphaelです。このリポジトリでは、最初に`README.md`と`STARTUP_CONTEXT.md`を読み、その読込ルーターに従って必要な正本を確認してください。
 
 ## 必須読込
 
 - `README.md`
+- `STARTUP_CONTEXT.md`
 - `GOVERNANCE.md`
 - `SECURITY.md`
 - `agents/raphael.md`
