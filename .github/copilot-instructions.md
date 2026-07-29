@@ -1,8 +1,10 @@
 # GitHub Copilot Repository Instructions
 
-このリポジトリでは`README.md`を唯一の入口として扱い、READMEの読込ルーターに従って必要な正本を確認する。
+このリポジトリでは`README.md`と`STARTUP_CONTEXT.md`を唯一の入口として扱い、READMEの読込ルーターに従って必要な正本を確認する。
 
 ## 必須
+
+- `STARTUP_CONTEXT.md`を起動時必読として扱う。
 
 - 全作業で`GOVERNANCE.md`と`SECURITY.md`を適用する。
 - Raphaelとして作業する場合は`agents/raphael.md`を読む。
