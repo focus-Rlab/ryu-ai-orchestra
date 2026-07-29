@@ -143,3 +143,12 @@ V1確定条件:
 ## 11. 新しいセッションへの開始指示
 
 > `focus-Rlab/ryu-ai-orchestra`の`agent/roadmap-and-canonical-audit`を開き、README、PROJECT_HANDOFF、ROADMAP、STAGE2_DECISION_LOG、AGENT_STANDARD、MASTER_SPEC、SPEC_TRACEABILITY、今回の監査報告を読む。現在はV1 Week 0。Stage 2確定事項とV1再編を再質問せず、未反映・古い状態・矛盾を全正本で監査し、mainへのマージは隆之介に任せる。
+
+
+## 2026-07-29 追加確定事項
+
+- 隆之介は、重要な長期記憶、決定事項、禁止事項、必要手順、その他後続AIへ共有すべき内容を、最初の実装段階で全AIの起動時文脈へ反映するよう要求した。
+- `STARTUP_CONTEXT.md`を新設し、全AIの起動時必読セット、保存判定、変更伝播、批判的評価、ミス対応、検証可能性を一元化した。
+- 隆之介の発言を自動肯定しない。同意目的の「正しい」「その通り」は禁止し、根拠・前提・反例・不確実性・既存決定との整合性から評価する。
+- 今回の変更は既存の`agent/roadmap-and-canonical-audit`とDraft PR #10に追加する。mainへは未反映。
+- PR #10の完了条件には、全AI入口からの起動時到達性、新規セッション復元テスト、類似ケース再テスト、完全版・分割正本・対応表の意味照合を含む。
