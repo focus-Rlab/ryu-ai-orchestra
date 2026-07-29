@@ -52,6 +52,7 @@ Owner: Ryunosuke Matsumoto
 | V1汎用オーケストレーター方向 | STAGE2_DECISION_LOG.md V-01 / MASTER_SPEC.md §24 / VISION.md / ROADMAP.md / README.md / PROJECT_HANDOFF.md | 反映済み |
 | V1資源・費用ゲート・初期案件 | STAGE2_DECISION_LOG.md V-02 / MASTER_SPEC.md §24 / ROADMAP.md / README.md / PROJECT_HANDOFF.md | 反映済み |
 | V1承認境界・ChatGPT承認 | STAGE2_DECISION_LOG.md V-03〜V-04 / MASTER_SPEC.md §24 / GOVERNANCE.md / ROADMAP.md / README.md | 反映済み |
+| V1 Week 2 Softwareドメインパックと自己改善案件 | MASTER_SPEC.md §24 / ROADMAP.md / README.md / PROJECT_HANDOFF.md / `software_domain` / docs/WEEK2_SOFTWARE_SELF_IMPROVEMENT.md | 作業ブランチで実装・検証中 |
 | Ciel進化 | MASTER_SPEC.md / ROADMAP.md / RECONSIDER.md / agents/raphael.md | 反映済み |
 | 確定・暫定・保留 | RECONSIDER.md / ROADMAP.md / RAPHAEL_TEST_PLAN.md / PROJECT_HANDOFF.md | 反映済み |
 | Stage 1完了・後続訂正 | ROADMAP.md / STAGE1_STATUS.md / STAGE1_REVIEW_RESOLUTION.md | 反映済み |

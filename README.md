@@ -4,13 +4,13 @@
 
 ## 現在の段階
 
-- Version: 0.9.0-draft
-- Stage: V1 Week 1「汎用コア最小実装」
-- Status: PR #12で汎用コア実装・無料ローカル総合検証・課金事前承認ゲート検証を完了。レビューとmainマージ判断待ち
+- Version: 0.10.0-draft
+- Stage: V1 Week 2「Softwareドメインパックと自己改善案件」
+- Status: PR #12のmainマージ後検証を完了。Issue #13でSoftwareドメインパックとRaphael自己改善案件を実装中
 - 現在の中核エージェント: Raphael
 - 運用方式: GitHub正本・人間承認型の段階的オーケストレーション
-- 完了済み: Stage 0〜Stage 2、V1 Week 0、PR #1〜#10をmainへマージ
-- 現在の作業先: `agent/v1-week1-general-core`（Issue #11）
+- 完了済み: Stage 0〜Stage 2、V1 Week 0〜Week 1、PR #1〜#12をmainへマージ
+- 現在の作業先: `agent/v1-week2-software-domain`（Issue #13）
 
 ## Raphaelの確定した位置づけ
 
@@ -121,8 +121,8 @@ AI専用入口は正本本文の複製元ではなく、このREADMEと関係正
 - 初月資源: 週14時間、約56時間、API上限10,000円
 - 費用ゲート: 7,000円警告、9,000円高性能モデル制限、10,000円自動停止
 - 最初の実案件: Raphael自身のコード・設計改善 → 小規模新規アプリ
-- 現在: Week 1の実装・12件のテスト・総合検証をPR #12で完了し、レビュー待ち
-- 次: 隆之介のレビューとmainマージ判断。マージ後にWeek 2を開始
+- 現在: Week 1をmainへ統合し、Week 2のSoftwareドメインパックとRaphael自己改善案件を実装中
+- 次: Software固有能力・無料ローカルツール・分野別評価を汎用コアへ注入し、改善前後の証拠をDraft PRで提示
 - 正式承認: 隆之介本人がChatGPT、Gemini、Claude、Codex、Claude Codeのいずれかで明示した場合のみ有効
 - 有料API・従量課金・課金可能・料金不明の外部機能は、1円でも事前明示承認なしに導入・実行しない
 - mainマージ、外部公開・送信・提出、本番反映等は隆之介の承認が必要
