@@ -2,7 +2,6 @@
 
 Version: 0.7.0-draft
 Owner: Ryunosuke Matsumoto
-Current working branch: `agent/v1-week2-software-domain`
 
 ## 1. この文書の目的
 
@@ -31,14 +30,7 @@ V1は、汎用コア、ドメインパック、ツールコネクタ、分野別
 
 ## 3. 現在のGitHub状態
 
-- Repository: `focus-Rlab/ryu-ai-orchestra`
-- Default branch: `main`
-- `main`最新確認済みマージ: PR #12
-- PR #12: 隆之介がmainへマージ済み。汎用コア、課金禁止ゲート、12件のテストをmain上で再確認済み
-- Current working branch: `agent/v1-week2-software-domain`
-- Current Stage: V1 Week 2「Softwareドメインパックと自己改善案件」
-- Stage 2作業ブランチ `stage2/agent-governance`: main統合済み
-- 現在の作業: Issue #13に基づくSoftwareドメインパック、開発ツール接続定義、software評価パック、Raphael自己改善案件
+変動する現在地は`PROJECT_STATE.json`だけを正本とする。本書にはPR番号、active Issue、作業ブランチ、検証main SHA、次の一手を複製しない。新しいセッションは同JSONを読み、GitHub接続がある場合は明示された証拠と照合する。
 
 ## 4. 完了済み
 
@@ -119,20 +111,9 @@ V1確定条件:
 - 変更内容は大小を問わずRaphaelが把握する
 - 重要な変更は隆之介が承認する
 
-## 8. 現在の状態
+## 8. 現在の状態と次の具体的作業
 
-- Stage 0〜Stage 2、V1 Week 0〜Week 1、PR #1〜#12のmain統合は完了。
-- `agent/v1-week2-software-domain`でIssue #13のWeek 2実装を進めている。
-- Software固有処理は`software_domain`に分離し、`v1_core`を変更しない。
-- INCIDENT_LOGの評価基準正式承認は未決定のまま維持する。
-
-## 9. 次の具体的作業
-
-1. Softwareドメインパック、ツール定義、software評価パックのテストを完了する。
-2. Raphael自己改善案件の改善前後と証拠を記録する。
-3. 汎用コア無変更、無料ローカル手段限定、未承認評価基準不使用を監査する。
-4. Draft PRで隆之介へ全差分を提示する。
-5. 隆之介のレビューとmainマージ判断を待つ。
+`PROJECT_STATE.json`を参照する。状態変更は`scripts/sync_project_state.py`で同JSONだけを更新し、`scripts/check_project_state.py`で検査する。GitHub未接続時は実際のmain一致を推測で合格にしない。
 
 ## 10. 現在の禁止事項
 
@@ -143,8 +124,7 @@ V1確定条件:
 
 ## 11. 新しいセッションへの開始指示
 
-> `focus-Rlab/ryu-ai-orchestra`の`agent/v1-week2-software-domain`を開き、STARTUP_CONTEXTを最初に読み、読了後にREADME、PROJECT_HANDOFF、ROADMAP、GOVERNANCE、SECURITY、MASTER_SPEC、SPEC_TRACEABILITY、agents/raphael.md、Issue #13を読む。現在はV1 Week 2。Software固有処理を汎用コアから分離し、未承認評価基準を使わず、mainへのマージは隆之介に任せる。
-
+> `STARTUP_CONTEXT.md`を最初に読み、README、`PROJECT_STATE.json`、PROJECT_HANDOFF、GOVERNANCE、SECURITYと作業別正本を読む。現在地はJSONから復元し、mainマージは隆之介に任せる。
 
 ## 2026-07-29 追加確定事項
 
