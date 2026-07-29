@@ -10,15 +10,16 @@ Current working branch: `agent/roadmap-and-canonical-audit`
 
 新しいセッションでは、最初に次を読む。
 
-1. `README.md`
-2. `PROJECT_HANDOFF.md`
-3. `STAGE2_DECISION_LOG.md`
-4. `AGENT_STANDARD.md`
-5. `ROADMAP.md`
-6. `GOVERNANCE.md`
-7. `MASTER_SPEC.md`
-8. `SPEC_TRACEABILITY.md`
-9. `agents/raphael.md`
+1. `STARTUP_CONTEXT.md`
+2. `README.md`
+3. `PROJECT_HANDOFF.md`
+4. `STAGE2_DECISION_LOG.md`
+5. `AGENT_STANDARD.md`
+6. `ROADMAP.md`
+7. `GOVERNANCE.md`
+8. `MASTER_SPEC.md`
+9. `SPEC_TRACEABILITY.md`
+10. `agents/raphael.md`
 
 重要: `AGENT_STANDARD.md`とStage 2関係正本は、`STAGE2_DECISION_LOG.md`の隆之介承認済み判断を反映した統合版である。`INCIDENT_LOG.md`に残る評価基準の正式承認などの未決定事項は、Stage 2完了によって承認済みとは扱わない。
 
@@ -142,7 +143,7 @@ V1確定条件:
 
 ## 11. 新しいセッションへの開始指示
 
-> `focus-Rlab/ryu-ai-orchestra`の`agent/roadmap-and-canonical-audit`を開き、README、PROJECT_HANDOFF、ROADMAP、STAGE2_DECISION_LOG、AGENT_STANDARD、MASTER_SPEC、SPEC_TRACEABILITY、今回の監査報告を読む。現在はV1 Week 0。Stage 2確定事項とV1再編を再質問せず、未反映・古い状態・矛盾を全正本で監査し、mainへのマージは隆之介に任せる。
+> `focus-Rlab/ryu-ai-orchestra`の`agent/roadmap-and-canonical-audit`を開き、STARTUP_CONTEXTを最初に読み、読了後にREADME、PROJECT_HANDOFF、ROADMAP、STAGE2_DECISION_LOG、AGENT_STANDARD、MASTER_SPEC、SPEC_TRACEABILITY、今回の監査報告を読む。現在はV1 Week 0。Stage 2確定事項とV1再編を再質問せず、未反映・古い状態・矛盾を全正本で監査し、mainへのマージは隆之介に任せる。
 
 
 ## 2026-07-29 追加確定事項
