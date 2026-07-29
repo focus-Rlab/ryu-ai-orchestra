@@ -49,11 +49,11 @@ class Orchestrator:
         decision = self.budget_policy.decide(
             self.spent_jpy, request.estimated_cost_jpy
         )
+        record.verification["budget_decision"] = decision.value
         if decision is BudgetDecision.STOP_FOR_APPROVAL and not has_formal_approval(
             request.id, "budget_override", self.approvals
         ):
             record.transition(RunState.BLOCKED, "Budget stop requires ChatGPT approval")
-            record.verification["budget_decision"] = decision.value
             return record
 
         if request.requires_approval and not has_formal_approval(
@@ -68,6 +68,15 @@ class Orchestrator:
         record.transition(RunState.PLANNED, "Plan created")
         record.agent, record.environment = select(understood, record.plan)
         record.transition(RunState.ASSIGNED, "Agent and environment selected")
+        if (
+            decision is BudgetDecision.RESTRICT_HIGH_PERFORMANCE
+            and record.environment.lower() == "high-performance"
+        ):
+            record.transition(
+                RunState.BLOCKED,
+                "High-performance environment restricted at projected budget",
+            )
+            return record
 
         record.rollback_snapshot = deepcopy(
             {"spent_jpy": self.spent_jpy, "state": record.state.value}
