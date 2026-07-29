@@ -2,15 +2,9 @@
 
 隆之介専用のAIエージェント組織を、役割・権限・記憶・評価・セキュリティの正本として管理し、ChatGPT、Claude、Codex、Gemini、GitHub Copilot等から再利用するための基盤です。
 
-## 現在の段階
+## 現在地
 
-- Version: 0.10.0-draft
-- Stage: V1 Week 2「Softwareドメインパックと自己改善案件」
-- Status: PR #12のmainマージ後検証を完了。Issue #13でSoftwareドメインパックとRaphael自己改善案件を実装中
-- 現在の中核エージェント: Raphael
-- 運用方式: GitHub正本・人間承認型の段階的オーケストレーション
-- 完了済み: Stage 0〜Stage 2、V1 Week 0〜Week 1、PR #1〜#12をmainへマージ
-- 現在の作業先: `agent/v1-week2-software-domain`（Issue #13）
+変動する現在地（Stage/Week、最新マージPR、検証済みmain SHA、active Issue・branch、次の一手）は`PROJECT_STATE.json`だけを正本とする。このREADMEには複製しない。
 
 ## Raphaelの確定した位置づけ
 
@@ -75,7 +69,8 @@ Raphaelは秘書専用AIではない。AIオーケストラ全体を統括する
 
 ### 現在状態・引き継ぎ
 
-- `PROJECT_HANDOFF.md`: 現在地、確定事項、作業中PR、次の一手を復元する正本
+- `PROJECT_STATE.json`: 変動する現在地の唯一の正本
+- `PROJECT_HANDOFF.md`: 安定した引き継ぎ規則・確定事項・保留事項
 
 ### 完全版・監査層
 
@@ -121,8 +116,7 @@ AI専用入口は正本本文の複製元ではなく、このREADMEと関係正
 - 初月資源: 週14時間、約56時間、API上限10,000円
 - 費用ゲート: 7,000円警告、9,000円高性能モデル制限、10,000円自動停止
 - 最初の実案件: Raphael自身のコード・設計改善 → 小規模新規アプリ
-- 現在: Week 1をmainへ統合し、Week 2のSoftwareドメインパックとRaphael自己改善案件を実装中
-- 次: Software固有能力・無料ローカルツール・分野別評価を汎用コアへ注入し、改善前後の証拠をDraft PRで提示
+- 現在地と次の一手: `PROJECT_STATE.json`を参照
 - 正式承認: 隆之介本人がChatGPT、Gemini、Claude、Codex、Claude Codeのいずれかで明示した場合のみ有効
 - 有料API・従量課金・課金可能・料金不明の外部機能は、1円でも事前明示承認なしに導入・実行しない
 - mainマージ、外部公開・送信・提出、本番反映等は隆之介の承認が必要
