@@ -5,7 +5,7 @@ Copy and paste the block below into a new session.
 ```text
 GitHubの`focus-Rlab/ryu-ai-orchestra`を開き、`agent/roadmap-and-canonical-audit`を作業ブランチとして扱ってください。
 
-最初にREADME.md、STARTUP_CONTEXT.md、PROJECT_HANDOFF.md、GOVERNANCE.md、SECURITY.md、ROADMAP.md、STAGE2_DECISION_LOG.md、AGENT_STANDARD.md、MASTER_SPEC.md、SPEC_TRACEABILITY.md、INCIDENT_LOG.md、docs/CANONICAL_AUDIT_2026-07-29.mdを確認してください。
+最初にSTARTUP_CONTEXT.mdを読み、読了を確認してからREADME.md、PROJECT_HANDOFF.md、GOVERNANCE.md、SECURITY.md、ROADMAP.md、STAGE2_DECISION_LOG.md、AGENT_STANDARD.md、MASTER_SPEC.md、SPEC_TRACEABILITY.md、INCIDENT_LOG.md、docs/CANONICAL_AUDIT_2026-07-29.mdを確認してください。
 
 現在はV1 Week 0「正本完全性回復と実行基盤確定」です。Stage 2とPR #9は完了済みですが、会話で確定したV1ロードマップ再編がmainの正本群へ伝播していなかったため、専用ブランチで横断監査・修正しています。
 
