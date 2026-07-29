@@ -1,6 +1,6 @@
 # GitHub Copilot Repository Instructions
 
-このリポジトリでは`README.md`と`STARTUP_CONTEXT.md`を唯一の入口として扱い、READMEの読込ルーターに従って必要な正本を確認する。
+このリポジトリでは`README.md`を唯一の入口とし、`STARTUP_CONTEXT.md`を起動時必読の共通正本として扱い、READMEの読込ルーターに従って必要な正本を確認する。
 
 ## 必須
 
