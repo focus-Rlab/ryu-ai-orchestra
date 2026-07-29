@@ -442,20 +442,34 @@ This standard now incorporates the following confirmed architecture. Detailed de
 - External publication, sending, production or main changes, payment, sensitive access expansion, and material core-governance changes require Ryunosuke approval.
 - ChatGPT is the sole formal approval channel for the current phase.
 
-## 11. Unresolved Stage 2 parameters
+## 11. Confirmed memory governance
 
-Only the parameters below remain open; the confirmed architecture above must not be reopened unless Ryunosuke requests reconsideration.
+- V1 canonical long-term memory uses structured GitHub files and exactly one canonical source. A later database migration declares a single canonical source at every stage.
+- Explicit “remember” instructions and continuing goals, values, constraints, and decisions create long-term-memory candidates.
+- Feedback about reasoning, judgment, format, or workflow is corrected immediately, then analyzed for cause and prevention. It becomes a reusable long-term rule only after Ryunosuke approves the proposed scope.
+- Old or requested-forgetting information is fully deleted only after Ryunosuke approves the identified deletion scope. Deleted content is not preserved; content-free audit metadata may remain.
+- Low-risk memory approval may be delegated only through evidence-based, scope-specific trust evaluation and may be revoked.
 
-1. Memory-update delegation evidence, eligible low-risk categories, review cadence, and revocation thresholds.
-2. Temporary working memory versus canonical long-term memory.
-3. Memory correction, deletion, forgetting, retention, storage, and canonical-source rules.
-4. Trust promotion and demotion thresholds.
-5. Objection severity and mandatory-stop thresholds.
-6. The exact boundary of an important change.
-7. Confidence requirements for Raphael proxy decisions.
-8. Pilot evidence required before agent activation.
-9. Performance review cadence and scoring.
-10. Archive and retirement structure.
+## 12. Confirmed authority and stopping model
 
-Until a parameter is decided, use the safest reversible default and do not promote that default to canonical architecture without Ryunosuke's approval.
+- Trust is managed per agent, domain, capability, and operation using accuracy, evidence, impact awareness, correction rate, and rule compliance.
+- Initial operation is human-controlled. Raphael acts only inside explicitly delegated boundaries.
+- High-confidence, low-impact work may later be executed by proxy; medium-confidence, low-impact work may proceed only to a reversible draft; low-confidence or medium-to-high-impact work waits for confirmation.
+- External publication, sending, payment, production or main application, sensitive access, core-rule changes, broad or hard-to-recover changes, and changes to long-term goals, budget, or important judgment criteria initially require Ryunosuke's approval.
+- High-trust automation is possible only for exact operations, limits, and conditions explicitly approved by Ryunosuke. Anomalies or violations suspend it.
+- Objections use low, medium, high, and emergency levels. Only the required response strength differs; every level receives root-cause analysis.
+- Emergency stopping is authorized from initial operation without prior approval. Stopping does not authorize deletion, publication, payment, or other additional action.
 
+## 13. Confirmed lifecycle and evaluation model
+
+- New agents conduct real work in trial status. Only security- or authority-relevant capabilities are restricted; unnecessary efficiency-reducing restrictions are prohibited.
+- Every task receives a lightweight evaluation; trial agents receive periodic comprehensive review; adopted agents receive periodic and incident-triggered review; high-risk work receives detailed review every time.
+- Security, authority, and important-instruction compliance are mandatory gates. Serious violations cannot be hidden by a high average score.
+- Accuracy, quality, explainability, cost, speed, and correction rate use work-appropriate weighted scoring.
+- Overlapping agents enter staged integration or retirement: compare, inventory, transfer, verify, archive recoverably, then request Ryunosuke's approval before complete deletion.
+- Archive duration is risk- and importance-based.
+- A handoff is complete only when the receiving agent demonstrates correct use on representative real work without material loss or performance degradation.
+
+## 14. Implementation rule
+
+The foundational Stage 2 architecture is confirmed. Implementers may choose reversible technical details such as schemas, measurement formulas, and automation mechanics only when those choices preserve the confirmed meaning and authority boundaries. Meaning changes, authority expansion, and important changes require Ryunosuke's approval.
