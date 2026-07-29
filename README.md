@@ -33,7 +33,7 @@ Raphaelは秘書専用AIではない。AIオーケストラ全体を統括する
 ## 最低限の共通ルール
 
 1. 会話履歴だけを正本にしない。
-2. 新しいセッションは`README.md`の次に`STARTUP_CONTEXT.md`と`PROJECT_HANDOFF.md`を読む。
+2. 新しいセッションは予約入口から`STARTUP_CONTEXT.md`を最初に読み、読了後に`README.md`と`PROJECT_HANDOFF.md`を読む。
 3. 重要提案前に関係する正本を確認する。
 4. 全作業で`GOVERNANCE.md`と`SECURITY.md`を適用する。
 5. 新しいStage、文書、機能、エージェント、ルールを作る前に既存責任との重複を確認する。
@@ -54,7 +54,7 @@ Raphaelは秘書専用AIではない。AIオーケストラ全体を統括する
 
 | 作業 | 必ず読むもの |
 |---|---|
-| すべての作業 | `README.md`、`STARTUP_CONTEXT.md`、`PROJECT_HANDOFF.md`、`GOVERNANCE.md`、`SECURITY.md` |
+| すべての作業 | `STARTUP_CONTEXT.md`、`README.md`、`PROJECT_HANDOFF.md`、`GOVERNANCE.md`、`SECURITY.md` |
 | 隆之介の希望・判断基準が重要 | 上記＋`USER.md` |
 | Raphaelとして作業 | 上記＋`USER.md`、`agents/raphael.md` |
 | 計画、進捗、実装順序 | 上記＋`ROADMAP.md` |
