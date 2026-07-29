@@ -4,10 +4,10 @@ Version: 0.8.0-draft
 
 ## 現在地
 
-- 段階: V1 Week 0 — 正本完全性回復と実行基盤確定
-- 状態: Stage 2とPR #9は完了済み。V1再編の反映漏れを修正・監査中
-- main基盤: Stage 0〜Stage 2およびPR #1〜#9を統合済み
-- 現在の作業先: `agent/roadmap-and-canonical-audit`
+- 段階: V1 Week 1 — 汎用コア最小実装
+- 状態: PR #10のマージ後検証を完了し、Issue #11で汎用コアを実装中
+- main基盤: Stage 0〜Stage 2、V1 Week 0およびPR #1〜#10を統合済み
+- 現在の作業先: `agent/v1-week1-general-core`
 - 最終目標: 自己改善型・分野適応型の汎用オーケストレーターRaphael
 - 初期検証領域: ソフトウェア／アプリ開発。最終目的ではなく、YouTube・小説・事業・学習等への転用性を検証する最初の領域
 
@@ -66,7 +66,7 @@ Status: 完了
 
 ### Week 0: 正本完全性回復と実行基盤確定
 
-Status: 現在実行中
+Status: 完了（PR #10マージ、main上のマージ後検証済み）
 
 目的: 会話で確定したV1再編と既存のStage 2確定事項が、mainの全正本へ抜けなく反映される状態を作る。
 
@@ -89,7 +89,7 @@ Status: 現在実行中
 
 ### Week 1: 汎用コア最小実装
 
-Status: Week 0完了後
+Status: 現在実行中（Issue #11）
 
 目的: 特定分野に依存しないRaphael V1の最小実行ループを作る。
 
