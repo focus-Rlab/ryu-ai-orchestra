@@ -1,6 +1,6 @@
 # Operating Guide
 
-Version: 0.4.0-draft
+Version: 0.5.0-draft
 Owner: Ryunosuke Matsumoto
 
 ## 1. このリポジトリの使い方
@@ -13,8 +13,8 @@ ChatGPT、Claude、Codex、Gemini、GitHub Copilot等、使用するAIモデル�
 
 新しいセッションまたはAI環境では、最初に次を読む。
 
-1. `README.md`
-2. `STARTUP_CONTEXT.md`
+1. `STARTUP_CONTEXT.md`
+2. `README.md`
 3. `PROJECT_HANDOFF.md`
 4. `GOVERNANCE.md`
 5. `SECURITY.md`
@@ -22,7 +22,7 @@ ChatGPT、Claude、Codex、Gemini、GitHub Copilot等、使用するAIモデル�
 
 通常チャットでの開始例:
 
-> `focus-Rlab/ryu-ai-orchestra`の`README.md`、`STARTUP_CONTEXT.md`、`PROJECT_HANDOFF.md`を最初に読み、現在の作業ブランチ・PRと今回必要な正本を確認してから作業して。
+> `focus-Rlab/ryu-ai-orchestra`の`STARTUP_CONTEXT.md`を最初に読み、読了後に`README.md`と`PROJECT_HANDOFF.md`を読み、現在の作業ブランチ・PRと今回必要な正本を確認してから作業して。
 
 自動入口:
 
@@ -32,7 +32,7 @@ ChatGPT、Claude、Codex、Gemini、GitHub Copilot等、使用するAIモデル�
 - GitHub Copilot: `.github/copilot-instructions.md`
 - GitHub custom Raphael: `.github/agents/raphael.md`
 
-自動入口があっても、全正本を自動で読了したとは仮定しない。
+自動入口があっても、参照先を自動で読了したとは仮定しない。`STARTUP_CONTEXT.md`の読了確認前に分析・提案・変更を開始しない。予約入口を認識しないAI環境では、開始プロンプトで明示しない限り自動共有済みと判定しない。
 
 ## 3. 接続・権限・書込可否
 
@@ -58,8 +58,8 @@ ChatGPT、Claude、Codex、Gemini、GitHub Copilot等、使用するAIモデル�
 
 ### すべての作業
 
-- `README.md`
 - `STARTUP_CONTEXT.md`
+- `README.md`
 - `PROJECT_HANDOFF.md`
 - `GOVERNANCE.md`
 - `SECURITY.md`
