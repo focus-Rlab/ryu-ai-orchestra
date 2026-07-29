@@ -1,8 +1,10 @@
 # Repository Agent Instructions
 
-このリポジトリで作業するAIエージェントは、最初に`README.md`を読み、そこにある読込ルーターに従う。
+このリポジトリで作業するAIエージェントは、最初に`README.md`と`STARTUP_CONTEXT.md`を読み、そこにある読込ルーターに従う。
 
 ## 必須ルール
+
+0. `STARTUP_CONTEXT.md`を起動時必読として扱う。
 
 1. `README.md`を唯一の入口として扱う。
 2. 全作業で`GOVERNANCE.md`と`SECURITY.md`を適用する。
