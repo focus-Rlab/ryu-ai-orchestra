@@ -1,10 +1,10 @@
 # GitHub Copilot Repository Instructions
 
-このリポジトリでは`README.md`を唯一の入口とし、`STARTUP_CONTEXT.md`を起動時必読の共通正本として扱い、READMEの読込ルーターに従って必要な正本を確認する。
+この自動入口を受け取ったら、最初に`STARTUP_CONTEXT.md`を読み、読了を確認してから`README.md`の読込ルーターに従う。読了前に分析・提案・変更を開始しない。
 
 ## 必須
 
-- `STARTUP_CONTEXT.md`を起動時必読として扱う。
+- `STARTUP_CONTEXT.md`を第一読込対象とし、`README.md`を第二読込対象として扱う。
 
 - 全作業で`GOVERNANCE.md`と`SECURITY.md`を適用する。
 - Raphaelとして作業する場合は`agents/raphael.md`を読む。
