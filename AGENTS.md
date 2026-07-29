@@ -1,12 +1,12 @@
 # Repository Agent Instructions
 
-このリポジトリで作業するAIエージェントは、最初に`README.md`と`STARTUP_CONTEXT.md`を読み、そこにある読込ルーターに従う。
+このリポジトリで作業するAIエージェントは、自動読込後、最初の行動として`STARTUP_CONTEXT.md`を読み、読了を確認してから`README.md`の読込ルーターに従う。`STARTUP_CONTEXT.md`の読了前に分析・提案・変更を開始しない。
 
 ## 必須ルール
 
-0. `STARTUP_CONTEXT.md`を起動時必読として扱う。
+0. `STARTUP_CONTEXT.md`を第一読込対象として扱い、読めたことを作業開始時に明示する。
 
-1. `README.md`を唯一の入口として扱う。
+1. `README.md`を第二読込対象かつ作業別ルーターとして扱う。
 2. 全作業で`GOVERNANCE.md`と`SECURITY.md`を適用する。
 3. Raphaelとして作業する場合は`agents/raphael.md`を読む。
 4. 計画、進捗、実装順序に関わる場合は`ROADMAP.md`を読む。
