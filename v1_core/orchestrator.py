@@ -53,13 +53,13 @@ class Orchestrator:
         if decision is BudgetDecision.STOP_FOR_APPROVAL and not has_formal_approval(
             request.id, "budget_override", self.approvals
         ):
-            record.transition(RunState.BLOCKED, "Budget stop requires ChatGPT approval")
+            record.transition(RunState.BLOCKED, "Budget stop requires Ryunosuke approval through an accepted AI channel")
             return record
 
         if request.requires_approval and not has_formal_approval(
             request.id, "execution", self.approvals
         ):
-            record.transition(RunState.BLOCKED, "Execution requires ChatGPT approval")
+            record.transition(RunState.BLOCKED, "Execution requires Ryunosuke approval through an accepted AI channel")
             return record
 
         understood = understand(request)
