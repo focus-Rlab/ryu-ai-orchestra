@@ -1,6 +1,6 @@
 # Stage 2 Decision Log
 
-Version: 0.1.4-draft  
+Version: 0.2.0-draft  
 Owner: Ryunosuke Matsumoto  
 Status: Active decision record  
 Branch: `stage2/agent-governance`
@@ -384,7 +384,77 @@ Reason:
 Early human approval allows Raphael to learn Ryunosuke's standards for evidence, trade-offs, and acceptable risk before receiving bounded proxy authority. Gradual delegation preserves the intended path toward autonomy without granting broad memory-control authority prematurely.
 
 
-## 9. Current unresolved topics
+## 9. V1 direction, cost, and approval boundary
+
+### Decision V-01: General-purpose, domain-adaptive orchestrator
+
+Status: Confirmed
+
+Raphael's final target is a self-improving, domain-adaptive general-purpose orchestrator. Software and app development are initial validation domains, not the final scope.
+
+The architecture must separate:
+
+- a general core for requirements, planning, state, budget, authority, memory, evaluation, and improvement;
+- domain packs such as software, YouTube, fiction, business, or learning;
+- tool connectors appropriate to each domain;
+- domain-specific evaluation packs.
+
+A new domain should be added by researching its requirements, composing necessary capabilities, running bounded trials, evaluating results, and retaining only demonstrated improvements. Self-improvement alone is not sufficient; requirement understanding, domain exploration, capability composition, tool switching, domain-specific evaluation, and safe rollback are also required.
+
+### Decision V-02: Initial V1 resources and validation work
+
+Status: Confirmed
+
+- Development capacity: 14 hours per week, approximately 56 hours in the first month.
+- Initial monthly API hard cap: JPY 10,000.
+- Cost controls: warning at JPY 7,000; restrict high-performance models at JPY 9,000; automatic stop and Ryunosuke approval at JPY 10,000.
+- Initial validation work: improve Raphael's own code and design, then build a small new application.
+- The application is a validation case for transferability, not the final product goal.
+
+### Decision V-03: Initial autonomous execution boundary
+
+Status: Confirmed
+
+Without case-by-case prior approval, Raphael may:
+
+- research, plan, and prepare recommendations;
+- create and modify artifacts in a private work environment or working branch;
+- run tests and reviews;
+- create a pull request;
+- complete non-public drafts such as documents, videos, or fiction.
+
+Ryunosuke's explicit approval is required for:
+
+- external publication, posting, sending, or submission;
+- production deployment or merge to main;
+- payment, purchase, or cost beyond the approved budget;
+- use of personal data or credentials beyond already authorized task-relevant access;
+- permission or safety-rule changes;
+- material changes to Raphael's core configuration.
+
+### Decision V-04: Initial approval channel
+
+Status: Confirmed
+
+For the current phase, ChatGPT is the sole formal approval channel.
+
+- Raphael presents approval requests and evidence in ChatGPT.
+- Ryunosuke approves, rejects, or requests revision in ChatGPT.
+- The decision and reason are logged.
+- A GitHub PR may hold the proposed change, but GitHub action alone is not treated as formal approval during this phase.
+- The approval channel may later be changed when operating volume justifies it.
+
+### Decision P-02: Integrate confirmed decisions before continuing design
+
+Status: Confirmed
+
+- Confirmed decisions are incorporated into the current Stage 2 canonical draft as work proceeds.
+- Only unresolved matters are returned to Ryunosuke as questions.
+- After all required questions are resolved, the documents are synchronized and prepared for merge to main.
+- Stage 2 is not skipped or declared complete merely because a later V1 roadmap has been proposed.
+- The final move to main remains subject to Ryunosuke's explicit approval.
+
+## 10. Current unresolved topics
 
 The following matters have not yet been decided and must not be assumed:
 
@@ -403,13 +473,13 @@ The following matters have not yet been decided and must not be assumed:
 8. Archive and retirement structure.
 9. Full synchronization targets after `AGENT_STANDARD.md` revision.
 
-## 10. Next design question
+## 11. Next design question
 
 The next discussion continues with detailed memory governance, beginning with the conditions and evidence required before Raphael receives delegated approval authority for candidate long-term memory updates.
 
 The next session must explain the main access models and trade-offs, then ask Ryunosuke to choose from multiple options. It must not assume unresolved read, write, approval, correction, deletion, forgetting, retention, storage, or canonical-source rules.
 
-## 11. Revision target
+## 12. Revision target
 
 After enough foundational decisions are complete:
 
