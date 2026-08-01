@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "phase": "V1 Week 3",
-  "status": "reliability_fixes_before_week3_implementation",
-  "latest_merged_pr": 14,
-  "verified_main_commit": "526384c",
-  "active_issue": 16,
-  "active_branch": "agent/v1-governance-reliability-fixes",
-  "paused_issue": 15,
-  "next_action": "Review and merge the reliability fixes, then resume AI development request tracker requirements",
-  "verified_at": "2026-07-29",
-  "evidence": "GitHub connector: PR #14 merged and main files inspected"
+  "status": "week3_requirements_pending",
+  "latest_merged_pr": 17,
+  "verified_main_commit": "d8714c501fcee366500d99f8dcefa5a93ecdf7b6",
+  "active_issue": 15,
+  "active_branch": "agent/v1-week3-small-app",
+  "paused_issue": null,
+  "next_action": "Bring the active Week 3 branch up to the verified main commit, then confirm the AI development request tracker requirements before implementation",
+  "verified_at": "2026-08-01",
+  "evidence": "GitHub connector: PR #17 merged; main equals d8714c501fcee366500d99f8dcefa5a93ecdf7b6; Issue #15 and its branch exist; the branch is 17 commits behind main"
 }
