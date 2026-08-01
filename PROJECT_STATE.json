@@ -1,13 +1,13 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "phase": "V1 Week 3",
   "status": "week3_requirements_pending",
   "latest_merged_pr": 17,
-  "verified_main_commit": "d8714c501fcee366500d99f8dcefa5a93ecdf7b6",
   "active_issue": 15,
   "active_branch": "agent/v1-week3-small-app",
   "paused_issue": null,
-  "next_action": "Bring the active Week 3 branch up to the verified main commit, then confirm the AI development request tracker requirements before implementation",
+  "next_action": "Bring the active Week 3 branch up to the verified project content, then confirm the AI development request tracker requirements before implementation",
   "verified_at": "2026-08-01",
-  "evidence": "GitHub connector: PR #17 merged; main equals d8714c501fcee366500d99f8dcefa5a93ecdf7b6; Issue #15 and its branch exist; the branch is 17 commits behind main"
+  "evidence": "GitHub connector: PR #17 merged; Issue #15 and its branch exist; project content is protected by the self-reference-free digest",
+  "verified_project_digest": "sha256:960c037f68ed0c756541c767ec8a28a451074522c0c83b5cea1ddba38bd60216"
 }
