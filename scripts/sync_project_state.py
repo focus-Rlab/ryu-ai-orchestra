@@ -8,11 +8,15 @@ import json
 from datetime import date
 from pathlib import Path
 
+try:
+    from scripts.check_project_state import project_digest
+except ModuleNotFoundError:  # Support direct `python scripts/...` execution.
+    from check_project_state import project_digest
+
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, default=Path.cwd())
-    parser.add_argument("--main-commit", required=True)
     parser.add_argument("--merged-pr", required=True, type=int)
     parser.add_argument("--phase", required=True)
     parser.add_argument("--status", required=True)
@@ -27,13 +31,15 @@ def main() -> int:
         "phase": args.phase,
         "status": args.status,
         "latest_merged_pr": args.merged_pr,
-        "verified_main_commit": args.main_commit,
+        "schema_version": 2,
+        "verified_project_digest": project_digest(args.root),
         "active_issue": args.active_issue,
         "active_branch": args.active_branch,
         "next_action": args.next_action,
         "verified_at": date.today().isoformat(),
         "evidence": args.evidence,
     })
+    state.pop("verified_main_commit", None)
     path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n",
                     encoding="utf-8")
     print(f"Updated {path}")
