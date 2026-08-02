@@ -106,6 +106,14 @@ Raphaelが各エージェントを起動する際、以下を含む依頼書を�
 
 3体とも本日は`status: sandbox`から開始する。単体・境界テストに合格した時点で`pilot`へ移行できる（`AGENT_STANDARD.md` §5）。`active`への正式採用（mainマージ・恒久運用化）は別途隆之介の承認を要する。
 
+## 今後の要件改訂候補（フェーズ4 run-011より）
+
+「3体間ハンドオフ契約チェッカー」（`pilot_sandbox/handoff_contract_checker/`, 要件書v3.1）の独立評価（run-011）でtester-evaluatorが発見し、隆之介が「現行実装は要件書v3.1に適合しており不具合ではない。ただし次回の要件改訂候補として記録する」と判断した事項。
+
+- 現状、`REQ-B3`の`AC_NOT_ADDRESSED`判定は`addressed_acceptance_criteria[].id`が配列に存在するかどうかのみを見ており、`status`の値（`implemented`/`partially_implemented`/`not_implemented`）を判定に使っていない。そのため`status: "not_implemented"`のエントリがあっても、IDさえ存在すれば「対応済み」とみなされ、`AC_NOT_ADDRESSED`は発火しない
+- 将来、ID存在だけでなく`status`値も判定対象とするかどうかは隆之介が決定する
+- この変更を行う場合は、実装を先に変えず、要件書・チェック仕様・受入条件を先に改訂して承認を得ること（`AGENT_STANDARD.md`が定めるRaphael/requirements-designerの通常の意思決定順序どおり）
+
 ## 汎用コアとの関係
 
 `v1_core/`・`software_domain/`は本パイロットのために変更しない。`.claude/agents/*.md`はClaude Codeのサブエージェント機構であり、`v1_core.orchestrator.Orchestrator.run`が要求するCallable群（understand/plan/select/execute/verify）には接続されていない別レイヤーである。将来、この3体をPython実行ループへ正式統合する場合は、その時点で改めて設計変更として提示する。
