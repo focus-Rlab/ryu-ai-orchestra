@@ -9,6 +9,6 @@
   "next_action": "Start Week 3 in a new conversation. First verify GitHub main and whether requirements-designer, implementer, and tester-evaluator are recognized as subagent_type at session start. Then ask Ryunosuke only requirement question 1 of 5: the small app's purpose. Do not implement until all requirements are confirmed.",
   "verified_at": "2026-08-02",
   "evidence": "PR #20 is merged into main and contains the completed three-agent pilot: 11 reconstructed commits, 56 changed files, pilot promotion, user evaluation, and 64 passing tests (28 repository tests, 32 handoff-checker tests, 4 connected-pilot tests). Issue #15 remains open with 0 of 5 requirement questions asked. Issue #19 is closed as completed and links PR #20 and Draft PR #21.",
-  "verified_project_digest": "sha256:a06ad6b8d17a7201b07257c95fc13071f27e60823a4f4e770612512748748994",
+  "verified_project_digest": "sha256:c1ab3dd90bdcafb817fd4f5e58f9ec891d0c3366f958e66c1ee51480fbe7fcee",
   "paused_note": null
 }
