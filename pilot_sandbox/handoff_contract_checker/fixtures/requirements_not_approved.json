@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "requirements",
+  "run_id": "run-100",
+  "target": "sample_target",
+  "purpose": "Provide a small sample module for fixture testing.",
+  "scope_in": ["module_a"],
+  "scope_out": [],
+  "acceptance_criteria": [
+    {"id": "AC-1", "description": "module_a exposes function foo()"},
+    {"id": "AC-2", "description": "module_a has unit tests for foo()"}
+  ],
+  "constraints": [],
+  "unresolved_items": [],
+  "approval_status": "draft"
+}
