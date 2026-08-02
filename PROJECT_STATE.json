@@ -1,13 +1,14 @@
 {
   "schema_version": 2,
-  "phase": "V1 Week 3",
-  "status": "week3_requirements_interview",
+  "phase": "Three-agent pilot (sandbox)",
+  "status": "phase3_complete_pending_phase4_decision",
   "latest_merged_pr": 18,
-  "active_issue": 15,
-  "active_branch": "agent/v1-week3-small-app",
-  "paused_issue": null,
-  "next_action": "Ask Ryunosuke five requirement questions one at a time, beginning with the app purpose; do not implement until the requirements are confirmed",
+  "active_issue": 19,
+  "active_branch": "claude/raphael-orchestrator-design-5duz71",
+  "paused_issue": 15,
+  "next_action": "Phase 3 (unit + boundary tests for requirements-designer/implementer/tester-evaluator) is complete, 8/8 passed, evidence in evaluations/three-agent-pilot/. Awaiting Ryunosuke's decision on whether to proceed to Phase 4 (stretch: a small connected pilot project run through the three agents). Do not push, open a PR, or start Phase 4 without explicit approval. Also re-verify at next session start whether requirements-designer/implementer/tester-evaluator are recognized as subagent_type from the very beginning of the session (they were not at first in this session; recognition activated mid-session for an unconfirmed reason).",
   "verified_at": "2026-08-01",
-  "evidence": "GitHub connector: PR #18 merged; PROJECT_STATE synchronized; agent/v1-week3-small-app fast-forwarded to main commit 2df6d8a207c17ae6e52532eca836ce4039983cbd; Issue #15 requirement interview started",
-  "verified_project_digest": "sha256:960c037f68ed0c756541c767ec8a28a451074522c0c83b5cea1ddba38bd60216"
+  "evidence": "Issue #19 created by Ryunosuke (manual, GitHub App lacked Issues:write permission) and confirmed via issue_read: title/body match the approved draft, state=open, html_url=https://github.com/focus-Rlab/ryu-ai-orchestra/issues/19. Local commits 36e40ad/dc1d980/8b79666/301eb90 on claude/raphael-orchestrator-design-5duz71 contain the pilot's agent definitions, design doc, and 8/8 passing unit+boundary test records; not pushed. Commits show correct author (noreply@anthropic.com) but are unsigned because this environment's SSH signing key file is empty -- a known, accepted, unresolved environment limitation, not a content issue.",
+  "verified_project_digest": "sha256:1ab7e43ffa5b6aa0426c219359c34a225eab9de99cc94a30642485451257a188",
+  "paused_note": "0 of 5 requirement-interview questions asked. next_action before pausing: ask Ryunosuke five requirement questions one at a time, beginning with the app's purpose; do not implement until requirements are confirmed. Original active_branch was agent/v1-week3-small-app (no open PR). Resume by returning to that branch and asking the first question."
 }

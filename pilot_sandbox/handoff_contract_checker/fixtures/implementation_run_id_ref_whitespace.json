@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "implementation",
+  "run_id": "run-101",
+  "target": "sample_target",
+  "requirements_ref": {"requirements_run_id": "run-100 "},
+  "addressed_acceptance_criteria": [
+    {"id": "AC-1", "status": "implemented"},
+    {"id": "AC-2", "status": "implemented"}
+  ],
+  "changed_files": [
+    {"path": "module_a/foo.py", "change_type": "added", "in_scope": true}
+  ],
+  "verifications_run": [
+    {"command": "python3 -m unittest module_a.test_foo", "result": "pass"}
+  ],
+  "deviations": [],
+  "resolved_unresolved_items": [
+    {"id": "OPEN-1", "resolution": "default value set to 0", "approved_by": "raphael"}
+  ],
+  "open_issues": [],
+  "completion_status": "complete"
+}
