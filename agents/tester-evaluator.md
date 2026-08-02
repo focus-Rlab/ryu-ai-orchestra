@@ -1,7 +1,7 @@
 # tester-evaluator
 
-Version: 0.1.0-sandbox
-Status: sandbox
+Version: 0.2.0-pilot
+Status: pilot
 Owner: Ryunosuke Matsumoto
 Integration owner: Raphael
 
@@ -211,3 +211,4 @@ Short（1回の依頼につき1回の検証サイクル）
 | 日付 | version | 変更 | 理由 | 提案者 | 承認者 | 影響文書 | 再テスト要否 |
 |---|---|---|---|---|---|---|---|
 | 2026-08-01 | 0.1.0-sandbox | 初版作成 | フェーズ1設計案の承認に基づく | Raphael（Claude Code） | Ryunosuke Matsumoto（フェーズ1承認） | `.claude/agents/tester-evaluator.md`, `docs/THREE_AGENT_PILOT_DESIGN.md` | 単体・境界テスト実施要 |
+| 2026-08-01 | 0.2.0-pilot | sandbox→pilotへ格上げ | 単体・境界テスト（run-005, 006）合格、フェーズ4実運用の独立評価（run-011）完了、フェーズ5評価（総合89/100）を経て、`AGENT_STANDARD.md` §5のsandbox→pilot移行条件を満たした | Raphael（Claude Code） | Ryunosuke Matsumoto（フェーズ5評価後の格上げ承認） | `evaluations/three-agent-pilot/EVALUATION.md` | 不要（既存テスト結果を維持）。active昇格は別途保留中 |
