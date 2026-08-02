@@ -24,6 +24,19 @@ def main() -> int:
     parser.add_argument("--active-branch", required=True)
     parser.add_argument("--next-action", required=True)
     parser.add_argument("--evidence", required=True)
+    parser.add_argument(
+        "--paused-issue", type=int, default=None,
+        help="Issue number paused in favor of the active work, if any.",
+    )
+    parser.add_argument(
+        "--paused-note", default=None,
+        help="What was completed and what remains on the paused issue, so it "
+             "is not lost when active work switches away from it.",
+    )
+    parser.add_argument(
+        "--clear-paused", action="store_true",
+        help="Explicitly clear paused_issue/paused_note (resume completed).",
+    )
     args = parser.parse_args()
     path = args.root / "PROJECT_STATE.json"
     state = json.loads(path.read_text(encoding="utf-8"))
@@ -39,6 +52,14 @@ def main() -> int:
         "verified_at": date.today().isoformat(),
         "evidence": args.evidence,
     })
+    if args.clear_paused:
+        state["paused_issue"] = None
+        state["paused_note"] = None
+    else:
+        if args.paused_issue is not None:
+            state["paused_issue"] = args.paused_issue
+        if args.paused_note is not None:
+            state["paused_note"] = args.paused_note
     state.pop("verified_main_commit", None)
     path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n",
                     encoding="utf-8")

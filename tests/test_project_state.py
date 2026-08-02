@@ -64,6 +64,56 @@ class ProjectStateTest(unittest.TestCase):
         )
         self.assertTrue(any("duplicates mutable state" in e for e in validate(root)))
 
+    def test_sync_script_records_paused_issue_without_losing_progress(self):
+        tmp, root = self.make_repo()
+        self.addCleanup(tmp.cleanup)
+        result = subprocess.run(
+            [
+                sys.executable, "scripts/sync_project_state.py",
+                "--root", str(root),
+                "--merged-pr", "14", "--phase", "V1 Week X",
+                "--status", "pilot", "--active-issue", "99",
+                "--active-branch", "agent/pilot",
+                "--next-action", "run pilot",
+                "--evidence", "test",
+                "--paused-issue", "16",
+                "--paused-note", "asked 0 of 5 questions; next is app purpose",
+            ],
+            cwd=Path(__file__).resolve().parents[1], capture_output=True, text=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        state = json.loads((root / "PROJECT_STATE.json").read_text(encoding="utf-8"))
+        self.assertEqual(state["paused_issue"], 16)
+        self.assertEqual(
+            state["paused_note"], "asked 0 of 5 questions; next is app purpose"
+        )
+        self.assertEqual(state["active_issue"], 99)
+
+    def test_sync_script_clear_paused_resets_fields(self):
+        tmp, root = self.make_repo()
+        self.addCleanup(tmp.cleanup)
+        state_path = root / "PROJECT_STATE.json"
+        state = json.loads(state_path.read_text(encoding="utf-8"))
+        state["paused_issue"] = 16
+        state["paused_note"] = "old note"
+        state_path.write_text(json.dumps(state), encoding="utf-8")
+        result = subprocess.run(
+            [
+                sys.executable, "scripts/sync_project_state.py",
+                "--root", str(root),
+                "--merged-pr", "14", "--phase", "V1 Week 3",
+                "--status", "resumed", "--active-issue", "16",
+                "--active-branch", "agent/v1-week3-small-app",
+                "--next-action", "resume interview",
+                "--evidence", "test", "--clear-paused",
+            ],
+            cwd=Path(__file__).resolve().parents[1], capture_output=True, text=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        state = json.loads(state_path.read_text(encoding="utf-8"))
+        self.assertIsNone(state["paused_issue"])
+        self.assertIsNone(state["paused_note"])
+
 
 if __name__ == "__main__":
     unittest.main()
