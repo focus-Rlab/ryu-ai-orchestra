@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
-  "phase": "Three-agent pilot (sandbox)",
-  "status": "phase3_complete_pending_phase4_decision",
-  "latest_merged_pr": 18,
-  "active_issue": 19,
-  "active_branch": "claude/raphael-orchestrator-design-5duz71",
-  "paused_issue": 15,
-  "next_action": "Phase 3 (unit + boundary tests for requirements-designer/implementer/tester-evaluator) is complete, 8/8 passed, evidence in evaluations/three-agent-pilot/. Awaiting Ryunosuke's decision on whether to proceed to Phase 4 (stretch: a small connected pilot project run through the three agents). Do not push, open a PR, or start Phase 4 without explicit approval. Also re-verify at next session start whether requirements-designer/implementer/tester-evaluator are recognized as subagent_type from the very beginning of the session (they were not at first in this session; recognition activated mid-session for an unconfirmed reason).",
-  "verified_at": "2026-08-01",
-  "evidence": "Issue #19 created by Ryunosuke (manual, GitHub App lacked Issues:write permission) and confirmed via issue_read: title/body match the approved draft, state=open, html_url=https://github.com/focus-Rlab/ryu-ai-orchestra/issues/19. Local commits 36e40ad/dc1d980/8b79666/301eb90 on claude/raphael-orchestrator-design-5duz71 contain the pilot's agent definitions, design doc, and 8/8 passing unit+boundary test records; not pushed. Commits show correct author (noreply@anthropic.com) but are unsigned because this environment's SSH signing key file is empty -- a known, accepted, unresolved environment limitation, not a content issue.",
-  "verified_project_digest": "sha256:1ab7e43ffa5b6aa0426c219359c34a225eab9de99cc94a30642485451257a188",
-  "paused_note": "0 of 5 requirement-interview questions asked. next_action before pausing: ask Ryunosuke five requirement questions one at a time, beginning with the app's purpose; do not implement until requirements are confirmed. Original active_branch was agent/v1-week3-small-app (no open PR). Resume by returning to that branch and asking the first question."
+  "phase": "V1 Week 3 pre-start",
+  "status": "three_agent_pilot_complete_week3_ready",
+  "latest_merged_pr": 20,
+  "active_issue": 15,
+  "active_branch": "agent/v1-week3-small-app",
+  "paused_issue": null,
+  "next_action": "Start Week 3 in a new conversation. First verify GitHub main and whether requirements-designer, implementer, and tester-evaluator are recognized as subagent_type at session start. Then ask Ryunosuke only requirement question 1 of 5: the small app's purpose. Do not implement until all requirements are confirmed.",
+  "verified_at": "2026-08-02",
+  "evidence": "PR #20 is merged into main and contains the completed three-agent pilot: 11 reconstructed commits, 56 changed files, pilot promotion, user evaluation, and 64 passing tests (28 repository tests, 32 handoff-checker tests, 4 connected-pilot tests). Issue #15 remains open with 0 of 5 requirement questions asked. Issue #19 is complete and should be closed after this state-sync PR is opened.",
+  "verified_project_digest": "sha256:a06ad6b8d17a7201b07257c95fc13071f27e60823a4f4e770612512748748994",
+  "paused_note": null
 }
