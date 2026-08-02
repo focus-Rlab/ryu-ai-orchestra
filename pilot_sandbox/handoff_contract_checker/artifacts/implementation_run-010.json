@@ -12,7 +12,7 @@
     {"id": "AC-5", "status": "implemented", "note": "implementation_ac_not_addressed.json"},
     {"id": "AC-6", "status": "implemented", "note": "implementation_undeclared_deviation.json"},
     {"id": "AC-7", "status": "implemented", "note": "implementation_declared_deviation_covered.json"},
-    {"id": "AC-8", "status": "implemented", "note": "evaluation_pass_without_evidence.json (empty + mismatched evidence_ref)"},
+    {"id": "AC-8", "status": "implemented", "note": "evaluation_pass_without_evidence.json (empty + mismatched evidence_ref); intentionally also reports SCHEMA_INVALID (REQ-A3/REQ-B1) alongside UNSUPPORTED_PASS_WITHOUT_EVIDENCE (REQ-B5), per run-010 review decision"},
     {"id": "AC-9", "status": "implemented", "note": "implementation_run_id_mismatch.json"},
     {"id": "AC-10", "status": "implemented", "note": "implementation_target_mismatch.json"},
     {"id": "AC-11", "status": "implemented", "note": "requirements_not_approved.json"},
@@ -27,7 +27,7 @@
     {"id": "AC-20", "status": "implemented", "note": "implementation_unapproved_proposed_deviation.json -> pending, exit 0"},
     {"id": "AC-21", "status": "implemented", "note": "implementation_unapproved_implemented_deviation.json -> finding, exit 1"},
     {"id": "AC-22", "status": "implemented", "note": "implementation_implemented_deviation_no_related_files.json via `validate`"},
-    {"id": "AC-23", "status": "implemented", "note": "30 automated tests in tests/test_checker.py + CoverageMetaTest cross-checking all REQ-B check_ids"},
+    {"id": "AC-23", "status": "implemented", "note": "32 automated tests in tests/test_checker.py + CoverageMetaTest cross-checking all REQ-B check_ids"},
     {"id": "AC-25", "status": "implemented", "note": "implementation_duplicate_run_id.json (run_id == requirements.run_id)"},
     {"id": "AC-26", "status": "implemented", "note": "requirements_bad_run_id_format.json via `validate`, exit 1"},
     {"id": "AC-27", "status": "implemented", "note": "requirements_bad_run_id_format.json + implementation_bad_run_id_shared.json, both 'run-1', via `check`, exit 2 as format error not duplicate"}
@@ -75,38 +75,34 @@
   ],
   "deviations": [
     {
-      "description": "REQ-A3 states evidence_ref-required-when-pass and residual_risks-required-when-conditional_pass as part of the evaluation schema (REQ-A3), but REQ-B5 separately assigns these exact conditions their own check_ids (UNSUPPORTED_PASS_WITHOUT_EVIDENCE, STATUS_INCONSISTENCY). To avoid duplicate/conflicting findings for the identical condition, these two constraints were implemented exclusively under REQ-B5 and intentionally excluded from the generic SCHEMA_INVALID (REQ-B1) check, since REQ-B explicitly names a more specific check_id for each. This only affects `check`; under `validate` (schema-only, REQ-B1 relevant per REQ-C1) these two conditions are not checked at all, since REQ-C1 restricts `validate` to REQ-B1 only and B5 is check-only.",
-      "reason": "Requirements v3.1 does not explicitly resolve this overlap; choosing to duplicate the SCHEMA_INVALID finding alongside the REQ-B5 finding would contradict REQ-B5's explicit ownership of these two named conditions and could confuse downstream consumers with two different check_ids for one root cause. This interpretation was necessary to produce a deterministic, non-ambiguous implementation from the requirements text as written.",
-      "related_files": ["pilot_sandbox/handoff_contract_checker/handoff_checker/schema.py"],
-      "approval_status": "unapproved",
-      "implementation_status": "implemented"
-    },
-    {
       "description": "REQ-C4 lists 'schema_version非対応' as a fatal (exit 2) condition without the '<checkのみ>' qualifier that is explicitly attached to the run_id items. This was interpreted as applying to both `validate` and `check` (i.e. an unsupported schema_version is always fatal, unlike a malformed run_id, which is only fatal in `check`). This is a plausible but not explicitly confirmed reading of REQ-C4's wording.",
       "reason": "The requirements text does not state this distinction as explicitly as it does for run_id (no '<checkのみ>' annotation was attached to schema_version, file-not-found, or JSON-syntax-error in REQ-C4's enumeration), so the absence of the qualifier was read as intentional. AC-15 itself does not specify which command it applies to.",
       "related_files": ["pilot_sandbox/handoff_contract_checker/handoff_checker/cli.py"],
-      "approval_status": "unapproved",
+      "approval_status": "approved",
+      "approved_by": "ryunosuke",
       "implementation_status": "implemented"
     },
     {
       "description": "The finding[].artifact field for cross-artifact-only findings that do not belong to a single artifact (TARGET_MISMATCH, and the completion_status/overall_result STATUS_INCONSISTENCY branch of REQ-B6) uses the literal string 'cross' as a sentinel value. REQ-A/B/C do not define an enum or convention for this field for cross-artifact findings.",
       "reason": "REQ-C3 defines finding[].artifact as a field but does not enumerate its allowed values or specify what to put there for a finding that inherently spans all three artifacts rather than belonging to one. 'cross' was chosen as a self-explanatory placeholder within the freedom left by the requirements.",
       "related_files": ["pilot_sandbox/handoff_contract_checker/handoff_checker/cross_checks.py"],
-      "approval_status": "unapproved",
+      "approval_status": "approved",
+      "approved_by": "ryunosuke",
       "implementation_status": "implemented"
     },
     {
       "description": "The `validate` command's JSON report shape (report_schema_version/checked/findings/summary, with checked = {artifact_type, run_id} and no 'pending' key) was designed by analogy to REQ-C3's `check` report shape, since REQ-C3 only defines the exact JSON structure for `check`. `validate` never produces pending items (REQ-C1 restricts it to REQ-B1 only, which has no pending-producing logic), so 'pending' was omitted rather than always emitted as an empty array.",
       "reason": "REQ-C3's JSON schema example is explicitly for `check`. No equivalent example is given for `validate`, so a consistent, minimal structure was designed within the requirements' stated constraints (REQ-C1: validate performs schema validation only).",
       "related_files": ["pilot_sandbox/handoff_contract_checker/handoff_checker/cli.py"],
-      "approval_status": "unapproved",
+      "approval_status": "approved",
+      "approved_by": "ryunosuke",
       "implementation_status": "implemented"
     }
   ],
   "resolved_unresolved_items": [],
   "open_issues": [
     "AC-24 (independent tester-evaluator verification with separate fixtures/reproduction steps) is explicitly out of scope for implementer per REQ-D and was not attempted.",
-    "The 4 interpretive decisions listed in `deviations` above are design choices made to resolve genuine ambiguity/underspecification in requirements v3.1; none required implementing anything outside the stated REQ-A/B/C behavior, but Raphael/Ryunosuke should confirm they match intent before tester-evaluator relies on them as ground truth."
+    "Run-010 review correction (2026-08-02): the original submission contained a 4th deviation that suppressed REQ-A3's schema-level evidence_ref/residual_risks constraints in favor of REQ-B5's semantic checks of the same conditions, to avoid what was assessed as duplicate findings. Ryunosuke did not approve this and directed that REQ-A3 (REQ-B1/SCHEMA_INVALID) and REQ-B5 be implemented independently, with both findings intentionally co-occurring for the same violation. This has been implemented in `handoff_checker/schema.py` (validate_evaluation): evidence_ref is now validated as required + matching an evidence[].id when result=='pass', and residual_risks is now validated as non-empty when overall_result=='conditional_pass', both as SCHEMA_INVALID findings independent of and in addition to REQ-B5's UNSUPPORTED_PASS_WITHOUT_EVIDENCE/STATUS_INCONSISTENCY. This also means `validate --type evaluation` alone now detects these two conditions (previously only `check` did, via REQ-B5). No remaining unapproved-and-implemented deviations from this batch; the 3 other deviations from the original submission were approved by Ryunosuke and are recorded above with approval_status 'approved'."
   ],
   "completion_status": "complete"
 }

@@ -4,22 +4,31 @@ Each validate_* function returns a list of finding dicts (check_id is
 always SCHEMA_INVALID). Nothing here mutates the input data; only the
 raw values already present in the JSON are echoed back in messages.
 
-Two constraints described in REQ-A3 are intentionally *excluded* from
-schema validation because REQ-B explicitly assigns them their own,
-more specific, check IDs (to avoid duplicated/conflicting semantics
-for the exact same condition):
+REQ-A3 states two conditional constraints as part of the evaluation
+schema itself:
 
   * evaluation.acceptance_criteria_results[].evidence_ref required and
     consistent with evidence[].id when result == "pass"
-    -> handled exclusively by REQ-B5 (UNSUPPORTED_PASS_WITHOUT_EVIDENCE)
   * evaluation.residual_risks non-empty when overall_result ==
     "conditional_pass"
-    -> handled exclusively by REQ-B5 (STATUS_INCONSISTENCY)
+
+REQ-B5 separately assigns these same real-world conditions their own,
+more specific, semantic check IDs (UNSUPPORTED_PASS_WITHOUT_EVIDENCE /
+STATUS_INCONSISTENCY). Requirements v3.1 does not state a rule
+suppressing one check in favor of the other, so both are implemented
+independently and, per Raphael/Ryunosuke direction (run-010 review),
+BOTH findings are intentionally reported together when the same
+underlying data violates both: SCHEMA_INVALID here (REQ-B1, format/
+structural validation of REQ-A3) and UNSUPPORTED_PASS_WITHOUT_EVIDENCE
+/ STATUS_INCONSISTENCY from REQ-B5 (cross_checks.py, semantic
+validation, `check` command only). This means `validate --type
+evaluation` now also reports SCHEMA_INVALID for these two conditions
+even though REQ-B5 itself is only exercised by `check`.
 
 All other constraints stated in REQ-A (including the deviations
 related_files-non-empty-when-implemented rule, which REQ-B4 itself
 explicitly labels a schema constraint / SCHEMA_INVALID, see AC-22) are
-validated here.
+validated here as well.
 """
 
 from __future__ import annotations
@@ -38,6 +47,7 @@ from .common import (
     is_non_empty_str,
     is_str,
     make_finding,
+    norm,
 )
 
 _ARTIFACT_TYPE_ENUM = {
@@ -533,6 +543,18 @@ def validate_evaluation(data: Dict[str, Any]) -> List[Dict[str, Any]]:
                 findings, artifact, "verification_target.implementation_run_id", vt["implementation_run_id"]
             )
 
+    # Pre-scan evidence ids (raw + normalized) so acceptance_criteria_results
+    # below can validate evidence_ref cross-references. This is intentionally
+    # independent of the 'evidence' block's own validity below (REQ-A3 does
+    # not make evidence_ref's schema check conditional on 'evidence' itself
+    # being fully schema-valid).
+    _raw_evidence = data.get("evidence")
+    evidence_ids_normalized = set()
+    if is_list(_raw_evidence):
+        for _e in _raw_evidence:
+            if is_dict(_e) and isinstance(_e.get("id"), str):
+                evidence_ids_normalized.add(norm(_e["id"]))
+
     # acceptance_criteria_results (min length 0; 1+ is only "recommended", not enforced)
     result_enum = ("pass", "fail", "not_tested")
     if "acceptance_criteria_results" not in data:
@@ -560,10 +582,27 @@ def validate_evaluation(data: Dict[str, Any]) -> List[Dict[str, Any]]:
                 _f(findings, artifact, f"{base}.result", "required field 'result' is missing")
             elif item["result"] not in result_enum:
                 _f(findings, artifact, f"{base}.result", f"'result' must be one of {result_enum}, got '{item['result']}'")
-            # NOTE: evidence_ref required-when-pass + must-match-evidence-id
-            # is intentionally NOT validated here; see module docstring.
             if "evidence_ref" in item and item["evidence_ref"] is not None and not is_str(item["evidence_ref"]):
                 _f(findings, artifact, f"{base}.evidence_ref", "'evidence_ref' must be a string if present")
+            # REQ-A3: evidence_ref is required and must reference an existing
+            # evidence[].id whenever result == "pass" (REQ-B0-normalized
+            # comparison). This is a schema-level (structural) requirement
+            # and is validated independently of REQ-B5's semantic check of
+            # the same condition (see module docstring); both findings are
+            # intentionally reported together when violated.
+            if item.get("result") == "pass":
+                evidence_ref = item.get("evidence_ref")
+                if (
+                    not isinstance(evidence_ref, str)
+                    or norm(evidence_ref) == ""
+                    or norm(evidence_ref) not in evidence_ids_normalized
+                ):
+                    _f(
+                        findings,
+                        artifact,
+                        f"{base}.evidence_ref",
+                        "'evidence_ref' is required and must match an existing evidence[].id when result is 'pass'",
+                    )
 
     # executed_steps
     if "executed_steps" not in data:
@@ -629,8 +668,11 @@ def validate_evaluation(data: Dict[str, Any]) -> List[Dict[str, Any]]:
             f"'overall_result' must be one of {overall_enum}, got '{data['overall_result']}'",
         )
 
-    # residual_risks (min length 0; 1+ required when conditional_pass is
-    # handled exclusively by REQ-B5 STATUS_INCONSISTENCY, see module docstring)
+    # residual_risks (min length 0 in general; REQ-A3 additionally requires
+    # 1+ when overall_result == "conditional_pass". This schema-level check
+    # is validated independently of REQ-B5's semantic STATUS_INCONSISTENCY
+    # check of the same condition, see module docstring; both findings are
+    # intentionally reported together when violated.)
     if "residual_risks" not in data:
         _f(findings, artifact, "residual_risks", "required field 'residual_risks' is missing")
     elif not is_list(data["residual_risks"]):
@@ -639,6 +681,13 @@ def validate_evaluation(data: Dict[str, Any]) -> List[Dict[str, Any]]:
         for i, item in enumerate(data["residual_risks"]):
             if not is_str(item):
                 _f(findings, artifact, f"residual_risks[{i}]", "elements of 'residual_risks' must be strings")
+        if data.get("overall_result") == "conditional_pass" and len(data["residual_risks"]) < 1:
+            _f(
+                findings,
+                artifact,
+                "residual_risks",
+                "'residual_risks' must contain at least 1 element when overall_result is 'conditional_pass'",
+            )
 
     return findings
 

@@ -91,6 +91,33 @@ class SchemaValidationTests(unittest.TestCase):
         self.assertTrue(matches)
         self.assertEqual(matches[0]["check_id"], "SCHEMA_INVALID")
 
+    def test_req_a3_evidence_ref_required_when_pass_is_schema_invalid_via_validate(self):
+        """REQ-A3: evidence_ref required + must match evidence[].id when
+        result == 'pass' is a schema-level constraint and must be detected
+        by `validate --type evaluation` alone (REQ-B1), independent of
+        REQ-B5 (which is check-only). Run-010 review decision: this must
+        NOT be suppressed in favor of REQ-B5's UNSUPPORTED_PASS_WITHOUT_EVIDENCE."""
+        code, report, err = run_validate_json("evaluation", "evaluation_pass_without_evidence.json")
+        self.assertEqual(code, 1, msg=err)
+        matches = [
+            f
+            for f in report["findings"]
+            if f["check_id"] == "SCHEMA_INVALID" and "evidence_ref" in f["field_path"]
+        ]
+        self.assertEqual(len(matches), 2, msg=f"expected 2 SCHEMA_INVALID evidence_ref findings, got: {report['findings']}")
+
+    def test_req_a3_residual_risks_required_when_conditional_pass_is_schema_invalid_via_validate(self):
+        """REQ-A3: residual_risks must contain >=1 element when
+        overall_result == 'conditional_pass' is a schema-level constraint
+        and must be detected by `validate --type evaluation` alone
+        (REQ-B1), independent of REQ-B5 (check-only)."""
+        code, report, err = run_validate_json("evaluation", "evaluation_conditional_pass_no_risks.json")
+        self.assertEqual(code, 1, msg=err)
+        matches = [
+            f for f in report["findings"] if f["check_id"] == "SCHEMA_INVALID" and f["field_path"] == "residual_risks"
+        ]
+        self.assertTrue(matches, msg=f"expected a SCHEMA_INVALID residual_risks finding, got: {report['findings']}")
+
 
 class CrossCheckTests(unittest.TestCase):
     """REQ-B2 - REQ-B6 via `check` (AC-3 .. AC-11, AC-16 .. AC-21)."""
@@ -137,6 +164,16 @@ class CrossCheckTests(unittest.TestCase):
         self.assertIn("UNSUPPORTED_PASS_WITHOUT_EVIDENCE", check_ids(report["findings"]), msg=err)
         matches = [f for f in report["findings"] if f["check_id"] == "UNSUPPORTED_PASS_WITHOUT_EVIDENCE"]
         self.assertEqual(len(matches), 2)  # AC-1 (mismatched ref) and AC-2 (empty ref)
+        # Run-010 review decision: REQ-A3's schema-level evidence_ref
+        # constraint (REQ-B1) and REQ-B5's semantic check of the same
+        # underlying data are both implemented independently, so the same
+        # violation is intentionally reported twice, under two check_ids.
+        schema_matches = [
+            f
+            for f in report["findings"]
+            if f["check_id"] == "SCHEMA_INVALID" and "evidence_ref" in f["field_path"]
+        ]
+        self.assertEqual(len(schema_matches), 2, msg=f"expected 2 SCHEMA_INVALID evidence_ref findings alongside the 2 UNSUPPORTED_PASS_WITHOUT_EVIDENCE findings, got: {report['findings']}")
         self.assertEqual(code, 1)
 
     def test_ac09_requirements_run_id_mismatch(self):
@@ -401,7 +438,12 @@ class BonusCrossCheckCoverageTests(unittest.TestCase):
         matches = [f for f in report["findings"] if f["check_id"] == "STATUS_INCONSISTENCY" and f["artifact"] == "cross"]
         self.assertTrue(matches, msg=err)
 
-    def test_extra_conditional_pass_requires_residual_risks_not_schema_invalid(self):
+    def test_extra_conditional_pass_requires_residual_risks_both_check_ids(self):
+        """Run-010 review decision: REQ-A3's schema-level residual_risks
+        constraint (REQ-B1/SCHEMA_INVALID) and REQ-B5's semantic
+        STATUS_INCONSISTENCY check of the same condition are both
+        implemented independently and are both expected to fire together
+        for the same underlying violation (intentional duplication)."""
         code, report, err = run_check_json(
             "requirements_valid.json", "implementation_valid.json", "evaluation_conditional_pass_no_risks.json"
         )
@@ -409,10 +451,8 @@ class BonusCrossCheckCoverageTests(unittest.TestCase):
             f for f in report["findings"] if f["check_id"] == "STATUS_INCONSISTENCY" and f["field_path"] == "residual_risks"
         ]
         self.assertTrue(status_matches, msg=err)
-        # residual_risks emptiness must NOT also be flagged as SCHEMA_INVALID
-        # (REQ-B5 owns this condition exclusively; see schema.py docstring)
         schema_matches = [f for f in report["findings"] if f["check_id"] == "SCHEMA_INVALID" and f["field_path"] == "residual_risks"]
-        self.assertEqual(schema_matches, [])
+        self.assertTrue(schema_matches, msg=f"expected SCHEMA_INVALID to also fire alongside STATUS_INCONSISTENCY, got: {report['findings']}")
 
 
 if __name__ == "__main__":
