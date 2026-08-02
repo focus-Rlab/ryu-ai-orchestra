@@ -55,6 +55,8 @@ Claude Codeの`.claude/agents/*.md`における`tools:`frontmatterは、**ツー
 
 **重要な誠実性の明記**: implementerとtester-evaluatorに付与したBashは、宣言どおりの用途（テスト・構文確認）に限定することを技術的に保証しない。これは今回のパイロットの既知の限界であり、PreToolUseフック等による強化は`agents/implementer.md`・`agents/tester-evaluator.md`の「Open questions」に将来の再検討事項として記録した。今回はRaphael（本セッション）がgit push/PR作成を自ら行い、実装・検証エージェントには行わせない運用で実質的リスクを抑える。
 
+**追記（run-007/run-008で実地検証済み）**: requirements-designerのWrite/Edit/Bash不許可、およびtester-evaluatorのWrite/Edit不許可は、当初は`tools:`frontmatterの仕様に基づく設計上の主張だったが、本物のサブエージェント（`subagent_type`経由の直接呼び出し）に対してWrite/Editの呼び出しを意図的に試行させたところ、いずれも関数定義自体が提示されておらず呼び出し不能（tester-evaluatorのEdit試行では`Error: No such tool available: Edit`という明示的なランタイムエラー）であることを確認した。詳細は`evaluations/three-agent-pilot/RUN_LOG.md`の「技術的強制の再検証」を参照。
+
 ## 共通依頼書（ブリーフ）様式
 
 Raphaelが各エージェントを起動する際、以下を含む依頼書を渡す。
