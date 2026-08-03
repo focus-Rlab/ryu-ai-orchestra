@@ -1,6 +1,6 @@
 # Specification Traceability Matrix
 
-Version: 0.6.0-draft
+Version: 0.6.1-draft
 Owner: Ryunosuke Matsumoto
 
 ## 目的
@@ -33,6 +33,7 @@ Owner: Ryunosuke Matsumoto
 | 必要ツールの接続・権限・読取・書込障害を即時報告する | MASTER_SPEC.md / README.md / USER.md / GOVERNANCE.md / PROJECT_HANDOFF.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md / RAPHAEL_HANDOFF_PROTOCOL.md / RAPHAEL_TEST_PLAN.md / OPERATING_GUIDE.md | 反映済み |
 | PRマージ・ブランチ変更・作業完了直後に現在地を同期する | MASTER_SPEC.md / README.md / GOVERNANCE.md / PROJECT_HANDOFF.md / ROADMAP.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md / RAPHAEL_HANDOFF_PROTOCOL.md / RAPHAEL_TEST_PLAN.md / OPERATING_GUIDE.md | 反映済み |
 | 情報不足の分類・質問最適化 | MASTER_SPEC.md / USER.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |
+| 文脈上明確な短文回答の解釈・不要な再質問防止・進行許可後の継続実行 | MASTER_SPEC.md / agents/raphael.md | 反映済み |
 | 自発性と反対強度 | MASTER_SPEC.md / USER.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |
 | 調査・実験 | MASTER_SPEC.md / SECURITY.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |
 | 最小有能チーム原則 | MASTER_SPEC.md / GOVERNANCE.md / OPERATING_GUIDE.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |
