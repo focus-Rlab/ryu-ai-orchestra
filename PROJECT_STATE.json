@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
   "phase": "V1 Week 3",
-  "status": "instruction_application_incident_open_corrective_controls_tested",
+  "status": "mistake_protocol_extension_under_review",
   "latest_merged_pr": 23,
   "active_issue": 15,
   "active_branch": "agent/v1-week3-small-app",
   "paused_issue": null,
-  "next_action": "Obtain Ryunosuke decision on formal adoption of the action gate. Keep the effort-avatar acceptance paused until incident handling is adopted; then complete mobile/WebGL validation and tester-evaluator review. Do not merge, deploy, publish, or use paid services without explicit approval.",
+  "next_action": "Ryunosuke reviews and decides whether to merge PR #24. After merge, resume the effort-avatar work and re-report implementation status, requirement gaps, unverified scope, and specialist assignments.",
   "verified_at": "2026-08-03",
-  "evidence": "Independent incident and control reviews completed. Pre-action and completion-claim gate implemented with 8 focused tests; full repository suite passes 41/41. Incident remains open pending formal adoption decision and later merge approval.",
-  "verified_project_digest": "sha256:98ca0687a79599111cb0279c18626ee3c5bec73d4ed84f9fd70b63ddbadf5c3f",
+  "evidence": "PR #24 now extends the full mistake-response flow to general mistakes and repeated mistakes. The repeated gh false-impossibility incident is recorded with an aggregated minimum count of five. Independent audit findings were adopted; 17 focused tests and 50 full repository tests pass. Machine validation limits are explicitly documented; merge remains pending Ryunosuke.",
+  "verified_project_digest": "sha256:eb5bab84dfc318987fb9ca9fee896b3a76df73f1a81d3be13680ab98ef5ef35c",
   "paused_note": null
 }

@@ -2,6 +2,15 @@
   "task": "Correct the repeated failure to apply already-read instructions during execution",
   "action": "Add a pre-action application gate, tests, canonical reinforcement, and an incident record",
   "action_type": "incident_response",
+  "mistake_detected": true,
+  "classification_basis": "Multiple execution failures share the same instruction-application root cause",
+  "mistake_triggers": [{"type": "user_report", "evidence": [{"type": "user_report", "ref": "conversation before PR #24", "result": "multiple instruction-application failures identified"}]}],
+  "mistake": {
+    "classification": "repeated",
+    "occurrence_count": 2,
+    "root_cause_id": "instruction-read-but-not-applied-at-action-boundary",
+    "prior_mistake_refs": [{"incident_id": "instruction-application-001"}]
+  },
   "canonical_files_read": [
     "STARTUP_CONTEXT.md",
     "README.md",
@@ -48,18 +57,18 @@
     "Do not change role, authority, evaluation criteria, or production behavior without Ryunosuke approval",
     "Do not report the incident closed before all required steps and independent review are complete"
   ],
-  "incident_steps": [
-    "classify",
-    "root_cause",
-    "impact_scope",
-    "similar_case_audit",
-    "generalized_prevention",
-    "success_test",
-    "failure_test",
-    "independent_review_decision",
-    "approval_boundary",
-    "canonical_updates",
-    "similar_but_not_identical_retest",
-    "incident_record"
-  ]
+  "incident_steps": {
+    "classify": {"status": "complete", "evidence": [{"type": "file", "ref": "INCIDENT_LOG.md", "result": "incident classified"}]},
+    "root_cause": {"status": "complete", "evidence": [{"type": "file", "ref": "INCIDENT_LOG.md", "result": "root cause recorded"}]},
+    "impact_scope": {"status": "complete", "evidence": [{"type": "file", "ref": "INCIDENT_LOG.md", "result": "impact recorded"}]},
+    "similar_case_audit": {"status": "complete", "evidence": [{"type": "agent_report", "ref": "incident_auditor", "result": "similar cases audited"}]},
+    "generalized_prevention": {"status": "complete", "evidence": [{"type": "file", "ref": "scripts/check_action_gate.py", "result": "gate implemented"}]},
+    "success_test": {"status": "complete", "evidence": [{"type": "test", "ref": "tests/test_action_gate.py", "result": "passing cases passed"}]},
+    "failure_test": {"status": "complete", "evidence": [{"type": "test", "ref": "tests/test_action_gate.py", "result": "fail-closed cases passed"}]},
+    "independent_review_decision": {"status": "complete", "evidence": [{"type": "agent_report", "ref": "control_reviewer", "result": "review completed"}]},
+    "approval_boundary": {"status": "complete", "evidence": [{"type": "pr", "ref": "PR #24", "result": "unmerged pending Ryunosuke"}]},
+    "canonical_updates": {"status": "complete", "evidence": [{"type": "file", "ref": "SPEC_TRACEABILITY.md", "result": "canonical updates traced"}]},
+    "similar_but_not_identical_retest": {"status": "complete", "evidence": [{"type": "test", "ref": "test_non_mistake_documentation_correction_passes", "result": "passed"}]},
+    "incident_record": {"status": "complete", "evidence": [{"type": "file", "ref": "INCIDENT_LOG.md", "result": "incident recorded"}]}
+  }
 }

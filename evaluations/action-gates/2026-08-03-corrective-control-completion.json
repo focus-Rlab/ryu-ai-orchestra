@@ -2,6 +2,9 @@
   "task": "Report the current result of the instruction-application corrective work",
   "action": "Make a bounded completion claim without closing the incident",
   "action_type": "completion_claim",
+  "mistake_detected": false,
+  "classification_basis": "This record reports bounded completion evidence; it is not itself a new mistake response",
+  "mistake_triggers": [{"type": "none", "evidence": [{"type": "file", "ref": "evaluations/action-gates/2026-08-03-corrective-control-completion.json", "result": "no new mistake detected"}]}],
   "canonical_files_read": [
     "STARTUP_CONTEXT.md",
     "GOVERNANCE.md",

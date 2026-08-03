@@ -16,6 +16,8 @@ COMMON_FIELDS = {
     "assignment_decision",
     "required_checks",
     "stop_conditions",
+    "mistake_detected",
+    "classification_basis",
 }
 
 INCIDENT_STEPS = {
@@ -33,12 +35,53 @@ INCIDENT_STEPS = {
     "incident_record",
 }
 
+MISTAKE_ACTION_TYPES = {"mistake_response", "incident_response", "incident_close"}
+MISTAKE_CLASSES = {"general", "repeated", "major"}
+PATH_STATUSES = {"available", "unavailable", "not_authorized", "not_equivalent"}
+REQUIRED_PATH_CLASSES = {"requested_tool", "configured_connector", "api", "local_vcs", "browser", "manual_handoff"}
+EVIDENCE_TYPES = {"file", "test", "agent_report", "user_report", "tool_result", "pr"}
+MISTAKE_TRIGGER_TYPES = {"user_report", "prior_action_invalid", "test_failure", "review_failure", "policy_violation"}
 
-def validate(record: dict) -> list[str]:
+
+def valid_evidence(items) -> bool:
+    if not isinstance(items, list) or not items:
+        return False
+    for item in items:
+        if not isinstance(item, dict) or item.get("type") not in EVIDENCE_TYPES or not item.get("ref") or not item.get("result"):
+            return False
+        if item.get("type") == "file" and not Path(item["ref"]).exists():
+            return False
+    return True
+
+
+def validate(record: dict, registry: dict | None = None) -> list[str]:
     errors: list[str] = []
     missing = sorted(COMMON_FIELDS - record.keys())
     if missing:
         errors.append(f"missing fields: {', '.join(missing)}")
+
+    if not isinstance(record.get("mistake_detected"), bool):
+        errors.append("mistake_detected must be true or false")
+    if not record.get("classification_basis"):
+        errors.append("classification_basis is required")
+
+    triggers = record.get("mistake_triggers")
+    if not isinstance(triggers, list) or not triggers:
+        errors.append("mistake_triggers must be a non-empty list")
+        triggers = []
+    confirmed_trigger = False
+    for trigger in triggers:
+        if not isinstance(trigger, dict) or not trigger.get("type") or not valid_evidence(trigger.get("evidence")):
+            errors.append("each mistake trigger requires type and structured evidence")
+            continue
+        if trigger.get("type") in MISTAKE_TRIGGER_TYPES:
+            confirmed_trigger = True
+        elif trigger.get("type") != "none":
+            errors.append("mistake trigger type is invalid")
+    if confirmed_trigger and record.get("mistake_detected") is not True:
+        errors.append("confirmed mistake triggers require mistake_detected true")
+    if record.get("mistake_detected") is True and not confirmed_trigger:
+        errors.append("mistake_detected true requires a confirmed mistake trigger")
 
     for field in ("canonical_files_read", "applicable_rules", "required_checks", "stop_conditions"):
         if field in record and not isinstance(record[field], list):
@@ -69,11 +112,98 @@ def validate(record: dict) -> list[str]:
             if "unverified_scope" not in completion:
                 errors.append("completion evidence must state unverified_scope")
 
-    if record.get("action_type") in {"incident_response", "incident_close"}:
-        steps = set(record.get("incident_steps", []))
-        missing_steps = sorted(INCIDENT_STEPS - steps)
+    if record.get("action_type") == "impossibility_claim":
+        inventory = record.get("execution_path_inventory")
+        if not isinstance(inventory, dict):
+            errors.append("impossibility claims require an execution_path_inventory")
+        else:
+            if not inventory.get("scope_basis"):
+                errors.append("execution path inventory requires a scope_basis")
+            if inventory.get("inventory_complete") is not True:
+                errors.append("execution path inventory must be explicitly complete")
+            paths = inventory.get("paths")
+            if not isinstance(paths, list) or not paths:
+                errors.append("execution path inventory requires checked paths")
+            else:
+                classes = [path.get("class") for path in paths if isinstance(path, dict)]
+                missing_classes = sorted(REQUIRED_PATH_CLASSES - set(classes))
+                if missing_classes:
+                    errors.append(f"execution path classes missing: {', '.join(missing_classes)}")
+                for path in paths:
+                    if not isinstance(path, dict):
+                        errors.append("each execution path must be an object")
+                        continue
+                    if path.get("status") not in PATH_STATUSES:
+                        errors.append("execution path status is invalid or unresolved")
+                    if path.get("class") not in REQUIRED_PATH_CLASSES:
+                        errors.append("execution path class is invalid")
+                    if not path.get("path") or not path.get("reason") or not valid_evidence(path.get("evidence")):
+                        errors.append("each execution path requires path, reason, and structured evidence")
+                    if not isinstance(path.get("outcome_equivalent"), bool):
+                        errors.append("each execution path must state outcome_equivalent")
+                    if not isinstance(path.get("authorized"), bool):
+                        errors.append("each execution path must state authorized")
+                    if (
+                        path.get("status") == "available"
+                        and path.get("outcome_equivalent") is True
+                        and path.get("authorized") is True
+                    ):
+                        errors.append("work cannot be called impossible while an authorized equivalent path is available")
+
+    is_mistake = record.get("mistake_detected") is True
+    if is_mistake and record.get("action_type") not in MISTAKE_ACTION_TYPES:
+        errors.append("mistake_detected actions must use a mistake response action_type")
+    if record.get("action_type") in MISTAKE_ACTION_TYPES and not is_mistake:
+        errors.append("mistake response action_type requires mistake_detected true")
+
+    if is_mistake:
+        mistake = record.get("mistake")
+        if not isinstance(mistake, dict):
+            errors.append("mistake classification is required for mistake responses")
+        else:
+            classification = mistake.get("classification")
+            occurrence_count = mistake.get("occurrence_count")
+            root_cause_id = mistake.get("root_cause_id")
+            prior_refs = mistake.get("prior_mistake_refs")
+            if classification not in MISTAKE_CLASSES:
+                errors.append("mistake.classification must be general, repeated, or major")
+            if not isinstance(occurrence_count, int) or occurrence_count < 1:
+                errors.append("mistake.occurrence_count must be a positive integer")
+            elif occurrence_count >= 2 and classification == "general":
+                errors.append("a repeated mistake cannot remain classified as general")
+            if not root_cause_id:
+                errors.append("mistake.root_cause_id is required")
+            if occurrence_count and occurrence_count >= 2 and not prior_refs:
+                errors.append("repeated mistakes require prior_mistake_refs")
+            if occurrence_count and occurrence_count >= 2 and isinstance(prior_refs, list):
+                known = (registry or {}).get("incidents", {})
+                covered_occurrences = 0
+                for prior in prior_refs:
+                    if not isinstance(prior, dict) or not prior.get("incident_id"):
+                        errors.append("prior mistake references must contain an incident_id")
+                        continue
+                    registered = known.get(prior["incident_id"])
+                    if not registered:
+                        errors.append("prior mistake reference is not present in the incident registry")
+                    elif registered.get("root_cause_id") != root_cause_id:
+                        errors.append("prior mistake root_cause_id does not match")
+                    else:
+                        covered_occurrences += registered.get("confirmed_occurrences", 0)
+                if covered_occurrences < occurrence_count - 1:
+                    errors.append("registered prior evidence does not cover the declared occurrence count")
+
+        steps = record.get("incident_steps")
+        if not isinstance(steps, dict):
+            errors.append("incident_steps must map every step to completion evidence")
+            steps = {}
+        missing_steps = sorted(INCIDENT_STEPS - set(steps))
         if missing_steps:
             errors.append(f"incident steps missing: {', '.join(missing_steps)}")
+        for step, result in steps.items():
+            if step not in INCIDENT_STEPS:
+                errors.append(f"unknown incident step: {step}")
+            if not isinstance(result, dict) or result.get("status") != "complete" or not valid_evidence(result.get("evidence")):
+                errors.append(f"incident step {step} requires complete status and structured evidence")
 
     return errors
 
@@ -83,7 +213,9 @@ def main() -> int:
     parser.add_argument("record", type=Path)
     args = parser.parse_args()
     record = json.loads(args.record.read_text(encoding="utf-8"))
-    errors = validate(record)
+    registry_path = args.record.parent / "mistake_registry.json"
+    registry = json.loads(registry_path.read_text(encoding="utf-8")) if registry_path.exists() else {}
+    errors = validate(record, registry)
     if errors:
         print("ACTION GATE: FAIL")
         for error in errors:
