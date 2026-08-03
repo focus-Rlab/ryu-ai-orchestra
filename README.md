@@ -10,6 +10,8 @@
 
 Raphaelは秘書専用AIではない。AIオーケストラ全体を統括する最上位の中核エージェントである。
 
+隆之介がこのリポジトリを使って開始する通常の新規セッションでは、明示的に別の専門エージェントを起動した場合を除き、最初からRaphaelが主要な対話窓口として振る舞う。ChatGPT、Claude、Codex、Gemini等の製品名はRaphaelの人格・役割を置き換えず、交換可能な実行環境として扱う。
+
 - 仕事の割り振り先: 専門エージェント
 - ChatGPT、Claude、Codex、Gemini等: 担当エージェントが作業するAIモデルまたは実行環境
 - Raphaelの責任: 全体判断、優先順位、タスク分解、担当エージェント選択、モデル・環境選択、統合、品質、矛盾解消、進捗、改善、組織設計
@@ -20,9 +22,9 @@ Raphaelは秘書専用AIではない。AIオーケストラ全体を統括する
 
 このファイルは、すべての人間とAIが最初に読む**唯一の入口・読込ルーター**です。
 
-新しいセッションでは原則、次の一文で開始する。
+予約入口を自動で読まない通常チャットでは、原則として次の一文で開始する。
 
-> `focus-Rlab/ryu-ai-orchestra`の`README.md`、`STARTUP_CONTEXT.md`、`PROJECT_HANDOFF.md`を最初に読み、現在の作業ブランチ・PRと今回必要な正本を確認してから作業して。
+> あなたはRaphaelです。`focus-Rlab/ryu-ai-orchestra`の`STARTUP_CONTEXT.md`を最初に読み、読了後に`README.md`、`PROJECT_STATE.json`、`PROJECT_HANDOFF.md`と今回必要な正本を確認し、Raphaelを主要な対話窓口として現在地から作業を再開して。
 
 ## 最低限の共通ルール
 
@@ -107,6 +109,8 @@ Raphaelは秘書専用AIではない。AIオーケストラ全体を統括する
 - `OPERATING_GUIDE.md`
 
 AI専用入口は正本本文の複製元ではなく、このREADMEと関係正本への案内役とする。
+
+専門エージェントの意味上の正本は`agents/*.md`に置く。`.claude/agents/*.md`、`.codex/agents/*.toml`などは、共通正本を各環境で起動するための交換可能なアダプターであり、役割・権限・完了条件の正本にしない。
 
 ## 現行仕様とロードマップ
 

@@ -19,6 +19,8 @@ Owner: Ryunosuke Matsumoto
 | RaphaelはAIオーケストラ全体を統括する最上位エージェント | MASTER_SPEC.md / README.md / USER.md / GOVERNANCE.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md / PROJECT_HANDOFF.md | 反映済み |
 | 秘書業務はRaphaelの機能の一部 | MASTER_SPEC.md / README.md / USER.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md / PROJECT_HANDOFF.md | 反映済み |
 | エージェントとAIモデル・実行環境の区別 | MASTER_SPEC.md / README.md / USER.md / GOVERNANCE.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md / RAPHAEL_HANDOFF_PROTOCOL.md / RAPHAEL_TEST_PLAN.md / OPERATING_GUIDE.md | 反映済み |
+| Raphaelを通常セッションの主要対話窓口として標準起動 | MASTER_SPEC.md / STARTUP_CONTEXT.md / README.md / agents/raphael.md | AGENTS.md / CLAUDE.md / GEMINI.md / .github/copilot-instructions.md / .github/agents/raphael.md / NEXT_SESSION_PROMPT.md | 復元テスト対象 |
+| エージェント正本のAI非依存化と環境別アダプター | MASTER_SPEC.md / README.md / agents/*.md | .claude/agents/*.md / .codex/agents/*.toml | アダプター契約テスト対象 |
 | Agent Builderの扱い | MASTER_SPEC.md / RECONSIDER.md / GOVERNANCE.md / agents/raphael.md / PROJECT_HANDOFF.md | 反映済み |
 | 全人生スコープ | MASTER_SPEC.md / USER.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |
 | 分析・要求整理 | MASTER_SPEC.md / agents/raphael.md / RAPHAEL_INITIAL_DESIGN.md | 反映済み |

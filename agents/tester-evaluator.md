@@ -5,7 +5,7 @@ Status: pilot
 Owner: Ryunosuke Matsumoto
 Integration owner: Raphael
 
-この文書は`AGENT_STANDARD.md`の必須エージェント定義テンプレート（§8）に従う正本である。`.claude/agents/tester-evaluator.md`はClaude Codeがこのエージェントを起動するための実行入口であり、両者が矛盾する場合は本書（`agents/tester-evaluator.md`）を正とする。
+この文書は`AGENT_STANDARD.md`の必須エージェント定義テンプレート（§8）に従うAI非依存の共通正本である。`.claude/agents/tester-evaluator.md`、`.codex/agents/tester-evaluator.toml`等は各実行環境でこのエージェントを起動するためのアダプターであり、矛盾する場合は本書を正とする。
 
 ## Purpose
 
@@ -37,8 +37,8 @@ Conditions under which the agent should not be created: 変更が既存テスト
 8. 外部送信・公開・課金操作は行わない。
 9. 判定の再現性、要件対応表の網羅性、自己申告への非依存度で測定する。
 10. 証拠なしの合格判定を行った場合は休止・設計見直しの根拠とする。
-11. 本書・`.claude/agents/tester-evaluator.md`・実行ログのみで別セッションが運用を再現できることを目標とする。
-12. 本書、`.claude/agents/tester-evaluator.md`、`docs/THREE_AGENT_PILOT_DESIGN.md`、`evaluations/three-agent-pilot/*.md`を同期する。
+11. 本書・ハンドオフ契約・実行ログのみから、特定のAI製品に依存せず別環境で運用を再構成できることを目標とする。
+12. 本書を意味上の正本とし、環境別アダプター、`docs/THREE_AGENT_PILOT_DESIGN.md`、`evaluations/three-agent-pilot/*.md`の意味整合を確認する。
 
 ## In scope
 

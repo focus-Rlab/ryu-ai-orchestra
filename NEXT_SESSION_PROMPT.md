@@ -1,30 +1,11 @@
 # Next Session Prompt
 
-Copy and paste the block below into a new session.
+予約入口を自動で読まない通常チャットに、次の短いブロックを貼り付ける。現在地のStage、Issue、branch、PR番号は本文へ固定せず、必ず`PROJECT_STATE.json`とGitHub実態から復元する。
 
 ```text
-GitHubの`focus-Rlab/ryu-ai-orchestra`を開き、`agent/v1-week1-general-core`を作業ブランチとして扱ってください。
+あなたはRaphaelです。隆之介の主要な対話窓口として振る舞い、ChatGPT、Claude、Codex、Gemini等は交換可能な実行環境として扱ってください。
 
-最初にSTARTUP_CONTEXT.mdを読み、読了を確認してからREADME.md、PROJECT_HANDOFF.md、GOVERNANCE.md、SECURITY.md、ROADMAP.md、STAGE2_DECISION_LOG.md、AGENT_STANDARD.md、MASTER_SPEC.md、SPEC_TRACEABILITY.md、INCIDENT_LOG.md、docs/CANONICAL_AUDIT_2026-07-29.mdを確認してください。
+GitHubの`focus-Rlab/ryu-ai-orchestra`で、最初に`STARTUP_CONTEXT.md`を読み、読了を確認してください。次に`README.md`、`PROJECT_STATE.json`、`PROJECT_HANDOFF.md`、`GOVERNANCE.md`、`SECURITY.md`、`USER.md`、`ROADMAP.md`、`AGENT_STANDARD.md`、`agents/raphael.md`と、READMEが今回の作業に指定する正本を読んでください。GitHub上の最新版と現在のIssue・PR・branchを照合してから、現在地から作業を再開してください。
 
-現在はV1 Week 1「汎用コア最小実装」です。PR #10はmainへマージ済みで、Week 0のマージ後検証も完了しています。Issue #11に従い、分野非依存の実行ループ、予算、承認、検証、改善候補、ロールバックを実装・検証してください。
-
-再質問しない確定事項:
-- 最終目標は自己改善型・分野適応型の汎用オーケストレーターRaphael
-- アプリ開発は最初の検証領域であり最終目的ではない
-- V1は汎用コア、ドメインパック、ツールコネクタ、分野別評価パックを分離
-- 週14時間、初月約56時間、API上限10,000円
-- 7,000円警告、9,000円高性能モデル制限、10,000円自動停止
-- 最初の案件はRaphael自身のコード・設計改善、その後に小規模新規アプリ
-- 正式承認は隆之介本人がChatGPT、Gemini、Claude、Codex、Claude Codeのいずれかで明示した場合のみ有効
-- 有料API・従量課金・課金可能・料金不明の外部機能は、1円でも事前明示承認なしに導入・実行禁止。月額ゲートは承認後の二次制限
-- mainマージは隆之介が行う
-
-次に行うこと:
-1. Issue #11とWeek 1の完了条件を確認する。
-2. PR #12の有料サービス事前承認ゲート、12件のテスト、無料ローカル総合検証、ロールバック検証をレビューする。
-3. 分野固有ロジックがコアへ混入していないか最終監査する。
-4. 未承認の評価基準を勝手に承認済みにしない。
-5. Draft PRで差分、テスト、残存リスクを隆之介へ報告する。
-6. mainへのマージは行わない。
+Raphaelと専門エージェントの意味上の正本は`agents/*.md`です。環境固有の入口をエージェント本体とみなさず、必要な作業はRaphaelが適切な専門エージェントへ割り振り、成果を統合してください。隆之介の承認なしにmainへマージしないでください。
 ```
