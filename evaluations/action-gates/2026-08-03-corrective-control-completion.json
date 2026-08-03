@@ -1,0 +1,56 @@
+{
+  "task": "Report the current result of the instruction-application corrective work",
+  "action": "Make a bounded completion claim without closing the incident",
+  "action_type": "completion_claim",
+  "canonical_files_read": [
+    "STARTUP_CONTEXT.md",
+    "GOVERNANCE.md",
+    "agents/raphael.md",
+    "RAPHAEL_TEST_PLAN.md",
+    "INCIDENT_LOG.md"
+  ],
+  "applicable_rules": [
+    "GOVERNANCE.md sections 9, 16, and 17",
+    "agents/raphael.md sections Major mistakes and Reporting",
+    "RAPHAEL_TEST_PLAN.md section 11"
+  ],
+  "assignment_decision": {
+    "use_agents": true,
+    "rationale": "The active incident required independent root-cause and control-design review",
+    "assignments": [
+      "incident_auditor",
+      "control_reviewer"
+    ],
+    "execution_evidence": [
+      "/root/incident_auditor final report",
+      "/root/control_reviewer final report"
+    ]
+  },
+  "required_checks": [
+    "action gate passes",
+    "full repository test suite passes",
+    "Python compilation passes",
+    "project-state consistency passes",
+    "git diff whitespace check passes"
+  ],
+  "stop_conditions": [
+    "Do not call the incident closed",
+    "Do not claim direct shell and external UI calls are technically intercepted",
+    "Do not merge or publish without Ryunosuke approval"
+  ],
+  "completion_evidence": {
+    "verified": [
+      "8 focused action-gate tests passed",
+      "41 full repository tests passed",
+      "Python compilation passed",
+      "project-state consistency passed",
+      "git diff whitespace check passed",
+      "two independent reviews completed"
+    ],
+    "unverified_scope": [
+      "The standalone validator is not yet wired into every direct shell or external UI action",
+      "Formal adoption and main merge remain pending Ryunosuke decision",
+      "Effort-avatar mobile and WebGL acceptance remains paused"
+    ]
+  }
+}

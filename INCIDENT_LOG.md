@@ -242,3 +242,35 @@ Without correction, a request estimated at 1 JPY could execute without prior app
 `python -m compileall -q v1_core tests`: passed.
 
 Status: corrective implementation complete in Draft PR #12; main merge remains Ryunosuke's decision.
+
+---
+
+# Incident: instructions read but not applied at action boundaries
+
+Incident date: 2026-08-03
+Record branch: `agent/v1-week3-small-app`
+Status: corrective implementation under review; incident not closed
+
+## Summary
+
+Raphael read repository instructions but repeatedly failed to apply them while acting. The visible failures included proceeding without actual specialist-agent delegation, omitting the prescribed incident-response sequence, asking redundant clarification after continuation was already authorized, and describing implementation too favorably before required visual validation.
+
+## Root cause
+
+The repository already stated the required rules. The missing control was a mandatory bridge between reading and action: no fail-closed step required Raphael to identify the rules applicable to the next concrete action, record the real assignment decision, and bind completion claims to pending checks. Consequently, knowledge of a rule could remain passive and disappear from execution.
+
+## Impact and similar-case audit
+
+The same failure structure affects startup instructions, specialist assignment, approval gates, incident recovery, validation, current-state synchronization, and completion reporting. A wording-only reminder would not address the cause because the existing wording was already sufficient to describe the intended behavior.
+
+## Corrective implementation
+
+- Added `scripts/check_action_gate.py` to reject incomplete action plans.
+- Added an action record for this incident under `evaluations/action-gates/`.
+- Added tests for a complete incident plan, missing applicable rules, claimed-but-unassigned agents, incomplete incident recovery, and a similar non-incident action.
+- Reinforced the existing rule across the complete specification, governance, Raphael runtime specification, operating guide, startup context, evaluation plan, and traceability table.
+- Assigned independent incident and control reviews to actual specialist sub-agents; their findings must be compared before closure.
+
+## Closure conditions
+
+This incident remains open until the independent reviews are received, the full repository test suite passes, the changed documents are checked for contradictory wording, and Ryunosuke decides whether the corrective change should be formally adopted and later merged. No main merge or public release is authorized by this record.

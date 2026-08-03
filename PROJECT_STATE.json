@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
   "phase": "V1 Week 3",
-  "status": "week3_ready_for_implementation",
+  "status": "instruction_application_incident_open_corrective_controls_tested",
   "latest_merged_pr": 23,
   "active_issue": 15,
   "active_branch": "agent/v1-week3-small-app",
   "paused_issue": null,
-  "next_action": "Begin implementation of the approved small app requirements recorded in Issue #15. Do not ask another permission question before starting. Keep the app private; do not merge to main, deploy, publish, or use paid services without Ryunosuke's explicit approval.",
+  "next_action": "Obtain Ryunosuke decision on formal adoption of the action gate. Keep the effort-avatar acceptance paused until incident handling is adopted; then complete mobile/WebGL validation and tester-evaluator review. Do not merge, deploy, publish, or use paid services without explicit approval.",
   "verified_at": "2026-08-03",
-  "evidence": "Issue #15 contains Ryunosuke-approved product requirements and implementation choices. Redundant-clarification prevention was added to MASTER_SPEC.md and agents/raphael.md on the active Week 3 branch.",
-  "verified_project_digest": "sha256:233bec6ccaaf69520584943e512543989269eb24953fbcb68b208f84f46e1308",
+  "evidence": "Independent incident and control reviews completed. Pre-action and completion-claim gate implemented with 8 focused tests; full repository suite passes 41/41. Incident remains open pending formal adoption decision and later merge approval.",
+  "verified_project_digest": "sha256:98ca0687a79599111cb0279c18626ee3c5bec73d4ed84f9fd70b63ddbadf5c3f",
   "paused_note": null
 }
