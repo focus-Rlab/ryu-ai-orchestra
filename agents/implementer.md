@@ -5,7 +5,7 @@ Status: pilot
 Owner: Ryunosuke Matsumoto
 Integration owner: Raphael
 
-この文書は`AGENT_STANDARD.md`の必須エージェント定義テンプレート（§8）に従う正本である。`.claude/agents/implementer.md`はClaude Codeがこのエージェントを起動するための実行入口であり、両者が矛盾する場合は本書（`agents/implementer.md`）を正とする。
+この文書は`AGENT_STANDARD.md`の必須エージェント定義テンプレート（§8）に従うAI非依存の共通正本である。`.claude/agents/implementer.md`、`.codex/agents/implementer.toml`等は各実行環境でこのエージェントを起動するためのアダプターであり、矛盾する場合は本書を正とする。
 
 ## Purpose
 
@@ -31,14 +31,14 @@ Conditions under which the agent should not be created: 変更が1行未満の�
 2. Raphael自身が実装すると、後続のtester-evaluatorによる独立検証の意味が薄れる。
 3. 統合責任者はRaphael。implementerは実装差分の作成責任のみ持つ。
 4. 権限は作業ブランチ内の読み書き・ローカルコマンド実行（後述）。
-5. 既存の`software_domain`の`software-engineer`ロールと概念的に近いが、`software_domain`はPython実行ループのモック関数であり、本エージェントはClaude Code上の実運用サブエージェントである。両者は別レイヤーであり重複ではない（フェーズ0-J参照）。
+5. 既存の`software_domain`の`software-engineer`ロールと概念的に近いが、`software_domain`はPython実行ループのモック関数であり、本エージェントは複数のAI実行環境から利用できる組織上の実運用エージェントである。両者は別レイヤーであり重複ではない（フェーズ0-J参照）。
 6. 要件に不足・矛盾がある場合は推測で埋めずRaphaelへ差し戻す。
 7. 独立してmainへの反映・外部送信・push・PR作成は行わない。
 8. 有料・課金可能・外部送信を伴う操作は行わない（技術的には可能だが、後述のとおりプロンプト規則とRaphael検査で担保）。
 9. 要件対応表の網羅性、自己検証（構文・テスト実行）の有無、境界テスト合否で測定する。
 10. 未承認の要件変更を独断で行った場合は休止・設計見直しの根拠とする。
-11. 本書・`.claude/agents/implementer.md`・実行ログのみで別セッションが運用を再現できることを目標とする。
-12. 本書、`.claude/agents/implementer.md`、`docs/THREE_AGENT_PILOT_DESIGN.md`、`evaluations/three-agent-pilot/*.md`を同期する。
+11. 本書・ハンドオフ契約・実行ログのみから、特定のAI製品に依存せず別環境で運用を再構成できることを目標とする。
+12. 本書を意味上の正本とし、環境別アダプター、`docs/THREE_AGENT_PILOT_DESIGN.md`、`evaluations/three-agent-pilot/*.md`の意味整合を確認する。
 
 ## In scope
 

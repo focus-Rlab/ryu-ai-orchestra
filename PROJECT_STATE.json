@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
-  "phase": "V1 Week 3 pre-start",
-  "status": "three_agent_pilot_complete_week3_ready",
-  "latest_merged_pr": 20,
-  "active_issue": 15,
-  "active_branch": "agent/v1-week3-small-app",
-  "paused_issue": null,
-  "next_action": "Start Week 3 in a new conversation. First verify GitHub main and whether requirements-designer, implementer, and tester-evaluator are recognized as subagent_type at session start. Then ask Ryunosuke only requirement question 1 of 5: the small app's purpose. Do not implement until all requirements are confirmed.",
-  "verified_at": "2026-08-02",
-  "evidence": "PR #20 is merged into main and contains the completed three-agent pilot: 11 reconstructed commits, 56 changed files, pilot promotion, user evaluation, and 64 passing tests (28 repository tests, 32 handoff-checker tests, 4 connected-pilot tests). Issue #15 remains open with 0 of 5 requirement questions asked. Issue #19 is closed as completed and links PR #20 and Draft PR #21.",
-  "verified_project_digest": "sha256:c1ab3dd90bdcafb817fd4f5e58f9ec891d0c3366f958e66c1ee51480fbe7fcee",
-  "paused_note": null
+  "phase": "Portability correction before V1 Week 3",
+  "status": "portable_raphael_entrypoint_draft_ready",
+  "latest_merged_pr": 21,
+  "active_issue": 22,
+  "active_branch": "agent/portable-raphael-entry",
+  "paused_issue": 15,
+  "next_action": "Review the Draft PR for Issue #22. Do not merge without Ryunosuke approval. After Issue #22 is resolved, resume paused Issue #15 and ask only requirement question 1: the small app purpose.",
+  "verified_at": "2026-08-03",
+  "evidence": "PR #21 is merged into main. Issue #22 tracks the combined portability and standard Raphael entrypoint correction. The local branch adds AI-independent canonical agent specs, Codex adapters, top-level Raphael entrypoints, and recovery tests. Issue #15 remains paused at 0 of 5 requirement questions.",
+  "verified_project_digest": "sha256:233bec6ccaaf69520584943e512543989269eb24953fbcb68b208f84f46e1308",
+  "paused_note": "Week 3 small-app validation remains at 0 of 5 requirement questions. No app requirements were decided and no implementation began. Resume by asking only the app-purpose question after Issue #22 is resolved."
 }

@@ -22,7 +22,7 @@ ChatGPT、Claude、Codex、Gemini、GitHub Copilot等、使用するAIモデル�
 
 通常チャットでの開始例:
 
-> `focus-Rlab/ryu-ai-orchestra`の`STARTUP_CONTEXT.md`を最初に読み、読了後に`README.md`と`PROJECT_HANDOFF.md`を読み、現在の作業ブランチ・PRと今回必要な正本を確認してから作業して。
+> あなたはRaphaelです。`focus-Rlab/ryu-ai-orchestra`の`STARTUP_CONTEXT.md`を最初に読み、読了後に`README.md`、`PROJECT_STATE.json`、`PROJECT_HANDOFF.md`と今回必要な正本を確認し、Raphaelを主要な対話窓口として現在地から作業を再開して。
 
 自動入口:
 
@@ -33,6 +33,8 @@ ChatGPT、Claude、Codex、Gemini、GitHub Copilot等、使用するAIモデル�
 - GitHub custom Raphael: `.github/agents/raphael.md`
 
 自動入口があっても、参照先を自動で読了したとは仮定しない。`STARTUP_CONTEXT.md`の読了確認前に分析・提案・変更を開始しない。予約入口を認識しないAI環境では、開始プロンプトで明示しない限り自動共有済みと判定しない。
+
+通常のトップレベルセッションはRaphaelとして開始する。専門エージェントを明示起動したサブセッションだけ、その専門役割を優先する。環境固有入口は共通正本へのアダプターであり、エージェントそのものではない。
 
 ## 3. 接続・権限・書込可否
 
@@ -93,6 +95,8 @@ ChatGPT、Claude、Codex、Gemini、GitHub Copilot等、使用するAIモデル�
 - **AIモデル・実行環境**: 担当エージェントが作業する基盤
 
 Raphaelは先に担当エージェントを決め、その後でモデル・環境を選ぶ。
+
+専門エージェントの共通正本は`agents/*.md`に置く。`.claude/agents/*.md`、`.codex/agents/*.toml`などには、その環境で正本を読み込ませる最小限の起動指示と技術的な権限制約だけを置く。移行時は正本を変更せず、新しいアダプターを追加して再現テストを行う。
 
 例:
 
