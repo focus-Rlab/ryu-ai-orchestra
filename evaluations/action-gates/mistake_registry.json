@@ -1,0 +1,14 @@
+{
+  "incidents": {
+    "instruction-application-001": {
+      "root_cause_id": "instruction-read-but-not-applied-at-action-boundary",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#Incident: instructions read but not applied at action boundaries"
+    },
+    "gh-impossibility-prior-user-report": {
+      "root_cause_id": "single-path-failure-treated-as-outcome-impossibility",
+      "confirmed_occurrences": 4,
+      "record": "Ryunosuke report in the conversation requesting the PR #24 extension"
+    }
+  }
+}

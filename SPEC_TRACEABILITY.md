@@ -124,7 +124,8 @@ Stage 2の確定設計を追加同期し、決定ログ、Agent Standard、完�
 | 重要な長期記憶・決定・禁止・必須手順の保存判定 | `MASTER_SPEC.md` | `STARTUP_CONTEXT.md`、内容別の分割正本 | `README.md` | 分類、旧表現検索、復元テスト |
 | 重要変更の全正本伝播 | `MASTER_SPEC.md` | `STARTUP_CONTEXT.md`、`GOVERNANCE.md`、`PROJECT_HANDOFF.md` | `OPERATING_GUIDE.md` | 完全版・分割正本・対応表・入口の意味照合 |
 | ユーザー発言の批判的評価 | `MASTER_SPEC.md` | `USER.md`、`STARTUP_CONTEXT.md`、`GOVERNANCE.md` | 全AI入口→STARTUP_CONTEXT | 自動肯定・禁止表現・根拠説明のケーステスト |
-| ミス発生時の必須手順 | `MASTER_SPEC.md` | `GOVERNANCE.md`、`STARTUP_CONTEXT.md`、`INCIDENT_LOG.md` | `README.md`、`OPERATING_GUIDE.md` | 根本原因、横断監査、一般化、成功/失敗、類似ケース再テスト |
+| 一般・反復・重大ミス発生時の必須手順 | `MASTER_SPEC.md` | `GOVERNANCE.md`、`STARTUP_CONTEXT.md`、`INCIDENT_LOG.md` | `README.md`、`OPERATING_GUIDE.md` | 分類、根本原因、横断監査、一般化、成功/失敗、類似ケース再テスト、2回目の格上げ、代替経路確認 |
+| 読了した規則の行動直前適用ゲート | `MASTER_SPEC.md` §12 | `GOVERNANCE.md` §9、`agents/raphael.md`、`RAPHAEL_TEST_PLAN.md` | `OPERATING_GUIDE.md`、`scripts/check_action_gate.py` | 完全計画の成功、規則欠落・架空委任・事故工程欠落の失敗、非事故類似ケース |
 
 | 有料API・従量課金・課金可能・料金不明サービスの事前明示承認 | `MASTER_SPEC.md` §25 | `STARTUP_CONTEXT.md` §10、`GOVERNANCE.md`、`SECURITY.md`、`ROADMAP.md`、`PROJECT_HANDOFF.md` | 全AI入口→STARTUP_CONTEXT、README | 1円、課金可能0円、料金不明、予算超過承認のみ、正式5窓口のテスト |
 | 隆之介向け説明・進捗報告の恒久ルール（IT初心者への配慮、専門用語・略称・独自名称の区別、報告順序） | `MASTER_SPEC.md` §27 | `agents/raphael.md`「隆之介向け説明・進捗報告のスタイル」、`USER.md`「説明への配慮」 | README「Raphaelとして作業」ルートから`agents/raphael.md`・`USER.md`へ到達 | 次回セッションでの復元テスト未実施（要フォローアップ）。3体パイロットのフェーズ5ユーザー評価（説明の分かりやすさ1/10）が確定根拠 |

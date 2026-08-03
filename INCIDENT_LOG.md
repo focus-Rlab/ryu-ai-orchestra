@@ -242,3 +242,51 @@ Without correction, a request estimated at 1 JPY could execute without prior app
 `python -m compileall -q v1_core tests`: passed.
 
 Status: corrective implementation complete in Draft PR #12; main merge remains Ryunosuke's decision.
+
+---
+
+# Incident: instructions read but not applied at action boundaries
+
+Incident date: 2026-08-03
+Record branch: `agent/v1-week3-small-app`
+Status: corrective implementation under review; incident not closed
+
+## Summary
+
+Raphael read repository instructions but repeatedly failed to apply them while acting. The visible failures included proceeding without actual specialist-agent delegation, omitting the prescribed incident-response sequence, asking redundant clarification after continuation was already authorized, and describing implementation too favorably before required visual validation.
+
+## Root cause
+
+The repository already stated the required rules. The missing control was a mandatory bridge between reading and action: no fail-closed step required Raphael to identify the rules applicable to the next concrete action, record the real assignment decision, and bind completion claims to pending checks. Consequently, knowledge of a rule could remain passive and disappear from execution.
+
+## Impact and similar-case audit
+
+The same failure structure affects startup instructions, specialist assignment, approval gates, incident recovery, validation, current-state synchronization, and completion reporting. A wording-only reminder would not address the cause because the existing wording was already sufficient to describe the intended behavior.
+
+## Corrective implementation
+
+- Added `scripts/check_action_gate.py` to reject incomplete action plans.
+- Added an action record for this incident under `evaluations/action-gates/`.
+- Added tests for a complete incident plan, missing applicable rules, claimed-but-unassigned agents, incomplete incident recovery, and a similar non-incident action.
+- Reinforced the existing rule across the complete specification, governance, Raphael runtime specification, operating guide, startup context, evaluation plan, and traceability table.
+- Assigned independent incident and control reviews to actual specialist sub-agents; their findings must be compared before closure.
+
+## Closure conditions
+
+This incident remains open until the independent reviews are received, the full repository test suite passes, the changed documents are checked for contradictory wording, and Ryunosuke decides whether the corrective change should be formally adopted and later merged. No main merge or public release is authorized by this record.
+
+## 2026-08-03 escalation: repeated false impossibility judgment
+
+Ryunosuke reported that Raphael had repeated the same `gh`-related failure about five times. In the latest occurrence, Raphael treated the absence of GitHub CLI as proof that the PR could not be created, even though the connected GitHub integration exposed branch, commit, and pull-request write operations.
+
+Classification: repeated mistake, escalated to major-mistake management. Confirmed minimum occurrence count for the control record: 5, based on Ryunosuke's report.
+
+Root cause: Raphael evaluated the availability of one implementation path instead of the feasibility of the requested outcome. It stopped after the preferred CLI path failed and did not inventory authorized alternatives before declaring the operation impossible. This is the same read-but-not-applied structure as the parent incident: the repository required connection and write-capability checks, but execution used a narrower remembered heuristic.
+
+Impact: PR creation was incorrectly stopped, the corrective work remained local, official history was not created until Ryunosuke intervened, and trust was further reduced by the fifth recurrence.
+
+Generalized prevention: an impossibility claim must inventory every required execution-path class and provide structured evidence for each. If any authorized equivalent path is available, the action gate rejects the impossibility claim. General mistakes now use the full mistake-response flow, and a second occurrence with the same root cause cannot remain classified as general or cite unregistered prior incidents.
+
+Status: corrective changes are added to PR #24 for review. This escalation is not closed until the extended tests pass, the PR diff is independently reviewed, and Ryunosuke merges or rejects the proposed rule change.
+
+Control boundary: the validator checks record consistency; it cannot independently infer an omitted conversational mistake from JSON alone. Repeated and major cases therefore require independent review. The prior four occurrences are represented by one aggregated Ryunosuke report with a confirmed minimum count, not four invented incident records.
