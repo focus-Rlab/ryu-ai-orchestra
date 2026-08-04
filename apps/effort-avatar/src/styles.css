@@ -20,7 +20,7 @@ button { color: inherit; }
 .topbar { position: absolute; top: 0; left: 0; right: 0; z-index: 3; display: flex; align-items: center; justify-content: space-between; padding: calc(18px + env(safe-area-inset-top)) 20px 0; }
 .topbar h1 { font-size: 26px; line-height: 1; letter-spacing: .26em; margin: 3px 0 0; }
 .eyebrow { color: #717d9f; font-size: 9px; font-weight: 700; letter-spacing: .22em; margin: 0; }
-.avatar-toggle, .add-button { background: rgba(20, 27, 51, .72); border: 1px solid var(--line); border-radius: 999px; padding: 9px 13px; font-size: 12px; font-weight: 600; backdrop-filter: blur(12px); }
+.avatar-toggle, .add-button { min-width: 44px; min-height: 44px; background: rgba(20, 27, 51, .72); border: 1px solid var(--line); border-radius: 999px; padding: 9px 13px; font-size: 12px; font-weight: 600; backdrop-filter: blur(12px); }
 .avatar-canvas { position: absolute; inset: 28px 0 0; }
 .avatar-canvas canvas { display: block; }
 .avatar-loading { position: absolute; inset: 28px 0 0; display: grid; place-items: center; color: #91a0bc; font-size: .75rem; }
@@ -58,7 +58,7 @@ button { color: inherit; }
 .habit-info strong { display: block; font-size: 14px; }
 .habit-info span { display: block; color: var(--muted); font-size: 10px; margin-top: 3px; }
 .habit-actions { display: flex; align-items: center; gap: 6px; }
-.done-button, .miss-button, .recorded { border-radius: 10px; border: 0; font-size: 11px; font-weight: 700; padding: 9px 10px; }
+.done-button, .miss-button, .recorded { min-width: 44px; min-height: 44px; border-radius: 10px; border: 0; font-size: 11px; font-weight: 700; padding: 9px 10px; }
 .done-button { background: #eef2ff; color: #11182c; }
 .miss-button { background: rgba(255,255,255,.05); color: #7f89a7; }
 .recorded { background: rgba(82, 219, 150, .1); color: #68dda0; }

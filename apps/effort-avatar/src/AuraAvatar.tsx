@@ -182,17 +182,30 @@ export function AuraAvatar({ avatarType, progress }: Props) {
       return ring
     })
 
-    const ground = new THREE.Mesh(
+    const ground = auraAbilities.length ? new THREE.Mesh(
       new THREE.CircleGeometry(1.65, 64),
       new THREE.MeshBasicMaterial({ color: COLORS[strongest.ability], transparent: true, opacity: 0.08 + averageStrength * 0.1 }),
-    )
-    ground.rotation.x = -Math.PI / 2
-    ground.position.y = -1.65
-    scene.add(ground)
+    ) : null
+    if (ground) {
+      ground.rotation.x = -Math.PI / 2
+      ground.position.y = -1.65
+      scene.add(ground)
+    }
+
+    let animationId = 0
+    let contextAvailable = true
+    const handleContextLost = (event: Event) => {
+      event.preventDefault()
+      contextAvailable = false
+      cancelAnimationFrame(animationId)
+      renderer.domElement.style.display = 'none'
+      setWebglFailed(true)
+    }
+    renderer.domElement.addEventListener('webglcontextlost', handleContextLost)
 
     let frame = 0
-    let animationId = 0
     const animate = () => {
+      if (!contextAvailable) return
       frame += 0.012
       avatar.position.y = -0.1 + Math.sin(frame * 1.35) * 0.035
       avatar.rotation.y = Math.sin(frame * 0.42) * 0.12
@@ -236,6 +249,7 @@ export function AuraAvatar({ avatarType, progress }: Props) {
     return () => {
       cancelAnimationFrame(animationId)
       window.removeEventListener('resize', resize)
+      renderer.domElement.removeEventListener('webglcontextlost', handleContextLost)
       renderer.dispose()
       scene.traverse((object) => {
         if (object instanceof THREE.Mesh || object instanceof THREE.Points || object instanceof THREE.LineSegments) {

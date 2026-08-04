@@ -293,3 +293,28 @@ Control boundary: the validator checks record consistency; it cannot independent
 # Incident: application test invoked from repository root (2026-08-04)
 
 During AURA validation, `npm test` was first invoked from the repository root, where no `package.json` exists. The command failed before running tests and made no file changes. Root cause: command groups were combined without binding each command to the directory that owns its configuration. App checks were rerun from `apps/effort-avatar`; repository checks were run separately from the root. Both passed. Prevention: keep application-package commands and repository-level commands in separate executions with explicit working directories. Classification: general, first recorded occurrence, bounded non-mutating impact.
+
+# Incident: AURA visual acceptance stopped after one blocked path (2026-08-04)
+
+Classification: repeated mistake, escalated to major-mistake management. This is the second confirmed occurrence of the root cause `instruction-read-but-not-applied-at-action-boundary` after the 2026-08-03 incident.
+
+## Summary and impact
+
+Raphael stated that AURA visual acceptance would continue automatically, then ended the turn after the cloud browser blocked a localhost URL. The AURA code was preserved in Draft PR #26, but real-browser acceptance, specialist judgment, the final project-state update, and PR readiness were pushed back to Ryunosuke even though authorized local alternatives had not been exhausted.
+
+The same execution gap appeared again at the start of the recovery session when repository status was inspected before the mandatory first read of `STARTUP_CONTEXT.md`. These are not separate root causes: in both cases an already known rule was not rebound to the immediate next action.
+
+## Recovery and generalized prevention
+
+The recovery inventoried outcome-equivalent paths instead of stopping at the preferred browser surface. Vite's server path failed, a simple static server succeeded, the cloud browser still blocked localhost, and a free temporary Chromium package was then installed outside the repository and run in the same local execution boundary as the static server. This produced real 390x844 browser evidence without deployment, external publication, paid service, or permanent dependency changes.
+
+The existing generalized control remains: a failed tool or preferred path is evidence only about that path. Work may stop only after all realistic authorized alternatives are checked or a real user decision, approval, safety, cost, or permission boundary is reached. Completion reports must distinguish a blocked path from a blocked outcome.
+
+## Tests and independent review
+
+- Mobile interaction covered avatar switching, built-in and custom habits, completion, missed records, minute entry, and reload persistence.
+- WebGL evidence covered a live canvas, two different animation frames 650ms apart, rare/composite rendering, startup fallback, and runtime context loss.
+- The initial zero-effort ground glow found during review was removed; touch targets, saved-state validation, and context-loss handling were strengthened.
+- `requirements-designer`, `implementer`, and `tester-evaluator` were actually started. All three accepted the remediated product evidence, subject to committing the official records and passing final repository checks.
+
+Status: corrective recovery implemented. Incident closure remains pending until the acceptance record, current state, code fixes, completion action gate, GitHub commit, and PR #26 readiness are all verified. Main merge remains Ryunosuke's decision.

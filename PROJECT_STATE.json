@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
   "phase": "V1 Week 3",
-  "status": "aura_draft_pr_open_visual_acceptance_pending",
+  "status": "aura_acceptance_passed_pr_ready_for_review",
   "latest_merged_pr": 25,
   "active_issue": 15,
   "active_branch": "agent/aura-acceptance-remediation",
   "paused_issue": null,
-  "next_action": "Review Draft PR #26, then complete mobile/WebGL/tap/reload visual acceptance before marking it ready or merging.",
+  "next_action": "Ryunosuke reviews and decides whether to merge PR #26. After merge, verify main, close Issue #15 if the merged result matches the accepted branch, and begin the Week 4 improvement-adoption review.",
   "verified_at": "2026-08-04",
-  "evidence": "Draft PR #26 contains the AURA implementation and corrections. App tests 12/12, repository tests 50/50, production build, Python compilation, npm audit, action gates, and project-state consistency pass. Initial JavaScript is 199.79KB after deferred 3D loading. Cloud browser localhost access was blocked, so visual acceptance remains open.",
-  "verified_project_digest": "sha256:ab6f6712fa9537b23183366330a53d6e8fead13f708de988b684c71ad2e9bbdd",
+  "evidence": "PR #26 branch passes AURA tests 13/13, repository tests, production build, Python compilation, npm audit, action gates, and project-state consistency. Real Chromium at 390x844 passed all nine Issue #15 acceptance conditions, including taps, four habit types, reload persistence, live WebGL animation, level-tier and rare composite visuals, startup fallback, and runtime context-loss fallback. Three formal specialist reviews found no remaining blocker. Initial JavaScript is about 200.51KB; the deferred 3D chunk is about 532.05KB and remains a non-blocking optimization item.",
+  "verified_project_digest": "sha256:1909ce0dbf0c1b097fb87c505313f0fbe23e7d4ae0a9709ab8d1244cb7c6401e",
   "paused_note": null
 }

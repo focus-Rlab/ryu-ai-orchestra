@@ -29,4 +29,13 @@ describe('storage', () => {
     data.set('effort-avatar-state-v1', '{broken')
     expect(loadState()).toEqual(DEFAULT_STATE)
   })
+
+  it('falls back safely when stored data has an invalid schema', () => {
+    data.set('effort-avatar-state-v1', JSON.stringify({
+      ...DEFAULT_STATE,
+      avatarType: 'unknown',
+      habits: [{ ...DEFAULT_STATE.habits[0], ability: 'invalid' }],
+    }))
+    expect(loadState()).toEqual(DEFAULT_STATE)
+  })
 })
