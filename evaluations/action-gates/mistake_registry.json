@@ -5,6 +5,11 @@
       "confirmed_occurrences": 1,
       "record": "INCIDENT_LOG.md#Incident: instructions read but not applied at action boundaries"
     },
+    "aura-premature-stop-2026-08-04": {
+      "root_cause_id": "instruction-read-but-not-applied-at-action-boundary",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#Incident: AURA visual acceptance stopped after one blocked path (2026-08-04)"
+    },
     "gh-impossibility-prior-user-report": {
       "root_cause_id": "single-path-failure-treated-as-outcome-impossibility",
       "confirmed_occurrences": 4,

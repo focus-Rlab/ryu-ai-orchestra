@@ -1,0 +1,28 @@
+{
+  "task": "Recover from running an application command in the repository root",
+  "action": "Classify the bounded command error, rerun checks in their owning directories, and record prevention",
+  "action_type": "incident_response",
+  "mistake_detected": true,
+  "classification_basis": "npm test was invoked from the repository root although package.json belongs to apps/effort-avatar",
+  "mistake_triggers": [{"type": "test_failure", "evidence": [{"type": "tool_result", "ref": "npm test", "result": "ENOENT for repository-root package.json"}]}],
+  "mistake": {"classification": "general", "occurrence_count": 1, "root_cause_id": "command-owner-directory-not-bound", "prior_mistake_refs": []},
+  "canonical_files_read": ["STARTUP_CONTEXT.md", "GOVERNANCE.md", "agents/raphael.md"],
+  "applicable_rules": ["General mistakes use the full bounded mistake-response flow", "Commands must be verified in the directory that owns their configuration"],
+  "assignment_decision": {"use_agents": false, "rationale": "The impact is a single failed read-only test command with no repository mutation; independent review would not proportionally reduce risk"},
+  "required_checks": ["app tests and build pass from apps/effort-avatar", "repository tests and state checks pass from repository root", "similar command-owner cases are separated"],
+  "stop_conditions": ["Do not treat the failed command as an application failure", "Do not proceed with an incomplete test result"],
+  "incident_steps": {
+    "classify": {"status": "complete", "evidence": [{"type": "tool_result", "ref": "npm test", "result": "classified as a wrong-working-directory invocation"}]},
+    "root_cause": {"status": "complete", "evidence": [{"type": "file", "ref": "apps/effort-avatar/package.json", "result": "npm scripts are owned by the application directory"}]},
+    "impact_scope": {"status": "complete", "evidence": [{"type": "tool_result", "ref": "git status", "result": "failed command made no file changes and only interrupted validation"}]},
+    "similar_case_audit": {"status": "complete", "evidence": [{"type": "tool_result", "ref": "validation command grouping", "result": "app-owned npm commands and repository-owned Python commands were the affected categories"}]},
+    "generalized_prevention": {"status": "complete", "evidence": [{"type": "tool_result", "ref": "command execution", "result": "run each command group with the directory that owns its configuration"}]},
+    "success_test": {"status": "complete", "evidence": [{"type": "test", "ref": "app and repository suites", "result": "12 app tests and 50 repository tests passed"}]},
+    "failure_test": {"status": "complete", "evidence": [{"type": "tool_result", "ref": "original invocation", "result": "root invocation fails with package.json ENOENT as expected"}]},
+    "independent_review_decision": {"status": "complete", "evidence": [{"type": "tool_result", "ref": "risk assessment", "result": "not required for a first bounded non-mutating command-location error"}]},
+    "approval_boundary": {"status": "complete", "evidence": [{"type": "file", "ref": "GOVERNANCE.md", "result": "no meaning, authority, production, merge, or paid-service change"}]},
+    "canonical_updates": {"status": "complete", "evidence": [{"type": "file", "ref": "INCIDENT_LOG.md", "result": "bounded incident and prevention recorded"}]},
+    "similar_but_not_identical_retest": {"status": "complete", "evidence": [{"type": "test", "ref": "project-state validation", "result": "repository-owned state check passed from repository root"}]},
+    "incident_record": {"status": "complete", "evidence": [{"type": "file", "ref": "evaluations/action-gates/2026-08-04-command-cwd-incident.json", "result": "structured incident record created"}]}
+  }
+}

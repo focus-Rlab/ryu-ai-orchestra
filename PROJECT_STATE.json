@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
   "phase": "V1 Week 3",
-  "status": "mistake_protocol_extension_under_review",
-  "latest_merged_pr": 23,
+  "status": "aura_acceptance_passed_pr_ready_for_review",
+  "latest_merged_pr": 25,
   "active_issue": 15,
-  "active_branch": "agent/v1-week3-small-app",
+  "active_branch": "agent/aura-acceptance-remediation",
   "paused_issue": null,
-  "next_action": "Ryunosuke reviews and decides whether to merge PR #24. After merge, resume the effort-avatar work and re-report implementation status, requirement gaps, unverified scope, and specialist assignments.",
-  "verified_at": "2026-08-03",
-  "evidence": "PR #24 now extends the full mistake-response flow to general mistakes and repeated mistakes. The repeated gh false-impossibility incident is recorded with an aggregated minimum count of five. Independent audit findings were adopted; 17 focused tests and 50 full repository tests pass. Machine validation limits are explicitly documented; merge remains pending Ryunosuke.",
-  "verified_project_digest": "sha256:eb5bab84dfc318987fb9ca9fee896b3a76df73f1a81d3be13680ab98ef5ef35c",
+  "next_action": "Ryunosuke reviews and decides whether to merge PR #26. After merge, verify main, close Issue #15 if the merged result matches the accepted branch, and begin the Week 4 improvement-adoption review.",
+  "verified_at": "2026-08-04",
+  "evidence": "PR #26 branch passes AURA tests 13/13, repository tests, production build, Python compilation, npm audit, action gates, and project-state consistency. Real Chromium at 390x844 passed all nine Issue #15 acceptance conditions, including taps, four habit types, reload persistence, live WebGL animation, level-tier and rare composite visuals, startup fallback, and runtime context-loss fallback. Three formal specialist reviews found no remaining blocker. Initial JavaScript is about 200.51KB; the deferred 3D chunk is about 532.05KB and remains a non-blocking optimization item.",
+  "verified_project_digest": "sha256:1909ce0dbf0c1b097fb87c505313f0fbe23e7d4ae0a9709ab8d1244cb7c6401e",
   "paused_note": null
 }
