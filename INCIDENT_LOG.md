@@ -290,3 +290,6 @@ Generalized prevention: an impossibility claim must inventory every required exe
 Status: corrective changes are added to PR #24 for review. This escalation is not closed until the extended tests pass, the PR diff is independently reviewed, and Ryunosuke merges or rejects the proposed rule change.
 
 Control boundary: the validator checks record consistency; it cannot independently infer an omitted conversational mistake from JSON alone. Repeated and major cases therefore require independent review. The prior four occurrences are represented by one aggregated Ryunosuke report with a confirmed minimum count, not four invented incident records.
+# Incident: application test invoked from repository root (2026-08-04)
+
+During AURA validation, `npm test` was first invoked from the repository root, where no `package.json` exists. The command failed before running tests and made no file changes. Root cause: command groups were combined without binding each command to the directory that owns its configuration. App checks were rerun from `apps/effort-avatar`; repository checks were run separately from the root. Both passed. Prevention: keep application-package commands and repository-level commands in separate executions with explicit working directories. Classification: general, first recorded occurrence, bounded non-mutating impact.
