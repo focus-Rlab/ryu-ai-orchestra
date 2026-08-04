@@ -6,5 +6,7 @@ secrets/
 *.key
 .DS_Store
 node_modules/
+dist/
+*.tsbuildinfo
 __pycache__/
 *.pyc
