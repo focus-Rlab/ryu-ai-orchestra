@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
   "phase": "V1 Week 3",
-  "status": "aura_code_remediation_complete_browser_acceptance_blocked",
+  "status": "aura_draft_pr_open_visual_acceptance_pending",
   "latest_merged_pr": 25,
   "active_issue": 15,
   "active_branch": "agent/aura-acceptance-remediation",
   "paused_issue": null,
-  "next_action": "Review Draft PR for the AURA remediation; then complete mobile/WebGL/tap/reload visual acceptance in an environment that can open the app.",
+  "next_action": "Review Draft PR #26, then complete mobile/WebGL/tap/reload visual acceptance before marking it ready or merging.",
   "verified_at": "2026-08-04",
-  "evidence": "PR #25 is merged at a84c19a. AURA requirement corrections are implemented. App tests 12/12, repository tests 50/50, production build, Python compilation, npm audit, action gates, and project-state consistency pass. Initial JavaScript fell from about 731KB to 199.79KB through deferred 3D loading. Cloud browser access to the local URL was blocked by the environment, so visual acceptance remains open.",
-  "verified_project_digest": "sha256:23b6baa2ac16c7661bdc75f84b53f6f3f8e01c2c23191af261ac7d22bba23272",
+  "evidence": "Draft PR #26 contains the AURA implementation and corrections. App tests 12/12, repository tests 50/50, production build, Python compilation, npm audit, action gates, and project-state consistency pass. Initial JavaScript is 199.79KB after deferred 3D loading. Cloud browser localhost access was blocked, so visual acceptance remains open.",
+  "verified_project_digest": "sha256:ab6f6712fa9537b23183366330a53d6e8fead13f708de988b684c71ad2e9bbdd",
   "paused_note": null
 }
