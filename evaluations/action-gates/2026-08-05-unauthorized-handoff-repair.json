@@ -1,0 +1,91 @@
+{
+  "gate_version": 2,
+  "task": "Record the unauthorized PROJECT_HANDOFF repair as a separate process mistake",
+  "action": "Classify and record that Codex repaired a canonical handoff file before asking Ryunosuke whether a content-level reconstruction was acceptable",
+  "action_type": "incident_response",
+  "mistake_detected": true,
+  "classification_basis": "Ryunosuke explicitly stated that repairing PROJECT_HANDOFF.md without permission was a clear mistake because the repair could alter content whose prior context Codex did not fully know",
+  "mistake_triggers": [
+    {
+      "type": "user_report",
+      "evidence": [
+        {
+          "type": "user_report",
+          "ref": "2026-08-05 Codex conversation",
+          "result": "Ryunosuke identified the unapproved handoff repair as a clear mistake and requested the mistake procedure"
+        }
+      ]
+    }
+  ],
+  "mistake": {
+    "classification": "general",
+    "occurrence_count": 1,
+    "root_cause_id": "content-repair-without-owner-approval",
+    "prior_mistake_refs": []
+  },
+  "incident_steps": {
+    "classify": {"status": "complete", "evidence": [{"type": "user_report", "ref": "2026-08-05 Codex conversation", "result": "Unapproved canonical handoff repair classified as a process mistake"}]},
+    "root_cause": {"status": "complete", "evidence": [{"type": "file", "ref": "agents/raphael.md", "result": "Raphael must separate technical ability from approved action and report constraints before acting"}]},
+    "impact_scope": {"status": "complete", "evidence": [{"type": "file", "ref": "PROJECT_HANDOFF.md", "result": "The edit was limited to the Draft PR branch and did not merge to main, but it touched a canonical handoff file"}]},
+    "similar_case_audit": {"status": "complete", "evidence": [{"type": "file", "ref": "GOVERNANCE.md", "result": "Similar risk applies to any corrupted or partially unreadable canonical file where content reconstruction may lose unknown context"}]},
+    "generalized_prevention": {"status": "complete", "evidence": [{"type": "file", "ref": "PROJECT_HANDOFF.md", "result": "Future recovery should distinguish byte-level readability repair from content-level reconstruction and ask Ryunosuke before reconstructing unknown canonical content"}]},
+    "success_test": {"status": "complete", "evidence": [{"type": "user_report", "ref": "2026-08-05 Codex conversation", "result": "The mistake is now explicitly recorded instead of hidden under the encoding repair"}]},
+    "failure_test": {"status": "complete", "evidence": [{"type": "user_report", "ref": "2026-08-05 Codex conversation", "result": "A future agent must not say a content-level reconstruction is fully safe when prior content is unknown"}]},
+    "independent_review_decision": {"status": "complete", "evidence": [{"type": "user_report", "ref": "2026-08-05 Codex conversation", "result": "Ryunosuke review is required for whether the reconstructed handoff content is acceptable before merge"}]},
+    "approval_boundary": {"status": "complete", "evidence": [{"type": "pr", "ref": "PR #28", "result": "Main merge remains Ryunosuke approval only; this record does not approve the handoff reconstruction"}]},
+    "canonical_updates": {"status": "complete", "evidence": [{"type": "file", "ref": "evaluations/action-gates/2026-08-05-unauthorized-handoff-repair.json", "result": "Mistake recorded as a separate action-gate file on the Draft PR branch"}]},
+    "similar_but_not_identical_retest": {"status": "complete", "evidence": [{"type": "file", "ref": "tests/test_repository_text_encoding.py", "result": "Encoding tests cover unreadable bytes, but owner approval remains a separate human gate for content reconstruction"}]},
+    "incident_record": {"status": "complete", "evidence": [{"type": "file", "ref": "evaluations/action-gates/2026-08-05-unauthorized-handoff-repair.json", "result": "This file is the incident record"}]}
+  },
+  "canonical_files_read": [
+    "PROJECT_HANDOFF.md",
+    "GOVERNANCE.md",
+    "MASTER_SPEC.md",
+    "SPEC_TRACEABILITY.md",
+    "agents/raphael.md",
+    "RAPHAEL_TEST_PLAN.md"
+  ],
+  "applicable_rules": [
+    "Technical ability to edit a file is not the same as permission to reconstruct unknown canonical content",
+    "Canonical content repair must separate byte-level recovery, content-level reconstruction, and user approval",
+    "Draft PR changes do not equal main approval",
+    "Mistakes identified by Ryunosuke must be classified and recorded"
+  ],
+  "rule_coverage": [
+    {"category": "security", "status": "not_applicable", "reason": "No secrets, credentials, or new external service were involved"},
+    {"category": "authority", "status": "applicable", "reason": "The repair touched canonical handoff content before owner approval", "control": "Record as mistake and require Ryunosuke review before merge", "evidence": "this action-gate record"},
+    {"category": "quality", "status": "applicable", "reason": "Unknown prior content may have been lost or altered", "control": "Treat repair as provisional until reviewed against conversation review and project state", "evidence": "PROJECT_HANDOFF.md and CONVERSATION_REVIEW.md"},
+    {"category": "user_communication", "status": "applicable", "reason": "Prior explanation overstated the safety of the repair", "control": "Use plain-language distinction between readability repair and content reconstruction", "evidence": "final report to Ryunosuke"},
+    {"category": "state_sync", "status": "applicable", "reason": "PR state changed after the repair", "control": "Keep PROJECT_STATE on PR review/acceptance state", "evidence": "PROJECT_STATE.json"},
+    {"category": "delivery", "status": "applicable", "reason": "Handoff readability affects future task continuation", "control": "Keep reconstructed handoff reviewable before merge", "evidence": "PROJECT_HANDOFF.md"},
+    {"category": "recovery", "status": "applicable", "reason": "Repair was a recovery action from corrupted text", "control": "Future recovery asks before reconstructing unknown content", "evidence": "this record"},
+    {"category": "agent_design", "status": "not_applicable", "reason": "No new agent or role change is needed for this bounded incident record"}
+  ],
+  "assignment_decision": {
+    "use_agents": false,
+    "rationale": "This is a direct incident record requested by Ryunosuke; no separate specialist is needed"
+  },
+  "deliverable_handoff": {
+    "required": true,
+    "medium": "Draft PR #28 action-gate record",
+    "acceptance_check": "Ryunosuke can review that the unauthorized repair is explicitly recorded and not treated as full approval",
+    "user_access_evidence": "PR #28 remains open for review"
+  },
+  "feedback_capture": {
+    "reviewed": true,
+    "classification": ["unapproved action", "authority boundary", "canonical reconstruction risk"],
+    "positive_patterns": ["Ryunosuke caught the authority problem before merge", "the mistake can be recorded while still on a Draft PR branch"],
+    "failures_or_gaps": ["Codex edited canonical handoff content before asking whether reconstruction was acceptable", "the first explanation did not clearly separate technical repair from content correctness"],
+    "source_evidence": ["2026-08-05 Codex conversation", "PROJECT_HANDOFF.md", "evaluations/week4-improvement-review/CONVERSATION_REVIEW.md"]
+  },
+  "required_checks": [
+    "This record validates through scripts/check_action_gate.py",
+    "Ryunosuke reviews reconstructed PROJECT_HANDOFF.md before merge",
+    "Do not treat UTF-8 readability as proof of content completeness"
+  ],
+  "stop_conditions": [
+    "Do not merge main based on this repair alone",
+    "Do not claim the original corrupted handoff content was perfectly recovered",
+    "Do not reconstruct unknown canonical content in future without owner approval"
+  ]
+}
