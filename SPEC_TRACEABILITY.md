@@ -129,3 +129,4 @@ Stage 2の確定設計を追加同期し、決定ログ、Agent Standard、完�
 
 | 有料API・従量課金・課金可能・料金不明サービスの事前明示承認 | `MASTER_SPEC.md` §25 | `STARTUP_CONTEXT.md` §10、`GOVERNANCE.md`、`SECURITY.md`、`ROADMAP.md`、`PROJECT_HANDOFF.md` | 全AI入口→STARTUP_CONTEXT、README | 1円、課金可能0円、料金不明、予算超過承認のみ、正式5窓口のテスト |
 | 隆之介向け説明・進捗報告の恒久ルール（IT初心者への配慮、専門用語・略称・独自名称の区別、報告順序） | `MASTER_SPEC.md` §27 | `agents/raphael.md`「隆之介向け説明・進捗報告のスタイル」、`USER.md`「説明への配慮」 | README「Raphaelとして作業」ルートから`agents/raphael.md`・`USER.md`へ到達 | 次回セッションでの復元テスト未実施（要フォローアップ）。3体パイロットのフェーズ5ユーザー評価（説明の分かりやすさ1/10）が確定根拠 |
+| 規則全体の強制適用、成果物共有・受入、会話フィードバック自動分類 | `MASTER_SPEC.md` §28 | `GOVERNANCE.md` §9、`agents/raphael.md` | `scripts/check_action_gate.py` | 8分類欠落、未共有アプリの完了主張、未分類フィードバックを失敗させる単体テスト |

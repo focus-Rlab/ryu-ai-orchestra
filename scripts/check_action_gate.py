@@ -20,6 +20,8 @@ COMMON_FIELDS = {
     "classification_basis",
 }
 
+RULE_CATEGORIES = {"security", "authority", "quality", "user_communication", "state_sync", "delivery", "recovery", "agent_design"}
+
 INCIDENT_STEPS = {
     "classify",
     "root_cause",
@@ -88,6 +90,42 @@ def validate(record: dict, registry: dict | None = None) -> list[str]:
             errors.append(f"{field} must be a list")
         elif field in record and not record[field]:
             errors.append(f"{field} must not be empty")
+
+    enforce_v2 = record.get("gate_version", 1) >= 2
+    coverage = record.get("rule_coverage")
+    if not enforce_v2:
+        coverage = [{"category": category, "status": "not_applicable", "reason": "legacy record"} for category in RULE_CATEGORIES]
+    if not isinstance(coverage, list) or not coverage:
+        errors.append("rule_coverage must be a non-empty list")
+    else:
+        seen = set()
+        for item in coverage:
+            if not isinstance(item, dict) or item.get("category") not in RULE_CATEGORIES:
+                errors.append("rule coverage category is invalid")
+                continue
+            seen.add(item["category"])
+            if item.get("status") not in {"applicable", "not_applicable"} or not item.get("reason"):
+                errors.append("each rule coverage item requires status and reason")
+            if item.get("status") == "applicable" and (not item.get("control") or not item.get("evidence")):
+                errors.append("applicable rule coverage requires control and evidence")
+        missing_categories = sorted(RULE_CATEGORIES - seen)
+        if missing_categories:
+            errors.append(f"rule coverage categories missing: {', '.join(missing_categories)}")
+
+    handoff = record.get("deliverable_handoff") if enforce_v2 else {"required": False}
+    if not isinstance(handoff, dict) or not isinstance(handoff.get("required"), bool):
+        errors.append("deliverable_handoff must state whether handoff is required")
+    elif handoff["required"]:
+        if not handoff.get("medium") or not handoff.get("acceptance_check"):
+            errors.append("required deliverable handoff needs a medium and acceptance check")
+        if record.get("action_type") == "completion_claim" and not handoff.get("user_access_evidence"):
+            errors.append("completion claim requires user-access evidence for deliverable handoff")
+
+    feedback = record.get("feedback_capture") if enforce_v2 else {"reviewed": False}
+    if not isinstance(feedback, dict) or not isinstance(feedback.get("reviewed"), bool):
+        errors.append("feedback_capture must state whether user feedback was reviewed")
+    elif feedback["reviewed"] and not feedback.get("classification"):
+        errors.append("reviewed feedback requires a classification")
 
     assignment = record.get("assignment_decision")
     if not isinstance(assignment, dict):
