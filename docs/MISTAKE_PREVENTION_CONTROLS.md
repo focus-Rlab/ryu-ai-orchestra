@@ -20,12 +20,34 @@ Therefore every future action gate must answer three questions before work start
 2. For each applicable rule, what failure mode could happen if the rule is only read but not applied?
 3. What concrete action check blocks that failure before implementation, explanation, delivery, or completion?
 
+## Named Canonical Domains
+
+The 8 broad rule categories are not enough by themselves. A later worker could satisfy those categories while still missing a specific important rule area. Every action-gate v2 record must therefore include `canonical_rule_domain_coverage` for all named domains below, each marked `applicable` or `not_applicable` with a reason.
+
+If a domain is applicable, the record must include the source, failure mode, and action check.
+
+Required domains:
+
+- `security`: secrets, private data, file integrity, unsafe operations, and permission boundaries.
+- `ryunosuke_evaluation_method`: Ryunosuke's personal acceptance, objective checks, explanation quality, correction burden, and subjective usefulness.
+- `raphael_behavior_code`: Raphael's identity, role, action norms, response style, and responsibility boundaries.
+- `approval_authority`: what Ryunosuke has approved, what is only proposed, and what cannot be decided by AI or GitHub alone.
+- `user_communication`: plain-language explanation, jargon handling, and understanding checks.
+- `delivery_acceptance`: internal validation, public access, user access evidence, and Ryunosuke acceptance as separate states.
+- `feedback_interpretation`: surface examples, underlying issue, interpretation risk, and prevention controls.
+- `mistake_recovery`: classification, impact, root cause, recurrence prevention, and incident records.
+- `agent_design`: whether existing agents are enough, whether temporary help is needed, or whether a new agent/skill is justified.
+- `state_sync`: current branch, PR, issue, next action, and project digest consistency.
+- `quality_validation`: tests, failure tests, independent review, and unverified scope.
+- `cost_and_tool_authority`: paid tools, tool availability, alternate paths, and authority to execute.
+
 ## Control Map
 
 | Failure pattern | Required control | Blocking check |
 | --- | --- | --- |
 | Rules were read but not applied at the action boundary. | Every applicable rule category must include `failure_mode` and `action_check`, not only `reason`, `control`, and `evidence`. | `scripts/check_action_gate.py` rejects applicable rule coverage without both fields. |
 | Future workers may miss a written rule that has not yet produced an obvious visible error. | Every action-gate v2 record must include `preflight_failure_review` with reviewed sources, known failure patterns, and risk-to-action controls. | The gate rejects missing or empty preflight failure review fields. |
+| Specific important rule areas are hidden inside broad categories. | Every action-gate v2 record must include all named canonical domains such as security, Ryunosuke evaluation method, Raphael behavior code, and approval authority. | The gate rejects missing canonical domains and applicable domains without source, failure mode, or action check. |
 | User-facing explanations were hard to understand, including unexplained PR/branch/gate/status language. | When `user_communication` applies, preflight must include a communication plan for Ryunosuke and future workers. | The gate rejects missing audience, plain-language summary, jargon list, or understanding check. |
 | Improvement scope was narrowed to recent visible examples such as security or beginner explanation. | The preflight review must list known failure patterns and map each risk to a prevention control. | The gate rejects empty risk-to-action controls. |
 | One failed path was treated as the whole task being impossible. | Impossibility claims must inventory requested tool, configured connector, API, local VCS, browser, and manual handoff paths. | The gate rejects incomplete path inventories and rejects an impossibility claim when an authorized equivalent path is available. |
@@ -74,6 +96,7 @@ This prevents the failure where a rule about beginner-friendly explanation exist
 The next AURA app repair must not start until all of the following are true:
 
 - This prevention-control change is merged.
+- The action gate passes with all named canonical domains reviewed, including security, Ryunosuke evaluation method, Raphael behavior code, approval authority, and user communication.
 - The action gate passes with feedback fields that preserve the underlying issue, not only example labels.
 - The action gate passes with preflight failure review fields that map known written rules to action checks.
 - The next implementation plan includes a visual ideal sharing step before UI changes.
