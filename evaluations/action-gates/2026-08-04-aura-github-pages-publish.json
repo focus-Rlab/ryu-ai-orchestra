@@ -1,0 +1,67 @@
+{
+  "gate_version": 2,
+  "task": "Publish AURA for Ryunosuke acceptance review",
+  "action": "Build the accepted AURA as static files, publish only those files to the gh-pages branch, and verify the public URL",
+  "action_type": "publish",
+  "mistake_detected": false,
+  "classification_basis": "Ryunosuke explicitly approved GitHub Pages publication after StackBlitz failed; prior sharing failures remain handled by their existing incident records",
+  "rule_coverage": [
+    {"category":"security","status":"applicable","reason":"public site","control":"secret and external-flow audit","evidence":"built files inspected"},
+    {"category":"authority","status":"applicable","reason":"external publication","control":"explicit approval gate","evidence":"Ryunosuke replied いいよ"},
+    {"category":"quality","status":"applicable","reason":"accepted build","control":"tests and production build","evidence":"required_checks"},
+    {"category":"user_communication","status":"applicable","reason":"user must understand access","control":"direct URL and status","evidence":"handoff plan"},
+    {"category":"state_sync","status":"not_applicable","reason":"main project state is unchanged by the isolated site branch"},
+    {"category":"delivery","status":"applicable","reason":"prior sharing failed","control":"HTTP and asset verification","evidence":"public URL returns 200"},
+    {"category":"recovery","status":"applicable","reason":"StackBlitz failed","control":"authorized GitHub Pages alternative","evidence":"gh-pages branch"},
+    {"category":"agent_design","status":"not_applicable","reason":"bounded publication needs no specialist agent"}
+  ],
+  "deliverable_handoff": {"required":true,"medium":"https://focus-rlab.github.io/ryu-ai-orchestra/","acceptance_check":"Ryunosuke opens and operates AURA","user_access_evidence":"HTTP 200 and asset response verified; personal acceptance remains pending"},
+  "feedback_capture": {"reviewed":true,"classification":["sharing failure","preference for operable URL","publication approval"],"positive_patterns":["publication approval boundary was explicitly requested"],"failures_or_gaps":["temporary images and StackBlitz did not provide reliable user access"],"source_evidence":["2026-08-04 conversation"]},
+  "mistake_triggers": [
+    {
+      "type": "none",
+      "evidence": [
+        {
+          "type": "user_report",
+          "ref": "conversation approval on 2026-08-04",
+          "result": "Ryunosuke replied いいよ to the explicit GitHub Pages publication request"
+        }
+      ]
+    }
+  ],
+  "canonical_files_read": [
+    "STARTUP_CONTEXT.md",
+    "README.md",
+    "PROJECT_STATE.json",
+    "PROJECT_HANDOFF.md",
+    "GOVERNANCE.md",
+    "SECURITY.md",
+    "ROADMAP.md",
+    "agents/raphael.md",
+    "apps/effort-avatar/README.md"
+  ],
+  "applicable_rules": [
+    "External publication requires Ryunosuke approval, which is present for this AURA GitHub Pages publication",
+    "Do not expose secrets, credentials, personal information, or unapproved external data flows",
+    "Use the dedicated gh-pages publication branch and do not mutate main",
+    "Use no paid or chargeable service and add no permanent dependency",
+    "A visible and usable public URL is required before claiming sharing complete"
+  ],
+  "assignment_decision": {
+    "use_agents": false,
+    "rationale": "This bounded publication task does not require a new specialist, and the current environment forbids unrequested sub-agent spawning"
+  },
+  "required_checks": [
+    "AURA tests pass",
+    "production build passes with repository-path base URL",
+    "built files contain no obvious secrets or external data collection",
+    "gh-pages branch contains only the intended static site",
+    "public URL returns the AURA page and its assets"
+  ],
+  "stop_conditions": [
+    "Do not change or merge main",
+    "Do not publish repository source, credentials, or personal data in the site branch",
+    "Do not use a paid or chargeable service",
+    "Do not claim completion if the public URL or required assets cannot be opened"
+  ]
+}

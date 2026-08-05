@@ -11,14 +11,16 @@ Owner: Ryunosuke Matsumoto
 
 1. `STARTUP_CONTEXT.md`
 2. `README.md`
-3. `PROJECT_HANDOFF.md`
-4. `STAGE2_DECISION_LOG.md`
-5. `AGENT_STANDARD.md`
-6. `ROADMAP.md`
-7. `GOVERNANCE.md`
-8. `MASTER_SPEC.md`
-9. `SPEC_TRACEABILITY.md`
-10. `agents/raphael.md`
+3. `PROJECT_STATE.json`
+4. `PROJECT_HANDOFF.md`
+5. `STAGE2_DECISION_LOG.md`
+6. `AGENT_STANDARD.md`
+7. `ROADMAP.md`
+8. `GOVERNANCE.md`
+9. `MASTER_SPEC.md`
+10. `SPEC_TRACEABILITY.md`
+11. `agents/raphael.md`
+12. `RAPHAEL_TEST_PLAN.md`
 
 重要: `AGENT_STANDARD.md`とStage 2関係正本は、`STAGE2_DECISION_LOG.md`の隆之介承認済み判断を反映した統合版である。`INCIDENT_LOG.md`に残る評価基準の正式承認などの未決定事項は、Stage 2完了によって承認済みとは扱わない。
 
@@ -161,3 +163,31 @@ V1確定条件:
 - Week 3のIssue #15は置き換えず、要件質問0/5問のまま保持した。次のセッションでは、GitHub実態と`PROJECT_STATE.json`を確認してから、最初の要件質問としてアプリの目的を一問だけ尋ねる。
 - 3体が新しいClaude Codeセッションの開始直後から`subagent_type`として認識されるかは未確認であり、Week 3開始時の再確認事項として残す。
 - 上記はClaude Codeアダプター固有の確認事項であり、3体の正本や存在自体をClaude Code専用とするものではない。3体の意味上の正本は`agents/*.md`であり、各AI環境では環境別アダプターから同じ役割を再現する。
+
+## 15. 2026-08-05 AURA公開後の受入再開
+
+AURAはGitHub Pagesで公開済み。公開URLは次のとおり。
+
+- https://focus-rlab.github.io/ryu-ai-orchestra/
+
+この公開は、内部テスト完了やPRマージとは別に扱う。AURAは、隆之介本人が実際に開き、見た目、操作、保存、説明理解、修正負担を評価するまで最終受入済みとはしない。
+
+AURA評価では、単にアプリが動くかだけでなく、`RAPHAEL_TEST_PLAN.md`の評価基準を適用する。最低限、次を分けて記録する。
+
+- 客観評価: 技術的動作、データ保存、画面崩れ、エラー、セキュリティ、公開URLの到達性
+- 隆之介本人の主観評価: 理解されている、任せられる、修正が少ない、実際に役立つ
+- 説明品質: 隆之介が目的、設計理由、選択肢、未完成部分を理解し、自分の判断を持てる状態か
+- 修正レベル: 修正なし、軽微修正、大幅修正、重大失敗
+- 受入状態: 未評価、条件付き受入、修正待ち、最終受入
+
+評価開始前に、Raphaelは「読んだ正本」から今回適用する規則を取り出し、8分類の行動ゲートへ記録する。評価基準を読まずにRaphael独自の観点だけで受入項目を作らない。
+
+## 16. 2026-08-05 PR #28と引き継ぎ修復
+
+Draft PR #28は、規則全体の強制適用、成果物共有・受入、会話フィードバック自動分類を実装するためのPRである。mainマージは隆之介承認待ち。
+
+このPRでは、当初 `PROJECT_HANDOFF.md` に非UTF-8バイトが混入し、GitHubコネクタでUTF-8テキストとして読めない状態になっていた。これは「テスト全部通過」と報告されていた検証では検出できていなかった。2026-08-05に同ファイルをUTF-8で復旧し、文字コード破損を検出するテストを追加する方針へ切り替えた。
+
+今後、正本や引き継ぎファイルを更新した後は、内容の意味だけでなく、ファイルがUTF-8として読めることも検証対象に含める。
+
+このトークで隆之介が評価した具体的な良かった点、だめだった点、再監査で判明した見落としは`evaluations/week4-improvement-review/CONVERSATION_REVIEW.md`を正とする。要約だけで具体例を失わない。

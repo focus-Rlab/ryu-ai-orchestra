@@ -1,0 +1,33 @@
+{
+  "gate_version": 2,
+  "task": "Carry the full AURA review into an enforceable PR and next-session handoff",
+  "action": "Commit, push, and open the Week 4 improvement PR",
+  "action_type": "completion_claim",
+  "mistake_detected": false,
+  "classification_basis": "The underlying incidents are already recorded; this action implements the user-approved generalized improvements",
+  "mistake_triggers": [{"type":"none","evidence":[{"type":"user_report","ref":"2026-08-05 conversation","result":"Ryunosuke approved the full review and requested implementation and PR"}]}],
+  "canonical_files_read": ["STARTUP_CONTEXT.md","README.md","PROJECT_STATE.json","PROJECT_HANDOFF.md","GOVERNANCE.md","SECURITY.md","MASTER_SPEC.md","SPEC_TRACEABILITY.md","agents/raphael.md","RAPHAEL_TEST_PLAN.md"],
+  "applicable_rules": ["use a dedicated branch and Draft PR","scan all rule categories","do not claim user acceptance before Ryunosuke opens AURA","record clear feedback without waiting for a record request"],
+  "rule_coverage": [
+    {"category":"security","status":"applicable","reason":"public AURA and GitHub write","control":"secret/publication boundary review","evidence":"SECURITY.md and static-site inspection"},
+    {"category":"authority","status":"applicable","reason":"push and PR are authorized; merge is not","control":"Draft PR only","evidence":"user request and governance"},
+    {"category":"quality","status":"applicable","reason":"validator change","control":"unit and repository tests","evidence":"required checks"},
+    {"category":"user_communication","status":"applicable","reason":"minimal-token handoff","control":"direct URL and concise prompt","evidence":"PROJECT_HANDOFF.md"},
+    {"category":"state_sync","status":"applicable","reason":"Week 4 branch state","control":"project-state checker","evidence":"PROJECT_STATE.json"},
+    {"category":"delivery","status":"applicable","reason":"AURA must be accessible","control":"public URL verification and pending user acceptance","evidence":"GitHub Pages HTTP 200"},
+    {"category":"recovery","status":"applicable","reason":"CLI unavailable and earlier sharing paths failed","control":"local git plus GitHub connector; public Pages URL","evidence":"remote branch and HTTP result"},
+    {"category":"agent_design","status":"applicable","reason":"existing agents versus new agent was discussed","control":"explicit no-new-agent decision for bounded integration","evidence":"assignment_decision"}
+  ],
+  "assignment_decision": {"use_agents":false,"rationale":"This bounded integration is not separable enough to justify a new specialist, and unrequested sub-agent spawning is prohibited in the current environment"},
+  "deliverable_handoff": {"required":true,"medium":"https://focus-rlab.github.io/ryu-ai-orchestra/","acceptance_check":"Ryunosuke opens and evaluates AURA","user_access_evidence":"HTTP 200 and assets verified; subjective acceptance explicitly remains pending"},
+  "feedback_capture": {
+    "reviewed": true,
+    "classification": ["confirmed permanent improvements","success patterns","recorded incidents","future vision not roadmap-approved","temporary token constraint"],
+    "positive_patterns": ["three-role independent testing found a visual defect","safe alternative browser path completed internal validation","implementation testing records state sync and PR were connected","user operations were minimized","no-new-agent decision was appropriate"],
+    "failures_or_gaps": ["rules were read but not applied at action boundaries","explanations remained too technical","rule scan was initially narrowed to only prominent examples","agent-creation decision was not explicitly recorded","AURA was called complete before accessible handoff and user acceptance","temporary screenshots and StackBlitz were shared without user-access verification","internal technical acceptance was confused with user acceptance","feedback was not automatically captured"],
+    "source_evidence": ["2026-08-05 conversation","evaluations/week4-improvement-review/CONVERSATION_REVIEW.md","INCIDENT_LOG.md","evaluations/week3-small-app/ACCEPTANCE_EVALUATION.md"]
+  },
+  "required_checks": ["action-gate unit tests","full repository tests","Python compilation","project-state consistency","public URL and assets","diff scope"],
+  "stop_conditions": ["do not merge main","do not call AURA finally accepted before user review","do not convert future vision into roadmap commitment","do not use paid services"],
+  "completion_evidence": {"verified":["tests","public URL","diff scope","push and Draft PR"],"unverified_scope":["Ryunosuke visual and interaction acceptance"]}
+}

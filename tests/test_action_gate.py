@@ -18,11 +18,18 @@ def completed_steps():
 
 def valid_record():
     return {
+        "gate_version": 2,
         "task": "correct a process failure",
         "action": "update controls and tests",
         "action_type": "incident_response",
         "mistake_detected": True,
         "classification_basis": "User report and incident evidence confirm a mistake",
+        "rule_coverage": [
+            {"category": category, "status": "applicable", "reason": "required scan", "control": "gate", "evidence": "test"}
+            for category in ("security", "authority", "quality", "user_communication", "state_sync", "delivery", "recovery", "agent_design")
+        ],
+        "deliverable_handoff": {"required": False},
+        "feedback_capture": {"reviewed": True, "classification": ["mistake"], "positive_patterns": ["safe recovery"], "failures_or_gaps": ["unshared deliverable"], "source_evidence": ["user report"]},
         "mistake_triggers": [{"type": "user_report", "evidence": [{"type": "user_report", "ref": "conversation", "result": "mistake confirmed"}]}],
         "mistake": {
             "classification": "major",
@@ -137,6 +144,29 @@ class ActionGateTests(unittest.TestCase):
         record.pop("mistake"); record.pop("incident_steps")
         record["completion_evidence"] = {"verified": [], "unverified_scope": ["visual QA"]}
         self.assertIn("completion evidence must include verified checks", validate(record))
+
+    def test_rule_scan_cannot_omit_delivery(self):
+        record = valid_record()
+        record["rule_coverage"] = [item for item in record["rule_coverage"] if item["category"] != "delivery"]
+        self.assertTrue(any("rule coverage categories missing:" in e for e in validate(record)))
+
+    def test_completion_cannot_claim_unshared_app(self):
+        record = valid_record()
+        record["action_type"] = "completion_claim"; record["mistake_detected"] = False
+        record.pop("mistake"); record.pop("incident_steps")
+        record["completion_evidence"] = {"verified": ["internal tests"], "unverified_scope": []}
+        record["deliverable_handoff"] = {"required": True, "medium": "public URL", "acceptance_check": "user opens app"}
+        self.assertIn("completion claim requires user-access evidence for deliverable handoff", validate(record))
+
+    def test_reviewed_feedback_requires_classification(self):
+        record = valid_record(); record["feedback_capture"] = {"reviewed": True}
+        self.assertIn("reviewed feedback requires a classification", validate(record))
+
+    def test_reviewed_feedback_requires_concrete_success_failure_and_evidence(self):
+        for field in ("positive_patterns", "failures_or_gaps", "source_evidence"):
+            record = valid_record()
+            record["feedback_capture"][field] = []
+            self.assertIn(f"reviewed feedback requires non-empty {field}", validate(record))
 
     @staticmethod
     def impossibility_record():
