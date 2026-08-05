@@ -1,10 +1,10 @@
 {
   "gate_version": 2,
   "task": "Prevent recurrence before AURA revision",
-  "action": "Add action-gate checks and documentation for feedback interpretation, deliverable acceptance, rule-to-action application, plain-language communication, and mistake prevention controls before resuming AURA app fixes.",
+  "action": "Add action-gate checks and documentation so written rules, user feedback, security, Ryunosuke evaluation, Raphael behavior, approval boundaries, communication, delivery acceptance, recovery, agent design, state sync, quality validation, and tool authority must be converted into action checks before AURA repair resumes.",
   "action_type": "incident_response",
   "mistake_detected": true,
-  "classification_basis": "Ryunosuke reported that prior work repeatedly read rules without applying them, corrected surface examples instead of underlying issues, and risked moving into AURA fixes before all bad points were prevented.",
+  "classification_basis": "Ryunosuke reported that prior work repeatedly read rules without applying them and required prevention mechanisms before AURA fixes.",
   "mistake_triggers": [
     {
       "type": "user_report",
@@ -12,7 +12,7 @@
         {
           "type": "user_report",
           "ref": "conversation 2026-08-05",
-          "result": "Ryunosuke required prevention mechanisms before app fixes and clarified that the core issue includes written rules not being converted into future action."
+          "result": "Ryunosuke required all written-but-not-applied rule areas to be checked, not only the latest example."
         }
       ]
     }
@@ -37,318 +37,82 @@
     "だめだった点をすべて修正できる状態でAURA修正へ進む",
     "ユーザーの例示を表面的な修正項目だけに縮小しない",
     "初心者にも分かる説明へ変換する",
+    "セキュリティ、評価方法、Raphael行動規範などの正本領域を行動前に照合する",
     "内部検証と本人受入を分離する",
     "GitHub連携で実行可能な作業を進める"
   ],
   "rule_coverage": [
-    {
-      "category": "security",
-      "status": "applicable",
-      "reason": "Repository controls can affect future delivery claims and file integrity.",
-      "control": "No secrets or credentials are added; file integrity remains covered by UTF-8 repository tests.",
-      "evidence": "tests/test_repository_text_encoding.py remains part of the PR #28 baseline.",
-      "failure_mode": "A future worker could claim safety after reading security rules but skip file-integrity or secret checks.",
-      "action_check": "Keep security in rule_coverage and keep encoding/file-integrity tests in the validation set."
-    },
-    {
-      "category": "authority",
-      "status": "applicable",
-      "reason": "Ryunosuke explicitly approved merging PR #28, then requested prevention mechanisms before app fixes.",
-      "control": "Work is limited to a new branch and Draft PR; AURA app repair remains paused.",
-      "evidence": "PROJECT_STATE.json next_action and docs/MISTAKE_PREVENTION_CONTROLS.md.",
-      "failure_mode": "A future worker could treat this as approval to begin app repairs immediately.",
-      "action_check": "PROJECT_STATE.json and the prevention document must say AURA repair starts only after this control PR is merged."
-    },
-    {
-      "category": "quality",
-      "status": "applicable",
-      "reason": "The change must turn conversation review failures into tests and blockers.",
-      "control": "Unit tests cover missing underlying issue, empty surface examples, empty prevention controls, missing action checks, and missing communication plans.",
-      "evidence": "tests/test_action_gate.py.",
-      "failure_mode": "A future worker could document good intentions without tests that fail on the bad behavior.",
-      "action_check": "Add failing tests for each new gate field before claiming the prevention mechanism exists."
-    },
-    {
-      "category": "user_communication",
-      "status": "applicable",
-      "reason": "Prior explanations used terms without enough clarity.",
-      "control": "Required handoff needs a plain-language summary, and preflight requires a communication plan when user_communication applies.",
-      "evidence": "scripts/check_action_gate.py deliverable_handoff and preflight validation.",
-      "failure_mode": "The worker may read the beginner-friendly explanation rule but still answer with unexplained PR, branch, gate, or check language.",
-      "action_check": "Before reporting status or handoff, prepare audience, plain-language summary, jargon list, and understanding check."
-    },
-    {
-      "category": "state_sync",
-      "status": "applicable",
-      "reason": "PR #28 is merged and PROJECT_STATE.json still pointed at the old branch/status.",
-      "control": "Update PROJECT_STATE.json to the prevention-control branch and keep AURA paused until this control PR is reviewed.",
-      "evidence": "PROJECT_STATE.json and docs/MISTAKE_PREVENTION_CONTROLS.md in this branch.",
-      "failure_mode": "The branch or next action could point to outdated PR #28 or direct AURA repair.",
-      "action_check": "Run project-state validation with expected merged PR #28 after final branch updates."
-    },
-    {
-      "category": "delivery",
-      "status": "applicable",
-      "reason": "Prior AURA delivery confused internal testing, public access, and user acceptance.",
-      "control": "Completion claims for handoff deliverables require passed internal validation, user-access evidence, and passed user acceptance.",
-      "evidence": "scripts/check_action_gate.py and tests/test_action_gate.py.",
-      "failure_mode": "A worker could call a public URL or internal test pass final acceptance.",
-      "action_check": "For completion claims, verify internal validation and Ryunosuke user acceptance separately."
-    },
-    {
-      "category": "recovery",
-      "status": "applicable",
-      "reason": "This work is an incident response to repeated process failures.",
-      "control": "Incident steps remain mandatory for mistake responses and this record maps the current response.",
-      "evidence": "evaluations/action-gates/2026-08-05-mistake-prevention-controls.json.",
-      "failure_mode": "A worker could make a small patch after a mistake without classifying impact or prevention.",
-      "action_check": "Mistake responses must complete all incident steps with structured evidence."
-    },
-    {
-      "category": "agent_design",
-      "status": "applicable",
-      "reason": "The review clarified that not adding agents was only appropriate for the AURA case, not a permanent policy.",
-      "control": "The prevention document requires per-task agent decisions with rationale.",
-      "evidence": "docs/MISTAKE_PREVENTION_CONTROLS.md.",
-      "failure_mode": "A future worker could avoid agents by default because it was good in one case.",
-      "action_check": "Record whether existing agents are enough, whether temporary help is needed, or whether new skill/agent work is justified for the task."
-    }
+    {"category": "security", "status": "applicable", "reason": "Repository safety and file integrity are relevant.", "control": "security domain action check", "evidence": "docs/MISTAKE_PREVENTION_CONTROLS.md", "failure_mode": "Security rules could be read but not applied.", "action_check": "Review security domain before acting."},
+    {"category": "authority", "status": "applicable", "reason": "AURA repair must wait for this control PR.", "control": "approval domain action check", "evidence": "PROJECT_STATE.json", "failure_mode": "Approval could be overextended.", "action_check": "Separate approved work from proposed next work."},
+    {"category": "quality", "status": "applicable", "reason": "Prevention controls require tests.", "control": "quality validation tests", "evidence": "tests/test_action_gate.py", "failure_mode": "Intentions could be documented without failing tests.", "action_check": "Run action gate tests."},
+    {"category": "user_communication", "status": "applicable", "reason": "Ryunosuke specifically raised explanation quality.", "control": "communication plan", "evidence": "scripts/check_action_gate.py", "failure_mode": "Plain explanation rules could be read but ignored.", "action_check": "Prepare audience, plain summary, jargon list, and understanding check."},
+    {"category": "state_sync", "status": "applicable", "reason": "PR #28 merged and PR #29 changed current state.", "control": "state check", "evidence": "PROJECT_STATE.json", "failure_mode": "Current branch or next action could become stale.", "action_check": "Run project state check after updates."},
+    {"category": "delivery", "status": "applicable", "reason": "Prior delivery confused URL access and acceptance.", "control": "acceptance separation", "evidence": "scripts/check_action_gate.py", "failure_mode": "Internal pass could be called user acceptance.", "action_check": "Separate internal validation, user access, and Ryunosuke acceptance."},
+    {"category": "recovery", "status": "applicable", "reason": "This is a process failure response.", "control": "incident steps", "evidence": "evaluations/action-gates/2026-08-05-mistake-prevention-controls.json", "failure_mode": "A mistake could be patched without full recovery steps.", "action_check": "Complete incident steps with evidence."},
+    {"category": "agent_design", "status": "applicable", "reason": "Agent use/non-use was part of the review.", "control": "agent decision rationale", "evidence": "docs/MISTAKE_PREVENTION_CONTROLS.md", "failure_mode": "One case-specific agent decision could become a blanket rule.", "action_check": "Record per-task agent rationale."}
+  ],
+  "canonical_rule_domain_coverage": [
+    {"domain": "security", "status": "applicable", "reason": "Security and file integrity remain relevant to repo changes.", "source": "GOVERNANCE.md / tests/test_repository_text_encoding.py", "failure_mode": "Security rules could be read but secret/file-integrity checks skipped.", "action_check": "Keep security/file-integrity checks in validation."},
+    {"domain": "ryunosuke_evaluation_method", "status": "applicable", "reason": "AURA acceptance and future app repair depend on Ryunosuke's evaluation method.", "source": "RAPHAEL_TEST_PLAN.md / AURA_USER_ACCEPTANCE_2026-08-05.md", "failure_mode": "Objective checks could be confused with Ryunosuke's subjective acceptance.", "action_check": "Separate objective checks, subjective acceptance, explanation quality, and correction burden."},
+    {"domain": "raphael_behavior_code", "status": "applicable", "reason": "Raphael must act from recorded norms, not apology or surface compliance.", "source": "agents/raphael.md / STARTUP_CONTEXT.md", "failure_mode": "Raphael identity and action norms could be read but not shape behavior.", "action_check": "Convert behavior norms into preflight failure patterns and communication plan."},
+    {"domain": "approval_authority", "status": "applicable", "reason": "User approval boundaries controlled PR #28 merge and AURA repair pause.", "source": "PROJECT_HANDOFF.md / GOVERNANCE.md", "failure_mode": "A specific approval could be treated as broader permission.", "action_check": "State what is approved, proposed, paused, or blocked before acting."},
+    {"domain": "user_communication", "status": "applicable", "reason": "Ryunosuke raised beginner-friendly explanation as an example of written-but-not-applied rules.", "source": "CONVERSATION_REVIEW.md", "failure_mode": "Jargon could be used without explanation.", "action_check": "Require communication_plan when user_communication applies."},
+    {"domain": "delivery_acceptance", "status": "applicable", "reason": "AURA delivery confused internal validation and user acceptance.", "source": "PROJECT_HANDOFF.md / AURA_USER_ACCEPTANCE_2026-08-05.md", "failure_mode": "Public URL reachability could be called final acceptance.", "action_check": "Require internal validation, user access evidence, and Ryunosuke acceptance separately."},
+    {"domain": "feedback_interpretation", "status": "applicable", "reason": "Surface-example interpretation was the active user concern.", "source": "AURA_USER_ACCEPTANCE_2026-08-05.md", "failure_mode": "Examples could become narrow fixes.", "action_check": "Require underlying_issue, surface_examples, interpretation_risk, and prevention_controls."},
+    {"domain": "mistake_recovery", "status": "applicable", "reason": "This branch responds to repeated process failures.", "source": "GOVERNANCE.md / CONVERSATION_REVIEW.md", "failure_mode": "A mistake could be corrected without recurrence prevention.", "action_check": "Require full incident_steps and evidence."},
+    {"domain": "agent_design", "status": "applicable", "reason": "The review mentioned agent non-use as case-specific only.", "source": "CONVERSATION_REVIEW.md / AGENT_STANDARD.md", "failure_mode": "No-new-agent could become an unintended blanket rule.", "action_check": "Record per-task agent use/non-use rationale."},
+    {"domain": "state_sync", "status": "applicable", "reason": "Project state changed after PR #28 merge and PR #29 updates.", "source": "PROJECT_STATE.json", "failure_mode": "Next action could point to AURA repair before prevention merge.", "action_check": "Validate PROJECT_STATE.json with expected PR #28."},
+    {"domain": "quality_validation", "status": "applicable", "reason": "The prevention mechanism must be tested, not only documented.", "source": "tests/test_action_gate.py", "failure_mode": "The PR could claim prevention without tests that fail on missing fields.", "action_check": "Run action-gate unit tests and gate-record validation."},
+    {"domain": "cost_and_tool_authority", "status": "applicable", "reason": "Prior work depended on alternate free/authorized tool paths.", "source": "GOVERNANCE.md / CONVERSATION_REVIEW.md", "failure_mode": "A tool path failure could be called impossible or paid/unauthorized paths could be used.", "action_check": "Use execution_path_inventory for impossibility claims and keep paid/authority limits explicit."}
   ],
   "preflight_failure_review": {
-    "reviewed_sources": [
-      "evaluations/week4-improvement-review/CONVERSATION_REVIEW.md",
-      "evaluations/week4-improvement-review/AURA_USER_ACCEPTANCE_2026-08-05.md",
-      "docs/MISTAKE_PREVENTION_CONTROLS.md"
-    ],
+    "reviewed_sources": ["CONVERSATION_REVIEW.md", "AURA_USER_ACCEPTANCE_2026-08-05.md", "docs/MISTAKE_PREVENTION_CONTROLS.md"],
     "known_failure_patterns": [
       "Rules are read but not converted into action checks.",
-      "Beginner-friendly explanation is written as a rule but not applied in user-facing replies.",
+      "Specific domains such as security, Ryunosuke evaluation, and Raphael behavior are hidden inside broad categories.",
+      "Beginner-friendly explanation is written as a rule but not applied.",
       "Feedback examples are narrowed into surface fixes.",
-      "Internal validation is mixed with Ryunosuke user acceptance.",
-      "A single failed path is treated as impossibility.",
-      "Agent decisions are made without recording rationale.",
-      "AURA repairs start before prevention controls are merged."
+      "Internal validation is mixed with Ryunosuke user acceptance."
     ],
     "risk_to_action_controls": [
-      {
-        "failure_pattern": "Rules are read but not converted into action checks.",
-        "prevention_control": "Every applicable rule coverage item must include failure_mode and action_check.",
-        "blocking_check": "scripts/check_action_gate.py rejects applicable coverage without both fields."
-      },
-      {
-        "failure_pattern": "Beginner-friendly explanation is written as a rule but not applied.",
-        "prevention_control": "user_communication coverage requires a communication_plan.",
-        "blocking_check": "tests/test_action_gate.py covers missing communication_plan and understanding_check."
-      },
-      {
-        "failure_pattern": "Feedback examples are narrowed into surface fixes.",
-        "prevention_control": "Reviewed feedback requires underlying_issue, surface_examples, interpretation_risk, and prevention_controls.",
-        "blocking_check": "tests/test_action_gate.py covers missing underlying_issue, surface_examples, and prevention_controls."
-      }
+      {"failure_pattern": "Rules are read but not converted into action checks.", "prevention_control": "Every applicable rule coverage item requires failure_mode and action_check.", "blocking_check": "scripts/check_action_gate.py rejects missing fields."},
+      {"failure_pattern": "Specific canonical domains are hidden inside broad categories.", "prevention_control": "Every action-gate v2 record requires all canonical_rule_domain_coverage domains.", "blocking_check": "tests/test_action_gate.py checks missing security and Ryunosuke evaluation domains."},
+      {"failure_pattern": "Beginner-friendly explanation is written as a rule but not applied.", "prevention_control": "user_communication coverage requires communication_plan.", "blocking_check": "tests/test_action_gate.py checks missing communication_plan and understanding_check."}
     ],
     "communication_plan": {
       "audience": "Ryunosuke and future workers",
       "plain_language_summary": "Explain what changed, what is still blocked, and what was actually verified using ordinary words before jargon.",
-      "jargon_to_explain": [
-        "PR",
-        "branch",
-        "gate",
-        "check",
-        "user acceptance"
-      ],
+      "jargon_to_explain": ["PR", "branch", "gate", "check", "user acceptance"],
       "understanding_check": "State the practical next action and separate verified results from pending checks."
     }
   },
-  "deliverable_handoff": {
-    "required": false
-  },
+  "deliverable_handoff": {"required": false},
   "feedback_capture": {
     "reviewed": true,
-    "classification": [
-      "mistake_prevention",
-      "feedback_interpretation",
-      "user_acceptance",
-      "rule_application",
-      "user_communication"
-    ],
-    "positive_patterns": [
-      "Recovering through an alternate path after one tool path failed was valid and should be preserved.",
-      "Not adding a new agent for the AURA case was acceptable only because the existing roles were sufficient for that case."
-    ],
-    "failures_or_gaps": [
-      "Rules were read but not applied at the moment of action.",
-      "Beginner-friendly explanation was recorded as required but not reliably applied.",
-      "Feedback examples were turned into narrow fixes instead of underlying failure patterns.",
-      "Internal validation, public access, and Ryunosuke's acceptance were mixed.",
-      "AURA fixes were about to begin before all bad points had prevention mechanisms."
-    ],
-    "source_evidence": [
-      "evaluations/week4-improvement-review/CONVERSATION_REVIEW.md",
-      "evaluations/week4-improvement-review/AURA_USER_ACCEPTANCE_2026-08-05.md",
-      "Ryunosuke conversation feedback on 2026-08-05"
-    ],
-    "underlying_issue": "The central failure is not a missing button or a single visual defect; it is that Codex/Raphael can read instructions and examples, then act on shallow labels instead of applying the user's judgment criteria, acceptance state, communication needs, and recurring failure pattern at the next action boundary.",
-    "surface_examples": [
-      "name change/delete buttons",
-      "character and aura examples",
-      "beginner-friendly explanation",
-      "not adding agents was good in this case",
-      "red/blue PR diff confusion",
-      "internal tests were reported as fully passing despite file corruption"
-    ],
-    "interpretation_risk": "A later worker may add two named buttons, tweak a character, explain one term, or avoid agents by default, while still failing to predict continued-use behavior, share visual ideals, separate acceptance states, explain status plainly, or decide agent structure per task.",
-    "prevention_controls": [
-      "Require underlying_issue for reviewed feedback.",
-      "Require non-empty surface_examples so concrete evidence is not lost.",
-      "Require interpretation_risk so the next worker sees how the feedback can be misunderstood.",
-      "Require prevention_controls before proceeding from reviewed feedback to implementation.",
-      "Require failure_mode and action_check for every applicable rule category.",
-      "Require communication_plan when user_communication applies.",
-      "Require passed user acceptance before completion claims for handoff deliverables."
-    ]
+    "classification": ["mistake_prevention", "feedback_interpretation", "rule_application", "canonical_domain_coverage"],
+    "positive_patterns": ["Alternate path recovery after one path failed should be preserved."],
+    "failures_or_gaps": ["Rules were read but not applied.", "Named rule domains could still be missed under broad categories.", "Examples could be narrowed into surface fixes."],
+    "source_evidence": ["CONVERSATION_REVIEW.md", "AURA_USER_ACCEPTANCE_2026-08-05.md", "Ryunosuke conversation feedback on 2026-08-05"],
+    "underlying_issue": "Written rules, user examples, and canonical domains must be converted into action checks before work starts; otherwise future workers can satisfy broad labels while missing security, Ryunosuke evaluation method, Raphael behavior code, or other specific domains.",
+    "surface_examples": ["beginner-friendly explanation", "security column", "Ryunosuke evaluation method", "Raphael behavior code", "name change/delete", "character/aura"],
+    "interpretation_risk": "A later worker may add the latest example only, while still skipping another named rule domain or treating broad category coverage as enough.",
+    "prevention_controls": ["Require all canonical domains", "Require source/failure_mode/action_check for applicable domains", "Require preflight failure review", "Require feedback underlying issue and interpretation risk"]
   },
-  "assignment_decision": {
-    "use_agents": false,
-    "rationale": "This is a bounded governance/test update on top of PR #28. Creating a new agent before the prevention controls exist would add process weight without improving this specific branch, but the prevention document requires future agent choices to be decided per task.",
-    "assignments": []
-  },
-  "required_checks": [
-    "Action gate rejects applicable rule coverage without failure_mode and action_check.",
-    "Action gate rejects missing preflight_failure_review.",
-    "Action gate rejects missing communication_plan when user_communication applies.",
-    "Action gate rejects feedback without underlying_issue.",
-    "Action gate rejects feedback without surface_examples.",
-    "Action gate rejects feedback without prevention_controls.",
-    "Action gate rejects completion claims for handoff deliverables without passed user acceptance.",
-    "Project state keeps AURA revision paused until prevention controls are merged."
-  ],
-  "stop_conditions": [
-    "Do not start AURA app code changes on this branch.",
-    "Do not record examples as the whole fix when Ryunosuke describes a broader pattern.",
-    "Do not claim tests passed unless they actually ran on the branch head.",
-    "Do not treat GitHub Pages reachability as Ryunosuke user acceptance.",
-    "Do not answer user-facing status with unexplained jargon when user_communication applies."
-  ],
+  "assignment_decision": {"use_agents": false, "rationale": "This is a bounded gate/test update; future agent decisions remain case-specific.", "assignments": []},
+  "required_checks": ["Action gate tests pass", "Action gate record passes", "Project state check passes"],
+  "stop_conditions": ["Do not start AURA app changes before this prevention PR is merged", "Do not treat broad 8-category coverage as enough without named canonical domains"],
   "incident_steps": {
-    "classify": {
-      "status": "complete",
-      "evidence": [
-        {
-          "type": "user_report",
-          "ref": "conversation 2026-08-05",
-          "result": "Ryunosuke identified the behavior as a repeated process failure that must be prevented before AURA fixes."
-        }
-      ]
-    },
-    "root_cause": {
-      "status": "complete",
-      "evidence": [
-        {
-          "type": "file",
-          "ref": "docs/MISTAKE_PREVENTION_CONTROLS.md",
-          "result": "Root cause documented as action-boundary rule and feedback interpretation failure."
-        }
-      ]
-    },
-    "impact_scope": {
-      "status": "complete",
-      "evidence": [
-        {
-          "type": "file",
-          "ref": "evaluations/week4-improvement-review/AURA_USER_ACCEPTANCE_2026-08-05.md",
-          "result": "Impact covers AURA acceptance, visual ideal sharing, continued-use behavior prediction, and feedback interpretation."
-        }
-      ]
-    },
-    "similar_case_audit": {
-      "status": "complete",
-      "evidence": [
-        {
-          "type": "file",
-          "ref": "evaluations/week4-improvement-review/CONVERSATION_REVIEW.md",
-          "result": "Conversation review lists related delivery, explanation, acceptance, and action-gate failures."
-        }
-      ]
-    },
-    "generalized_prevention": {
-      "status": "complete",
-      "evidence": [
-        {
-          "type": "file",
-          "ref": "scripts/check_action_gate.py",
-          "result": "Validator now requires feedback underlying issue, interpretation risk, prevention controls, rule action checks, communication plan, and acceptance statuses."
-        }
-      ]
-    },
-    "success_test": {
-      "status": "complete",
-      "evidence": [
-        {
-          "type": "test",
-          "ref": "tests/test_action_gate.py::test_complete_incident_plan_passes",
-          "result": "Updated valid record includes the new required feedback, preflight, and communication fields."
-        }
-      ]
-    },
-    "failure_test": {
-      "status": "complete",
-      "evidence": [
-        {
-          "type": "test",
-          "ref": "tests/test_action_gate.py::test_applicable_rule_requires_action_check",
-          "result": "A read-but-not-applied rule is covered as a failing case."
-        }
-      ]
-    },
-    "independent_review_decision": {
-      "status": "complete",
-      "evidence": [
-        {
-          "type": "tool_result",
-          "ref": "current branch scope review",
-          "result": "No separate agent was used for this narrow control update; future agent decisions remain case-specific."
-        }
-      ]
-    },
-    "approval_boundary": {
-      "status": "complete",
-      "evidence": [
-        {
-          "type": "user_report",
-          "ref": "conversation 2026-08-05",
-          "result": "Ryunosuke approved proceeding after merging PR #28 and required prevention before AURA fixes."
-        }
-      ]
-    },
-    "canonical_updates": {
-      "status": "complete",
-      "evidence": [
-        {
-          "type": "file",
-          "ref": "docs/MISTAKE_PREVENTION_CONTROLS.md",
-          "result": "Prevention controls documented before AURA implementation resumes."
-        }
-      ]
-    },
-    "similar_but_not_identical_retest": {
-      "status": "complete",
-      "evidence": [
-        {
-          "type": "test",
-          "ref": "tests/test_action_gate.py::test_user_communication_requires_plain_language_plan",
-          "result": "A related written-but-not-applied communication rule now fails."
-        }
-      ]
-    },
-    "incident_record": {
-      "status": "complete",
-      "evidence": [
-        {
-          "type": "file",
-          "ref": "evaluations/action-gates/2026-08-05-mistake-prevention-controls.json",
-          "result": "This record captures the current incident response."
-        }
-      ]
-    }
+    "classify": {"status": "complete", "evidence": [{"type": "user_report", "ref": "conversation 2026-08-05", "result": "Mistake class confirmed by user feedback."}]},
+    "root_cause": {"status": "complete", "evidence": [{"type": "file", "ref": "docs/MISTAKE_PREVENTION_CONTROLS.md", "result": "Root cause documented."}]},
+    "impact_scope": {"status": "complete", "evidence": [{"type": "file", "ref": "docs/MISTAKE_PREVENTION_CONTROLS.md", "result": "Impact scope covers named canonical domains."}]},
+    "similar_case_audit": {"status": "complete", "evidence": [{"type": "file", "ref": "evaluations/week4-improvement-review/CONVERSATION_REVIEW.md", "result": "Similar cases reviewed."}]},
+    "generalized_prevention": {"status": "complete", "evidence": [{"type": "file", "ref": "scripts/check_action_gate.py", "result": "Generalized prevention implemented."}]},
+    "success_test": {"status": "complete", "evidence": [{"type": "test", "ref": "tests/test_action_gate.py::test_complete_incident_plan_passes", "result": "Valid record includes canonical domains."}]},
+    "failure_test": {"status": "complete", "evidence": [{"type": "test", "ref": "tests/test_action_gate.py::test_canonical_rule_domain_cannot_omit_security", "result": "Missing domain fails."}]},
+    "independent_review_decision": {"status": "complete", "evidence": [{"type": "tool_result", "ref": "branch scope review", "result": "No separate agent used for bounded gate update."}]},
+    "approval_boundary": {"status": "complete", "evidence": [{"type": "user_report", "ref": "conversation 2026-08-05", "result": "User requested prevention before AURA repair."}]},
+    "canonical_updates": {"status": "complete", "evidence": [{"type": "file", "ref": "docs/MISTAKE_PREVENTION_CONTROLS.md", "result": "Canonical domain controls documented."}]},
+    "similar_but_not_identical_retest": {"status": "complete", "evidence": [{"type": "test", "ref": "tests/test_action_gate.py::test_canonical_rule_domain_cannot_omit_ryunosuke_evaluation", "result": "Evaluation domain omission fails."}]},
+    "incident_record": {"status": "complete", "evidence": [{"type": "file", "ref": "evaluations/action-gates/2026-08-05-mistake-prevention-controls.json", "result": "Incident record updated."}]}
   }
 }
