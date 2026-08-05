@@ -71,8 +71,8 @@
       "category": "state_sync",
       "status": "applicable",
       "reason": "PR #28 is merged and PROJECT_STATE.json still pointed at the old branch/status.",
-      "control": "Update PROJECT_STATE.json and PROJECT_HANDOFF.md to the prevention-control branch and AURA pause state.",
-      "evidence": "PROJECT_STATE.json and PROJECT_HANDOFF.md in this branch."
+      "control": "Update PROJECT_STATE.json to the prevention-control branch and keep AURA paused until this control PR is reviewed.",
+      "evidence": "PROJECT_STATE.json and docs/MISTAKE_PREVENTION_CONTROLS.md in this branch."
     },
     {
       "category": "delivery",
@@ -252,8 +252,8 @@
       "evidence": [
         {
           "type": "file",
-          "ref": "PROJECT_HANDOFF.md",
-          "result": "Handoff updated with the prevention-control branch and AURA pause state."
+          "ref": "docs/MISTAKE_PREVENTION_CONTROLS.md",
+          "result": "Prevention controls documented before AURA implementation resumes."
         }
       ]
     },
