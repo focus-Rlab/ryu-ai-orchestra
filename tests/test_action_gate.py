@@ -1,6 +1,6 @@
 import unittest
 
-from scripts.check_action_gate import INCIDENT_STEPS, validate
+from scripts.check_action_gate import CANONICAL_RULE_DOMAINS, INCIDENT_STEPS, validate
 
 REGISTRY = {"incidents": {"prior-1": {"root_cause_id": "same-root", "confirmed_occurrences": 1}}}
 
@@ -16,6 +16,63 @@ def completed_steps():
     }
 
 
+def domain_coverage():
+    return [
+        {
+            "domain": domain,
+            "status": "applicable",
+            "reason": "required canonical scan",
+            "source": "STARTUP_CONTEXT.md/GOVERNANCE.md/RAPHAEL_TEST_PLAN.md/agents/raphael.md",
+            "failure_mode": "canonical rule could be read but not applied to the next action",
+            "action_check": "state the concrete action check for this canonical domain before acting",
+        }
+        for domain in sorted(CANONICAL_RULE_DOMAINS)
+    ]
+
+
+def reviewed_feedback():
+    return {
+        "reviewed": True,
+        "classification": ["mistake", "user_acceptance"],
+        "positive_patterns": ["safe recovery after one path failed"],
+        "failures_or_gaps": ["surface examples were corrected without capturing the underlying issue"],
+        "source_evidence": ["AURA_USER_ACCEPTANCE_2026-08-05.md"],
+        "underlying_issue": "Feedback examples must be converted into the user's judgment criterion and recurring failure pattern before implementation.",
+        "surface_examples": ["name change/delete buttons", "character/aura examples", "overall design mismatch"],
+        "interpretation_risk": "A later worker may add the named buttons or tweak one visual part while missing continued-use prediction and ideal sharing.",
+        "prevention_controls": ["Require underlying_issue before reviewed feedback can pass", "Require prevention_controls before implementation starts"],
+    }
+
+
+def preflight_review():
+    return {
+        "reviewed_sources": ["CONVERSATION_REVIEW.md", "AURA_USER_ACCEPTANCE_2026-08-05.md"],
+        "known_failure_patterns": [
+            "rules read but not applied",
+            "plain-language explanation omitted",
+            "surface examples treated as complete fixes",
+        ],
+        "risk_to_action_controls": [
+            {
+                "failure_pattern": "rules read but not applied",
+                "prevention_control": "each applicable rule coverage item must state failure_mode and action_check",
+                "blocking_check": "validator rejects applicable coverage without action_check",
+            },
+            {
+                "failure_pattern": "plain-language explanation omitted",
+                "prevention_control": "user_communication coverage must include communication_plan",
+                "blocking_check": "validator rejects missing communication_plan",
+            },
+        ],
+        "communication_plan": {
+            "audience": "Ryunosuke and future workers",
+            "plain_language_summary": "Explain what changed, what is still blocked, and what was actually verified without unexplained abbreviations.",
+            "jargon_to_explain": ["PR", "branch", "gate", "user acceptance"],
+            "understanding_check": "State the practical next action and any unverified scope in ordinary language.",
+        },
+    }
+
+
 def valid_record():
     return {
         "gate_version": 2,
@@ -25,11 +82,21 @@ def valid_record():
         "mistake_detected": True,
         "classification_basis": "User report and incident evidence confirm a mistake",
         "rule_coverage": [
-            {"category": category, "status": "applicable", "reason": "required scan", "control": "gate", "evidence": "test"}
+            {
+                "category": category,
+                "status": "applicable",
+                "reason": "required scan",
+                "control": "gate",
+                "evidence": "test",
+                "failure_mode": "rule could be read without changing the next action",
+                "action_check": "record the concrete check that will be performed before acting",
+            }
             for category in ("security", "authority", "quality", "user_communication", "state_sync", "delivery", "recovery", "agent_design")
         ],
+        "canonical_rule_domain_coverage": domain_coverage(),
+        "preflight_failure_review": preflight_review(),
         "deliverable_handoff": {"required": False},
-        "feedback_capture": {"reviewed": True, "classification": ["mistake"], "positive_patterns": ["safe recovery"], "failures_or_gaps": ["unshared deliverable"], "source_evidence": ["user report"]},
+        "feedback_capture": reviewed_feedback(),
         "mistake_triggers": [{"type": "user_report", "evidence": [{"type": "user_report", "ref": "conversation", "result": "mistake confirmed"}]}],
         "mistake": {
             "classification": "major",
@@ -76,6 +143,51 @@ class ActionGateTests(unittest.TestCase):
         record.pop("incident_steps")
         record["assignment_decision"] = {"use_agents": False, "rationale": "bounded spelling change"}
         self.assertEqual(validate(record), [])
+
+    def test_canonical_rule_domain_coverage_is_required(self):
+        record = valid_record()
+        record.pop("canonical_rule_domain_coverage")
+        self.assertIn("canonical_rule_domain_coverage must be a non-empty list", validate(record))
+
+    def test_canonical_rule_domain_cannot_omit_security(self):
+        record = valid_record()
+        record["canonical_rule_domain_coverage"] = [item for item in record["canonical_rule_domain_coverage"] if item["domain"] != "security"]
+        self.assertTrue(any("canonical rule domains missing:" in error and "security" in error for error in validate(record)))
+
+    def test_canonical_rule_domain_cannot_omit_ryunosuke_evaluation(self):
+        record = valid_record()
+        record["canonical_rule_domain_coverage"] = [item for item in record["canonical_rule_domain_coverage"] if item["domain"] != "ryunosuke_evaluation_method"]
+        self.assertTrue(any("canonical rule domains missing:" in error and "ryunosuke_evaluation_method" in error for error in validate(record)))
+
+    def test_applicable_canonical_rule_domain_requires_action_check(self):
+        record = valid_record()
+        record["canonical_rule_domain_coverage"][0].pop("action_check")
+        self.assertIn("applicable canonical rule domain requires action_check", validate(record))
+
+    def test_applicable_rule_requires_action_check(self):
+        record = valid_record()
+        record["rule_coverage"][0].pop("action_check")
+        self.assertIn("applicable rule coverage requires failure_mode and action_check", validate(record))
+
+    def test_preflight_failure_review_is_required(self):
+        record = valid_record()
+        record.pop("preflight_failure_review")
+        self.assertIn("preflight_failure_review is required for action-boundary rule application", validate(record))
+
+    def test_preflight_requires_risk_to_action_controls(self):
+        record = valid_record()
+        record["preflight_failure_review"]["risk_to_action_controls"] = []
+        self.assertIn("preflight_failure_review requires non-empty risk_to_action_controls", validate(record))
+
+    def test_user_communication_requires_plain_language_plan(self):
+        record = valid_record()
+        record["preflight_failure_review"].pop("communication_plan")
+        self.assertIn("user_communication coverage requires a communication_plan", validate(record))
+
+    def test_communication_plan_requires_understanding_check(self):
+        record = valid_record()
+        record["preflight_failure_review"]["communication_plan"].pop("understanding_check")
+        self.assertIn("communication_plan requires understanding_check", validate(record))
 
     def test_second_occurrence_cannot_remain_general(self):
         record = valid_record()
@@ -155,8 +267,27 @@ class ActionGateTests(unittest.TestCase):
         record["action_type"] = "completion_claim"; record["mistake_detected"] = False
         record.pop("mistake"); record.pop("incident_steps")
         record["completion_evidence"] = {"verified": ["internal tests"], "unverified_scope": []}
-        record["deliverable_handoff"] = {"required": True, "medium": "public URL", "acceptance_check": "user opens app"}
-        self.assertIn("completion claim requires user-access evidence for deliverable handoff", validate(record))
+        record["deliverable_handoff"] = {
+            "required": True,
+            "medium": "public URL",
+            "acceptance_check": "user opens app",
+            "internal_validation_status": "passed",
+            "user_acceptance_status": "pending",
+            "plain_language_summary": "The app was shared for user review.",
+            "user_access_evidence": "https://example.invalid/app",
+        }
+        self.assertIn("completion claim requires passed user acceptance for deliverable handoff", validate(record))
+
+    def test_required_handoff_needs_plain_language_summary(self):
+        record = valid_record()
+        record["deliverable_handoff"] = {
+            "required": True,
+            "medium": "public URL",
+            "acceptance_check": "user opens app",
+            "internal_validation_status": "passed",
+            "user_acceptance_status": "pending",
+        }
+        self.assertIn("required deliverable handoff needs a plain_language_summary", validate(record))
 
     def test_reviewed_feedback_requires_classification(self):
         record = valid_record(); record["feedback_capture"] = {"reviewed": True}
@@ -167,6 +298,21 @@ class ActionGateTests(unittest.TestCase):
             record = valid_record()
             record["feedback_capture"][field] = []
             self.assertIn(f"reviewed feedback requires non-empty {field}", validate(record))
+
+    def test_reviewed_feedback_requires_underlying_issue(self):
+        record = valid_record()
+        record["feedback_capture"].pop("underlying_issue")
+        self.assertIn("reviewed feedback requires an underlying_issue", validate(record))
+
+    def test_reviewed_feedback_requires_surface_examples(self):
+        record = valid_record()
+        record["feedback_capture"]["surface_examples"] = []
+        self.assertIn("reviewed feedback requires non-empty surface_examples", validate(record))
+
+    def test_reviewed_feedback_requires_prevention_controls(self):
+        record = valid_record()
+        record["feedback_capture"]["prevention_controls"] = []
+        self.assertIn("reviewed feedback requires non-empty prevention_controls", validate(record))
 
     @staticmethod
     def impossibility_record():

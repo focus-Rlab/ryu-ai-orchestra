@@ -21,6 +21,20 @@ COMMON_FIELDS = {
 }
 
 RULE_CATEGORIES = {"security", "authority", "quality", "user_communication", "state_sync", "delivery", "recovery", "agent_design"}
+CANONICAL_RULE_DOMAINS = {
+    "security",
+    "ryunosuke_evaluation_method",
+    "raphael_behavior_code",
+    "approval_authority",
+    "user_communication",
+    "delivery_acceptance",
+    "feedback_interpretation",
+    "mistake_recovery",
+    "agent_design",
+    "state_sync",
+    "quality_validation",
+    "cost_and_tool_authority",
+}
 
 INCIDENT_STEPS = {
     "classify",
@@ -43,6 +57,15 @@ PATH_STATUSES = {"available", "unavailable", "not_authorized", "not_equivalent"}
 REQUIRED_PATH_CLASSES = {"requested_tool", "configured_connector", "api", "local_vcs", "browser", "manual_handoff"}
 EVIDENCE_TYPES = {"file", "test", "agent_report", "user_report", "tool_result", "pr"}
 MISTAKE_TRIGGER_TYPES = {"user_report", "prior_action_invalid", "test_failure", "review_failure", "policy_violation"}
+ACCEPTANCE_STATUSES = {"not_started", "pending", "passed", "failed", "conditional"}
+
+
+def non_empty_text(value) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def non_empty_list(value) -> bool:
+    return isinstance(value, list) and bool(value)
 
 
 def valid_evidence(items) -> bool:
@@ -54,6 +77,60 @@ def valid_evidence(items) -> bool:
         if item.get("type") == "file" and not Path(item["ref"]).exists():
             return False
     return True
+
+
+def validate_domain_coverage(record: dict, errors: list[str]) -> set[str]:
+    domains = record.get("canonical_rule_domain_coverage")
+    applicable_domains: set[str] = set()
+    if not isinstance(domains, list) or not domains:
+        errors.append("canonical_rule_domain_coverage must be a non-empty list")
+        return applicable_domains
+    seen = set()
+    for item in domains:
+        if not isinstance(item, dict) or item.get("domain") not in CANONICAL_RULE_DOMAINS:
+            errors.append("canonical rule domain is invalid")
+            continue
+        seen.add(item["domain"])
+        if item.get("status") not in {"applicable", "not_applicable"} or not non_empty_text(item.get("reason")):
+            errors.append("each canonical rule domain requires status and reason")
+        if item.get("status") == "applicable":
+            applicable_domains.add(item["domain"])
+            for field in ("source", "failure_mode", "action_check"):
+                if not non_empty_text(item.get(field)):
+                    errors.append(f"applicable canonical rule domain requires {field}")
+    missing = sorted(CANONICAL_RULE_DOMAINS - seen)
+    if missing:
+        errors.append(f"canonical rule domains missing: {', '.join(missing)}")
+    return applicable_domains
+
+
+def validate_preflight(record: dict, applicable_categories: set[str], applicable_domains: set[str], errors: list[str]) -> None:
+    preflight = record.get("preflight_failure_review")
+    if not isinstance(preflight, dict):
+        errors.append("preflight_failure_review is required for action-boundary rule application")
+        return
+    for field in ("reviewed_sources", "known_failure_patterns", "risk_to_action_controls"):
+        if not non_empty_list(preflight.get(field)):
+            errors.append(f"preflight_failure_review requires non-empty {field}")
+    for item in preflight.get("risk_to_action_controls", []):
+        if not isinstance(item, dict):
+            errors.append("each risk_to_action_control must be an object")
+            continue
+        for field in ("failure_pattern", "prevention_control", "blocking_check"):
+            if not non_empty_text(item.get(field)):
+                errors.append(f"each risk_to_action_control requires {field}")
+    if "user_communication" in applicable_categories or "user_communication" in applicable_domains:
+        communication = preflight.get("communication_plan")
+        if not isinstance(communication, dict):
+            errors.append("user_communication coverage requires a communication_plan")
+        else:
+            for field in ("audience", "plain_language_summary", "jargon_to_explain", "understanding_check"):
+                value = communication.get(field)
+                if field == "jargon_to_explain":
+                    if not isinstance(value, list):
+                        errors.append("communication_plan.jargon_to_explain must be a list")
+                elif not non_empty_text(value):
+                    errors.append(f"communication_plan requires {field}")
 
 
 def validate(record: dict, registry: dict | None = None) -> list[str]:
@@ -95,6 +172,7 @@ def validate(record: dict, registry: dict | None = None) -> list[str]:
     coverage = record.get("rule_coverage")
     if not enforce_v2:
         coverage = [{"category": category, "status": "not_applicable", "reason": "legacy record"} for category in RULE_CATEGORIES]
+    applicable_categories: set[str] = set()
     if not isinstance(coverage, list) or not coverage:
         errors.append("rule_coverage must be a non-empty list")
     else:
@@ -106,11 +184,20 @@ def validate(record: dict, registry: dict | None = None) -> list[str]:
             seen.add(item["category"])
             if item.get("status") not in {"applicable", "not_applicable"} or not item.get("reason"):
                 errors.append("each rule coverage item requires status and reason")
-            if item.get("status") == "applicable" and (not item.get("control") or not item.get("evidence")):
-                errors.append("applicable rule coverage requires control and evidence")
+            if item.get("status") == "applicable":
+                applicable_categories.add(item["category"])
+                if not item.get("control") or not item.get("evidence"):
+                    errors.append("applicable rule coverage requires control and evidence")
+                if enforce_v2 and (not non_empty_text(item.get("failure_mode")) or not non_empty_text(item.get("action_check"))):
+                    errors.append("applicable rule coverage requires failure_mode and action_check")
         missing_categories = sorted(RULE_CATEGORIES - seen)
         if missing_categories:
             errors.append(f"rule coverage categories missing: {', '.join(missing_categories)}")
+
+    applicable_domains = set()
+    if enforce_v2:
+        applicable_domains = validate_domain_coverage(record, errors)
+        validate_preflight(record, applicable_categories, applicable_domains, errors)
 
     handoff = record.get("deliverable_handoff") if enforce_v2 else {"required": False}
     if not isinstance(handoff, dict) or not isinstance(handoff.get("required"), bool):
@@ -118,8 +205,19 @@ def validate(record: dict, registry: dict | None = None) -> list[str]:
     elif handoff["required"]:
         if not handoff.get("medium") or not handoff.get("acceptance_check"):
             errors.append("required deliverable handoff needs a medium and acceptance check")
-        if record.get("action_type") == "completion_claim" and not handoff.get("user_access_evidence"):
-            errors.append("completion claim requires user-access evidence for deliverable handoff")
+        if handoff.get("internal_validation_status") not in ACCEPTANCE_STATUSES:
+            errors.append("required deliverable handoff needs internal_validation_status")
+        if handoff.get("user_acceptance_status") not in ACCEPTANCE_STATUSES:
+            errors.append("required deliverable handoff needs user_acceptance_status")
+        if not non_empty_text(handoff.get("plain_language_summary")):
+            errors.append("required deliverable handoff needs a plain_language_summary")
+        if record.get("action_type") == "completion_claim":
+            if not handoff.get("user_access_evidence"):
+                errors.append("completion claim requires user-access evidence for deliverable handoff")
+            if handoff.get("internal_validation_status") != "passed":
+                errors.append("completion claim requires passed internal validation for deliverable handoff")
+            if handoff.get("user_acceptance_status") != "passed":
+                errors.append("completion claim requires passed user acceptance for deliverable handoff")
 
     feedback = record.get("feedback_capture") if enforce_v2 else {"reviewed": False}
     if not isinstance(feedback, dict) or not isinstance(feedback.get("reviewed"), bool):
@@ -130,6 +228,14 @@ def validate(record: dict, registry: dict | None = None) -> list[str]:
         for field in ("positive_patterns", "failures_or_gaps", "source_evidence"):
             if not isinstance(feedback.get(field), list) or not feedback[field]:
                 errors.append(f"reviewed feedback requires non-empty {field}")
+        if not non_empty_text(feedback.get("underlying_issue")):
+            errors.append("reviewed feedback requires an underlying_issue")
+        if not non_empty_list(feedback.get("surface_examples")):
+            errors.append("reviewed feedback requires non-empty surface_examples")
+        if not non_empty_text(feedback.get("interpretation_risk")):
+            errors.append("reviewed feedback requires an interpretation_risk")
+        if not non_empty_list(feedback.get("prevention_controls")):
+            errors.append("reviewed feedback requires non-empty prevention_controls")
 
     assignment = record.get("assignment_decision")
     if not isinstance(assignment, dict):
