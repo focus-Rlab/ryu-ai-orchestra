@@ -65,6 +65,35 @@ def valid_evidence(items) -> bool:
     return True
 
 
+def validate_preflight(record: dict, applicable_categories: set[str], errors: list[str]) -> None:
+    preflight = record.get("preflight_failure_review")
+    if not isinstance(preflight, dict):
+        errors.append("preflight_failure_review is required for action-boundary rule application")
+        return
+    for field in ("reviewed_sources", "known_failure_patterns", "risk_to_action_controls"):
+        if not non_empty_list(preflight.get(field)):
+            errors.append(f"preflight_failure_review requires non-empty {field}")
+    for item in preflight.get("risk_to_action_controls", []):
+        if not isinstance(item, dict):
+            errors.append("each risk_to_action_control must be an object")
+            continue
+        for field in ("failure_pattern", "prevention_control", "blocking_check"):
+            if not non_empty_text(item.get(field)):
+                errors.append(f"each risk_to_action_control requires {field}")
+    if "user_communication" in applicable_categories:
+        communication = preflight.get("communication_plan")
+        if not isinstance(communication, dict):
+            errors.append("user_communication coverage requires a communication_plan")
+        else:
+            for field in ("audience", "plain_language_summary", "jargon_to_explain", "understanding_check"):
+                value = communication.get(field)
+                if field == "jargon_to_explain":
+                    if not isinstance(value, list):
+                        errors.append("communication_plan.jargon_to_explain must be a list")
+                elif not non_empty_text(value):
+                    errors.append(f"communication_plan requires {field}")
+
+
 def validate(record: dict, registry: dict | None = None) -> list[str]:
     errors: list[str] = []
     missing = sorted(COMMON_FIELDS - record.keys())
@@ -104,6 +133,7 @@ def validate(record: dict, registry: dict | None = None) -> list[str]:
     coverage = record.get("rule_coverage")
     if not enforce_v2:
         coverage = [{"category": category, "status": "not_applicable", "reason": "legacy record"} for category in RULE_CATEGORIES]
+    applicable_categories: set[str] = set()
     if not isinstance(coverage, list) or not coverage:
         errors.append("rule_coverage must be a non-empty list")
     else:
@@ -115,11 +145,18 @@ def validate(record: dict, registry: dict | None = None) -> list[str]:
             seen.add(item["category"])
             if item.get("status") not in {"applicable", "not_applicable"} or not item.get("reason"):
                 errors.append("each rule coverage item requires status and reason")
-            if item.get("status") == "applicable" and (not item.get("control") or not item.get("evidence")):
-                errors.append("applicable rule coverage requires control and evidence")
+            if item.get("status") == "applicable":
+                applicable_categories.add(item["category"])
+                if not item.get("control") or not item.get("evidence"):
+                    errors.append("applicable rule coverage requires control and evidence")
+                if enforce_v2 and (not non_empty_text(item.get("failure_mode")) or not non_empty_text(item.get("action_check"))):
+                    errors.append("applicable rule coverage requires failure_mode and action_check")
         missing_categories = sorted(RULE_CATEGORIES - seen)
         if missing_categories:
             errors.append(f"rule coverage categories missing: {', '.join(missing_categories)}")
+
+    if enforce_v2:
+        validate_preflight(record, applicable_categories, errors)
 
     handoff = record.get("deliverable_handoff") if enforce_v2 else {"required": False}
     if not isinstance(handoff, dict) or not isinstance(handoff.get("required"), bool):
