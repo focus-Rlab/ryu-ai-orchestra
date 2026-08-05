@@ -21,6 +21,20 @@ COMMON_FIELDS = {
 }
 
 RULE_CATEGORIES = {"security", "authority", "quality", "user_communication", "state_sync", "delivery", "recovery", "agent_design"}
+CANONICAL_RULE_DOMAINS = {
+    "security",
+    "ryunosuke_evaluation_method",
+    "raphael_behavior_code",
+    "approval_authority",
+    "user_communication",
+    "delivery_acceptance",
+    "feedback_interpretation",
+    "mistake_recovery",
+    "agent_design",
+    "state_sync",
+    "quality_validation",
+    "cost_and_tool_authority",
+}
 
 INCIDENT_STEPS = {
     "classify",
@@ -65,7 +79,32 @@ def valid_evidence(items) -> bool:
     return True
 
 
-def validate_preflight(record: dict, applicable_categories: set[str], errors: list[str]) -> None:
+def validate_domain_coverage(record: dict, errors: list[str]) -> set[str]:
+    domains = record.get("canonical_rule_domain_coverage")
+    applicable_domains: set[str] = set()
+    if not isinstance(domains, list) or not domains:
+        errors.append("canonical_rule_domain_coverage must be a non-empty list")
+        return applicable_domains
+    seen = set()
+    for item in domains:
+        if not isinstance(item, dict) or item.get("domain") not in CANONICAL_RULE_DOMAINS:
+            errors.append("canonical rule domain is invalid")
+            continue
+        seen.add(item["domain"])
+        if item.get("status") not in {"applicable", "not_applicable"} or not non_empty_text(item.get("reason")):
+            errors.append("each canonical rule domain requires status and reason")
+        if item.get("status") == "applicable":
+            applicable_domains.add(item["domain"])
+            for field in ("source", "failure_mode", "action_check"):
+                if not non_empty_text(item.get(field)):
+                    errors.append(f"applicable canonical rule domain requires {field}")
+    missing = sorted(CANONICAL_RULE_DOMAINS - seen)
+    if missing:
+        errors.append(f"canonical rule domains missing: {', '.join(missing)}")
+    return applicable_domains
+
+
+def validate_preflight(record: dict, applicable_categories: set[str], applicable_domains: set[str], errors: list[str]) -> None:
     preflight = record.get("preflight_failure_review")
     if not isinstance(preflight, dict):
         errors.append("preflight_failure_review is required for action-boundary rule application")
@@ -80,7 +119,7 @@ def validate_preflight(record: dict, applicable_categories: set[str], errors: li
         for field in ("failure_pattern", "prevention_control", "blocking_check"):
             if not non_empty_text(item.get(field)):
                 errors.append(f"each risk_to_action_control requires {field}")
-    if "user_communication" in applicable_categories:
+    if "user_communication" in applicable_categories or "user_communication" in applicable_domains:
         communication = preflight.get("communication_plan")
         if not isinstance(communication, dict):
             errors.append("user_communication coverage requires a communication_plan")
@@ -155,8 +194,10 @@ def validate(record: dict, registry: dict | None = None) -> list[str]:
         if missing_categories:
             errors.append(f"rule coverage categories missing: {', '.join(missing_categories)}")
 
+    applicable_domains = set()
     if enforce_v2:
-        validate_preflight(record, applicable_categories, errors)
+        applicable_domains = validate_domain_coverage(record, errors)
+        validate_preflight(record, applicable_categories, applicable_domains, errors)
 
     handoff = record.get("deliverable_handoff") if enforce_v2 else {"required": False}
     if not isinstance(handoff, dict) or not isinstance(handoff.get("required"), bool):
