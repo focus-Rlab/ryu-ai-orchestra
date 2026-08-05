@@ -29,7 +29,7 @@ def valid_record():
             for category in ("security", "authority", "quality", "user_communication", "state_sync", "delivery", "recovery", "agent_design")
         ],
         "deliverable_handoff": {"required": False},
-        "feedback_capture": {"reviewed": True, "classification": ["mistake"]},
+        "feedback_capture": {"reviewed": True, "classification": ["mistake"], "positive_patterns": ["safe recovery"], "failures_or_gaps": ["unshared deliverable"], "source_evidence": ["user report"]},
         "mistake_triggers": [{"type": "user_report", "evidence": [{"type": "user_report", "ref": "conversation", "result": "mistake confirmed"}]}],
         "mistake": {
             "classification": "major",
@@ -161,6 +161,12 @@ class ActionGateTests(unittest.TestCase):
     def test_reviewed_feedback_requires_classification(self):
         record = valid_record(); record["feedback_capture"] = {"reviewed": True}
         self.assertIn("reviewed feedback requires a classification", validate(record))
+
+    def test_reviewed_feedback_requires_concrete_success_failure_and_evidence(self):
+        for field in ("positive_patterns", "failures_or_gaps", "source_evidence"):
+            record = valid_record()
+            record["feedback_capture"][field] = []
+            self.assertIn(f"reviewed feedback requires non-empty {field}", validate(record))
 
     @staticmethod
     def impossibility_record():

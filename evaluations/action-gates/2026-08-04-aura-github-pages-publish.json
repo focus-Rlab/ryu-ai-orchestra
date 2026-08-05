@@ -16,7 +16,7 @@
     {"category":"agent_design","status":"not_applicable","reason":"bounded publication needs no specialist agent"}
   ],
   "deliverable_handoff": {"required":true,"medium":"https://focus-rlab.github.io/ryu-ai-orchestra/","acceptance_check":"Ryunosuke opens and operates AURA","user_access_evidence":"HTTP 200 and asset response verified; personal acceptance remains pending"},
-  "feedback_capture": {"reviewed":true,"classification":["sharing failure","preference for operable URL","publication approval"]},
+  "feedback_capture": {"reviewed":true,"classification":["sharing failure","preference for operable URL","publication approval"],"positive_patterns":["publication approval boundary was explicitly requested"],"failures_or_gaps":["temporary images and StackBlitz did not provide reliable user access"],"source_evidence":["2026-08-04 conversation"]},
   "mistake_triggers": [
     {
       "type": "none",

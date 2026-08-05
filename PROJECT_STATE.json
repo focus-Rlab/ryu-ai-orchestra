@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
   "phase": "V1 Week 4",
-  "status": "improvement_controls_pr_recovery_validation_needed",
+  "status": "improvement_controls_pr_review_ready",
   "latest_merged_pr": 26,
   "active_issue": 27,
   "active_branch": "agent/week4-improvement-review",
   "paused_issue": null,
-  "next_action": "Re-run latest-head validation for Draft PR #28, then Ryunosuke opens and evaluates the published AURA using the canonical Raphael evaluation criteria.",
+  "next_action": "Ryunosuke opens and evaluates the published AURA using the canonical Raphael criteria, then reviews Draft PR #28.",
   "verified_at": "2026-08-05",
-  "evidence": "AURA GitHub Pages URL and assets returned successfully earlier. PR #28 now repairs a non-UTF-8 PROJECT_HANDOFF.md corruption, adds repository text-encoding coverage, and records the evaluation-rule application failure. Latest-head full validation remains pending; Ryunosuke visual, interaction, understanding, and usefulness acceptance remains pending.",
-  "verified_project_digest": "sha256:62895aa8c15019685f7076011d7124027d00f2ab5dd04bfe99e80244dd4207de",
+  "evidence": "Latest PR head preserves UTF-8 recovery and canonical AURA evaluation criteria. The conversation review records 7 concrete strengths, 11 failures, and 5 additional omissions; action-gate v2 now requires positive patterns, failures, and source evidence. User visual, interaction, understanding, and usefulness acceptance remains pending.",
+  "verified_project_digest": "sha256:4e0c548b764b238d56bc993f4d4f2f07f14029f3495447cbf6af767260d714cb",
   "paused_note": null
 }

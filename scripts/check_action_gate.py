@@ -126,6 +126,10 @@ def validate(record: dict, registry: dict | None = None) -> list[str]:
         errors.append("feedback_capture must state whether user feedback was reviewed")
     elif feedback["reviewed"] and not feedback.get("classification"):
         errors.append("reviewed feedback requires a classification")
+    elif feedback["reviewed"]:
+        for field in ("positive_patterns", "failures_or_gaps", "source_evidence"):
+            if not isinstance(feedback.get(field), list) or not feedback[field]:
+                errors.append(f"reviewed feedback requires non-empty {field}")
 
     assignment = record.get("assignment_decision")
     if not isinstance(assignment, dict):

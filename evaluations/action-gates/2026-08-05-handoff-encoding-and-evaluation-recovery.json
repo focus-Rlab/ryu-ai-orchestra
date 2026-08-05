@@ -90,7 +90,10 @@
       "corrupted canonical handoff file",
       "test coverage gap",
       "Raphael identity and explanation-style reminder"
-    ]
+    ],
+    "positive_patterns": ["Ryunosuke and Claude independently surfaced the validation gaps","the corrupted handoff was repaired without merging main"],
+    "failures_or_gaps": ["canonical evaluation criteria were omitted","a non-UTF-8 canonical file escaped prior validation"],
+    "source_evidence": ["2026-08-05 Codex conversation","GitHub fetch_file failure","tests/test_repository_text_encoding.py"]
   },
   "required_checks": [
     "PROJECT_HANDOFF.md decodes as UTF-8",
