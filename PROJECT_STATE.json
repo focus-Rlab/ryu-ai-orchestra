@@ -6,9 +6,9 @@
   "active_issue": 27,
   "active_branch": "codex/mistake-prevention-controls",
   "paused_issue": null,
-  "next_action": "Review and merge the mistake-prevention controls before starting AURA app repairs. After this control PR is merged, resume AURA from Ryunosuke's 30/100 user acceptance result: first share and structure the visual ideal/worldview, then predict continued-use user behavior, then revise the app without reducing examples such as name change/delete or character/aura into narrow surface fixes.",
+  "next_action": "Review and merge the mistake-prevention controls before starting AURA app repairs. After this control PR is merged, resume AURA from Ryunosuke's 30/100 user acceptance result: first share and structure the visual ideal/worldview, then predict continued-use user behavior, then revise the app without reducing examples such as name change/delete, beginner-friendly explanation, or character/aura into narrow surface fixes.",
   "verified_at": "2026-08-05",
-  "evidence": "PR #28 was merged into main by Ryunosuke. AURA remains user-acceptance failed at 30/100. This branch adds stronger action-gate checks and docs/MISTAKE_PREVENTION_CONTROLS.md so future work must record the underlying issue, surface examples, interpretation risk, prevention controls, and separate internal validation from Ryunosuke user acceptance before completion claims.",
-  "verified_project_digest": "sha256:df97ced5c00ecbfd30b5c18c573bfe1d095364f826296e83ed72efef923b1681",
+  "evidence": "PR #28 was merged into main by Ryunosuke. AURA remains user-acceptance failed at 30/100. This branch adds stronger action-gate checks and docs/MISTAKE_PREVENTION_CONTROLS.md so future work must record underlying issue, surface examples, interpretation risk, prevention controls, preflight failure review, per-rule failure_mode/action_check, and a plain-language communication plan when user_communication applies. Internal validation remains separate from Ryunosuke user acceptance before completion claims.",
+  "verified_project_digest": "sha256:c31721225bdfbb2b3bc6638151b6fbe69ff1464bbf7e594a5f412e906a4c9142",
   "paused_note": null
 }
