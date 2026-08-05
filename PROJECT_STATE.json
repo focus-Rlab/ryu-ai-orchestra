@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
   "phase": "V1 Week 4",
-  "status": "improvement_controls_pr_latest_validation_needed",
+  "status": "aura_user_acceptance_failed_revision_needed",
   "latest_merged_pr": 26,
   "active_issue": 27,
   "active_branch": "agent/week4-improvement-review",
   "paused_issue": null,
-  "next_action": "Re-run latest-head validation after the unauthorized handoff repair incident record, then Ryunosuke opens and evaluates the published AURA using the canonical Raphael criteria and reviews Draft PR #28.",
+  "next_action": "Plan the next AURA revision from Ryunosuke's 30/100 user acceptance result: improve character quality, male/female differentiation, aura shape and visible growth, habit rename/delete controls, and the visual-ideal sharing process. Then re-run latest-head PR #28 validation before merge review.",
   "verified_at": "2026-08-05",
-  "evidence": "PR #28 records the concrete conversation review, UTF-8 handoff recovery, repository encoding test, and a separate incident record for unauthorized canonical handoff repair. Validation had passed before the latest incident-record commit, but latest-head validation and project digest refresh are now pending. User visual, interaction, understanding, and usefulness acceptance remains pending.",
+  "evidence": "Ryunosuke evaluated the published AURA and gave an overall 30/100. Basic input and habit addition worked, but the character, male/female differentiation, aura shape, visible level growth, and desire to use the app failed acceptance. The result is recorded in evaluations/week4-improvement-review/AURA_USER_ACCEPTANCE_2026-08-05.md. Latest-head validation and project digest refresh remain pending after these PR updates.",
   "verified_project_digest": "sha256:4e0c548b764b238d56bc993f4d4f2f07f14029f3495447cbf6af767260d714cb",
   "paused_note": null
 }
