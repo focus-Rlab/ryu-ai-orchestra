@@ -1,6 +1,6 @@
 import unittest
 
-from scripts.check_action_gate import INCIDENT_STEPS, validate
+from scripts.check_action_gate import CANONICAL_RULE_DOMAINS, INCIDENT_STEPS, validate
 
 REGISTRY = {"incidents": {"prior-1": {"root_cause_id": "same-root", "confirmed_occurrences": 1}}}
 
@@ -14,6 +14,20 @@ def completed_steps():
         step: {"status": "complete", "evidence": evidence(f"evidence:{step}")}
         for step in INCIDENT_STEPS
     }
+
+
+def domain_coverage():
+    return [
+        {
+            "domain": domain,
+            "status": "applicable",
+            "reason": "required canonical scan",
+            "source": "STARTUP_CONTEXT.md/GOVERNANCE.md/RAPHAEL_TEST_PLAN.md/agents/raphael.md",
+            "failure_mode": "canonical rule could be read but not applied to the next action",
+            "action_check": "state the concrete action check for this canonical domain before acting",
+        }
+        for domain in sorted(CANONICAL_RULE_DOMAINS)
+    ]
 
 
 def reviewed_feedback():
@@ -79,6 +93,7 @@ def valid_record():
             }
             for category in ("security", "authority", "quality", "user_communication", "state_sync", "delivery", "recovery", "agent_design")
         ],
+        "canonical_rule_domain_coverage": domain_coverage(),
         "preflight_failure_review": preflight_review(),
         "deliverable_handoff": {"required": False},
         "feedback_capture": reviewed_feedback(),
@@ -128,6 +143,26 @@ class ActionGateTests(unittest.TestCase):
         record.pop("incident_steps")
         record["assignment_decision"] = {"use_agents": False, "rationale": "bounded spelling change"}
         self.assertEqual(validate(record), [])
+
+    def test_canonical_rule_domain_coverage_is_required(self):
+        record = valid_record()
+        record.pop("canonical_rule_domain_coverage")
+        self.assertIn("canonical_rule_domain_coverage must be a non-empty list", validate(record))
+
+    def test_canonical_rule_domain_cannot_omit_security(self):
+        record = valid_record()
+        record["canonical_rule_domain_coverage"] = [item for item in record["canonical_rule_domain_coverage"] if item["domain"] != "security"]
+        self.assertTrue(any("canonical rule domains missing:" in error and "security" in error for error in validate(record)))
+
+    def test_canonical_rule_domain_cannot_omit_ryunosuke_evaluation(self):
+        record = valid_record()
+        record["canonical_rule_domain_coverage"] = [item for item in record["canonical_rule_domain_coverage"] if item["domain"] != "ryunosuke_evaluation_method"]
+        self.assertTrue(any("canonical rule domains missing:" in error and "ryunosuke_evaluation_method" in error for error in validate(record)))
+
+    def test_applicable_canonical_rule_domain_requires_action_check(self):
+        record = valid_record()
+        record["canonical_rule_domain_coverage"][0].pop("action_check")
+        self.assertIn("applicable canonical rule domain requires action_check", validate(record))
 
     def test_applicable_rule_requires_action_check(self):
         record = valid_record()
