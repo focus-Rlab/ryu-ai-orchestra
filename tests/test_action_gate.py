@@ -30,6 +30,35 @@ def reviewed_feedback():
     }
 
 
+def preflight_review():
+    return {
+        "reviewed_sources": ["CONVERSATION_REVIEW.md", "AURA_USER_ACCEPTANCE_2026-08-05.md"],
+        "known_failure_patterns": [
+            "rules read but not applied",
+            "plain-language explanation omitted",
+            "surface examples treated as complete fixes",
+        ],
+        "risk_to_action_controls": [
+            {
+                "failure_pattern": "rules read but not applied",
+                "prevention_control": "each applicable rule coverage item must state failure_mode and action_check",
+                "blocking_check": "validator rejects applicable coverage without action_check",
+            },
+            {
+                "failure_pattern": "plain-language explanation omitted",
+                "prevention_control": "user_communication coverage must include communication_plan",
+                "blocking_check": "validator rejects missing communication_plan",
+            },
+        ],
+        "communication_plan": {
+            "audience": "Ryunosuke and future workers",
+            "plain_language_summary": "Explain what changed, what is still blocked, and what was actually verified without unexplained abbreviations.",
+            "jargon_to_explain": ["PR", "branch", "gate", "user acceptance"],
+            "understanding_check": "State the practical next action and any unverified scope in ordinary language.",
+        },
+    }
+
+
 def valid_record():
     return {
         "gate_version": 2,
@@ -39,9 +68,18 @@ def valid_record():
         "mistake_detected": True,
         "classification_basis": "User report and incident evidence confirm a mistake",
         "rule_coverage": [
-            {"category": category, "status": "applicable", "reason": "required scan", "control": "gate", "evidence": "test"}
+            {
+                "category": category,
+                "status": "applicable",
+                "reason": "required scan",
+                "control": "gate",
+                "evidence": "test",
+                "failure_mode": "rule could be read without changing the next action",
+                "action_check": "record the concrete check that will be performed before acting",
+            }
             for category in ("security", "authority", "quality", "user_communication", "state_sync", "delivery", "recovery", "agent_design")
         ],
+        "preflight_failure_review": preflight_review(),
         "deliverable_handoff": {"required": False},
         "feedback_capture": reviewed_feedback(),
         "mistake_triggers": [{"type": "user_report", "evidence": [{"type": "user_report", "ref": "conversation", "result": "mistake confirmed"}]}],
@@ -90,6 +128,31 @@ class ActionGateTests(unittest.TestCase):
         record.pop("incident_steps")
         record["assignment_decision"] = {"use_agents": False, "rationale": "bounded spelling change"}
         self.assertEqual(validate(record), [])
+
+    def test_applicable_rule_requires_action_check(self):
+        record = valid_record()
+        record["rule_coverage"][0].pop("action_check")
+        self.assertIn("applicable rule coverage requires failure_mode and action_check", validate(record))
+
+    def test_preflight_failure_review_is_required(self):
+        record = valid_record()
+        record.pop("preflight_failure_review")
+        self.assertIn("preflight_failure_review is required for action-boundary rule application", validate(record))
+
+    def test_preflight_requires_risk_to_action_controls(self):
+        record = valid_record()
+        record["preflight_failure_review"]["risk_to_action_controls"] = []
+        self.assertIn("preflight_failure_review requires non-empty risk_to_action_controls", validate(record))
+
+    def test_user_communication_requires_plain_language_plan(self):
+        record = valid_record()
+        record["preflight_failure_review"].pop("communication_plan")
+        self.assertIn("user_communication coverage requires a communication_plan", validate(record))
+
+    def test_communication_plan_requires_understanding_check(self):
+        record = valid_record()
+        record["preflight_failure_review"]["communication_plan"].pop("understanding_check")
+        self.assertIn("communication_plan requires understanding_check", validate(record))
 
     def test_second_occurrence_cannot_remain_general(self):
         record = valid_record()
