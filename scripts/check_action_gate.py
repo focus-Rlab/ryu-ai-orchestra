@@ -43,6 +43,15 @@ PATH_STATUSES = {"available", "unavailable", "not_authorized", "not_equivalent"}
 REQUIRED_PATH_CLASSES = {"requested_tool", "configured_connector", "api", "local_vcs", "browser", "manual_handoff"}
 EVIDENCE_TYPES = {"file", "test", "agent_report", "user_report", "tool_result", "pr"}
 MISTAKE_TRIGGER_TYPES = {"user_report", "prior_action_invalid", "test_failure", "review_failure", "policy_violation"}
+ACCEPTANCE_STATUSES = {"not_started", "pending", "passed", "failed", "conditional"}
+
+
+def non_empty_text(value) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def non_empty_list(value) -> bool:
+    return isinstance(value, list) and bool(value)
 
 
 def valid_evidence(items) -> bool:
@@ -118,8 +127,19 @@ def validate(record: dict, registry: dict | None = None) -> list[str]:
     elif handoff["required"]:
         if not handoff.get("medium") or not handoff.get("acceptance_check"):
             errors.append("required deliverable handoff needs a medium and acceptance check")
-        if record.get("action_type") == "completion_claim" and not handoff.get("user_access_evidence"):
-            errors.append("completion claim requires user-access evidence for deliverable handoff")
+        if handoff.get("internal_validation_status") not in ACCEPTANCE_STATUSES:
+            errors.append("required deliverable handoff needs internal_validation_status")
+        if handoff.get("user_acceptance_status") not in ACCEPTANCE_STATUSES:
+            errors.append("required deliverable handoff needs user_acceptance_status")
+        if not non_empty_text(handoff.get("plain_language_summary")):
+            errors.append("required deliverable handoff needs a plain_language_summary")
+        if record.get("action_type") == "completion_claim":
+            if not handoff.get("user_access_evidence"):
+                errors.append("completion claim requires user-access evidence for deliverable handoff")
+            if handoff.get("internal_validation_status") != "passed":
+                errors.append("completion claim requires passed internal validation for deliverable handoff")
+            if handoff.get("user_acceptance_status") != "passed":
+                errors.append("completion claim requires passed user acceptance for deliverable handoff")
 
     feedback = record.get("feedback_capture") if enforce_v2 else {"reviewed": False}
     if not isinstance(feedback, dict) or not isinstance(feedback.get("reviewed"), bool):
@@ -130,6 +150,14 @@ def validate(record: dict, registry: dict | None = None) -> list[str]:
         for field in ("positive_patterns", "failures_or_gaps", "source_evidence"):
             if not isinstance(feedback.get(field), list) or not feedback[field]:
                 errors.append(f"reviewed feedback requires non-empty {field}")
+        if not non_empty_text(feedback.get("underlying_issue")):
+            errors.append("reviewed feedback requires an underlying_issue")
+        if not non_empty_list(feedback.get("surface_examples")):
+            errors.append("reviewed feedback requires non-empty surface_examples")
+        if not non_empty_text(feedback.get("interpretation_risk")):
+            errors.append("reviewed feedback requires an interpretation_risk")
+        if not non_empty_list(feedback.get("prevention_controls")):
+            errors.append("reviewed feedback requires non-empty prevention_controls")
 
     assignment = record.get("assignment_decision")
     if not isinstance(assignment, dict):
