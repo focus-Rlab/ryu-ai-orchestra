@@ -6,9 +6,9 @@
   "active_issue": 27,
   "active_branch": "agent/week4-improvement-review",
   "paused_issue": null,
-  "next_action": "Plan the next AURA revision from Ryunosuke's 30/100 user acceptance result: address the overall visual/design mismatch, character and aura ideal-sharing gap, visible growth uncertainty, and the broader failure to predict user actions that become necessary during continued use. Then re-run latest-head PR #28 validation before merge review.",
+  "next_action": "Plan the next AURA revision from Ryunosuke's 30/100 user acceptance result: address the overall visual/design mismatch, the visual-ideal sharing gap, visible growth uncertainty, the broader failure to predict user actions needed during continued use, and the feedback-interpretation failure where Codex kept correcting surface examples instead of extracting the underlying issue. Then re-run latest-head PR #28 validation before merge review.",
   "verified_at": "2026-08-05",
-  "evidence": "Ryunosuke evaluated the published AURA and gave an overall 30/100. Basic input and habit addition worked, but the overall design and experience did not match his ideal; character and aura examples point to a broader visual-ideal sharing gap, and missing rename/delete controls point to a broader failure to predict user actions needed during continued use. The result is recorded in evaluations/week4-improvement-review/AURA_USER_ACCEPTANCE_2026-08-05.md. Latest-head validation and project digest refresh remain pending after these PR updates.",
+  "evidence": "Ryunosuke evaluated the published AURA and gave an overall 30/100. Basic input and habit addition worked, but the overall design and experience did not match his ideal; character/aura examples indicate a broader visual-ideal sharing gap, and missing habit-management actions indicate a broader failure to predict user actions during continued use. During recording, Codex again corrected surface examples instead of the underlying feedback-interpretation failure; this is now recorded in evaluations/week4-improvement-review/AURA_USER_ACCEPTANCE_2026-08-05.md. Latest-head validation and project digest refresh remain pending after these PR updates.",
   "verified_project_digest": "sha256:4e0c548b764b238d56bc993f4d4f2f07f14029f3495447cbf6af767260d714cb",
   "paused_note": null
 }
