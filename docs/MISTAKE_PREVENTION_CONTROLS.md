@@ -10,20 +10,34 @@ This file converts the Week 4 AURA conversation review into action-blocking cont
 
 AURA application fixes are intentionally paused until these controls are reviewed and merged.
 
+## Core Principle
+
+The failure is not only that individual visible mistakes happened. The deeper failure is that a rule, review point, or user preference can be written down, read, and still not affect the next action.
+
+Therefore every future action gate must answer three questions before work starts:
+
+1. What known failure patterns were reviewed for this action?
+2. For each applicable rule, what failure mode could happen if the rule is only read but not applied?
+3. What concrete action check blocks that failure before implementation, explanation, delivery, or completion?
+
 ## Control Map
 
 | Failure pattern | Required control | Blocking check |
 | --- | --- | --- |
-| Rules were read but not applied at the action boundary. | Every action-gate v2 record must cover all 8 rule categories: security, authority, quality, user communication, state sync, delivery, recovery, and agent design. | `scripts/check_action_gate.py` rejects missing categories. |
+| Rules were read but not applied at the action boundary. | Every applicable rule category must include `failure_mode` and `action_check`, not only `reason`, `control`, and `evidence`. | `scripts/check_action_gate.py` rejects applicable rule coverage without both fields. |
+| Future workers may miss a written rule that has not yet produced an obvious visible error. | Every action-gate v2 record must include `preflight_failure_review` with reviewed sources, known failure patterns, and risk-to-action controls. | The gate rejects missing or empty preflight failure review fields. |
+| User-facing explanations were hard to understand, including unexplained PR/branch/gate/status language. | When `user_communication` applies, preflight must include a communication plan for Ryunosuke and future workers. | The gate rejects missing audience, plain-language summary, jargon list, or understanding check. |
+| Improvement scope was narrowed to recent visible examples such as security or beginner explanation. | The preflight review must list known failure patterns and map each risk to a prevention control. | The gate rejects empty risk-to-action controls. |
 | One failed path was treated as the whole task being impossible. | Impossibility claims must inventory requested tool, configured connector, API, local VCS, browser, and manual handoff paths. | The gate rejects incomplete path inventories and rejects an impossibility claim when an authorized equivalent path is available. |
 | Internal test completion and user acceptance were mixed. | Deliverables that need handoff must separately record internal validation, user access evidence, and user acceptance. | Completion claims for deliverables fail unless internal validation and user acceptance are both `passed`. |
-| User-facing explanations were hard to understand. | Required deliverable handoff must include a plain-language summary. | The gate rejects required handoff without `plain_language_summary`. |
 | Screenshots, URLs, or app links were assumed to be reachable by Ryunosuke. | Handoff records must state the medium and acceptance check, and final completion must include user-access evidence. | The gate rejects completion claims without user-access evidence. |
 | Feedback was recorded as labels instead of concrete successes, failures, and evidence. | Reviewed feedback must include positive patterns, failures or gaps, and source evidence. | The gate rejects empty feedback detail fields. |
 | Surface examples were corrected while the underlying issue was missed. | Reviewed feedback must identify `underlying_issue`, `surface_examples`, `interpretation_risk`, and `prevention_controls`. | The gate rejects reviewed feedback without those fields. |
 | Agent use or non-use was decided but not recorded. | Assignment decisions must state whether agents are used, why, and execution evidence when they are used. | The gate rejects missing assignment rationale or execution evidence. |
 | File corruption was not caught before a passing report. | Repository text files must be checked for UTF-8 readability. | `tests/test_repository_text_encoding.py` covers repository text encoding. |
 | Unauthorized repair changed content before approval. | Mistake responses must run full incident steps, including approval boundary and canonical updates. | Mistake actions fail without all incident steps and evidence. |
+| Visual artifacts passed internal checks but did not match Ryunosuke's ideal. | AURA revision cannot start until visual ideal sharing is planned before UI code changes. | This file and `PROJECT_STATE.json` keep AURA app repair paused until this prevention PR is merged. |
+| Continued-use needs were not predicted during design. | AURA revision must include continued-use behavior prediction before feature implementation. | The next AURA plan must include this before app repair starts. |
 
 ## Feedback Interpretation Rule
 
@@ -42,12 +56,26 @@ For the AURA acceptance result, the underlying issues are:
 - Continued-use user behavior was not predicted during design.
 - Feedback interpretation itself failed when Codex tried to fix the named examples instead of the failure pattern.
 
+## Plain-Language Explanation Rule
+
+If the work involves reporting status, explaining a PR, describing checks, or handing off a result, `user_communication` is applicable.
+
+The worker must prepare a communication plan that says:
+
+- who the explanation is for;
+- what will be explained in ordinary language;
+- which jargon terms must be explained or avoided;
+- how the answer will make the next practical action clear.
+
+This prevents the failure where a rule about beginner-friendly explanation exists but the worker still replies with terms such as PR, branch, gate, check, or acceptance without enough context.
+
 ## Before AURA Revision Can Start
 
 The next AURA app repair must not start until all of the following are true:
 
 - This prevention-control change is merged.
 - The action gate passes with feedback fields that preserve the underlying issue, not only example labels.
+- The action gate passes with preflight failure review fields that map known written rules to action checks.
 - The next implementation plan includes a visual ideal sharing step before UI changes.
 - The next implementation plan includes continued-use behavior prediction before feature changes.
 - The next completion claim separates internal validation, public URL access, and Ryunosuke's user acceptance.
