@@ -16,6 +16,20 @@ def completed_steps():
     }
 
 
+def reviewed_feedback():
+    return {
+        "reviewed": True,
+        "classification": ["mistake", "user_acceptance"],
+        "positive_patterns": ["safe recovery after one path failed"],
+        "failures_or_gaps": ["surface examples were corrected without capturing the underlying issue"],
+        "source_evidence": ["AURA_USER_ACCEPTANCE_2026-08-05.md"],
+        "underlying_issue": "Feedback examples must be converted into the user's judgment criterion and recurring failure pattern before implementation.",
+        "surface_examples": ["name change/delete buttons", "character/aura examples", "overall design mismatch"],
+        "interpretation_risk": "A later worker may add the named buttons or tweak one visual part while missing continued-use prediction and ideal sharing.",
+        "prevention_controls": ["Require underlying_issue before reviewed feedback can pass", "Require prevention_controls before implementation starts"],
+    }
+
+
 def valid_record():
     return {
         "gate_version": 2,
@@ -29,7 +43,7 @@ def valid_record():
             for category in ("security", "authority", "quality", "user_communication", "state_sync", "delivery", "recovery", "agent_design")
         ],
         "deliverable_handoff": {"required": False},
-        "feedback_capture": {"reviewed": True, "classification": ["mistake"], "positive_patterns": ["safe recovery"], "failures_or_gaps": ["unshared deliverable"], "source_evidence": ["user report"]},
+        "feedback_capture": reviewed_feedback(),
         "mistake_triggers": [{"type": "user_report", "evidence": [{"type": "user_report", "ref": "conversation", "result": "mistake confirmed"}]}],
         "mistake": {
             "classification": "major",
@@ -155,8 +169,27 @@ class ActionGateTests(unittest.TestCase):
         record["action_type"] = "completion_claim"; record["mistake_detected"] = False
         record.pop("mistake"); record.pop("incident_steps")
         record["completion_evidence"] = {"verified": ["internal tests"], "unverified_scope": []}
-        record["deliverable_handoff"] = {"required": True, "medium": "public URL", "acceptance_check": "user opens app"}
-        self.assertIn("completion claim requires user-access evidence for deliverable handoff", validate(record))
+        record["deliverable_handoff"] = {
+            "required": True,
+            "medium": "public URL",
+            "acceptance_check": "user opens app",
+            "internal_validation_status": "passed",
+            "user_acceptance_status": "pending",
+            "plain_language_summary": "The app was shared for user review.",
+            "user_access_evidence": "https://example.invalid/app",
+        }
+        self.assertIn("completion claim requires passed user acceptance for deliverable handoff", validate(record))
+
+    def test_required_handoff_needs_plain_language_summary(self):
+        record = valid_record()
+        record["deliverable_handoff"] = {
+            "required": True,
+            "medium": "public URL",
+            "acceptance_check": "user opens app",
+            "internal_validation_status": "passed",
+            "user_acceptance_status": "pending",
+        }
+        self.assertIn("required deliverable handoff needs a plain_language_summary", validate(record))
 
     def test_reviewed_feedback_requires_classification(self):
         record = valid_record(); record["feedback_capture"] = {"reviewed": True}
@@ -167,6 +200,21 @@ class ActionGateTests(unittest.TestCase):
             record = valid_record()
             record["feedback_capture"][field] = []
             self.assertIn(f"reviewed feedback requires non-empty {field}", validate(record))
+
+    def test_reviewed_feedback_requires_underlying_issue(self):
+        record = valid_record()
+        record["feedback_capture"].pop("underlying_issue")
+        self.assertIn("reviewed feedback requires an underlying_issue", validate(record))
+
+    def test_reviewed_feedback_requires_surface_examples(self):
+        record = valid_record()
+        record["feedback_capture"]["surface_examples"] = []
+        self.assertIn("reviewed feedback requires non-empty surface_examples", validate(record))
+
+    def test_reviewed_feedback_requires_prevention_controls(self):
+        record = valid_record()
+        record["feedback_capture"]["prevention_controls"] = []
+        self.assertIn("reviewed feedback requires non-empty prevention_controls", validate(record))
 
     @staticmethod
     def impossibility_record():
