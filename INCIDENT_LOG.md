@@ -208,6 +208,18 @@ This incident may be marked closed only after:
 6. corrective controls are implemented and tested;
 7. Ryunosuke approves the closure record.
 
+## 13. Recurrence: 2026-08-07 direct commit to `main` in the current session
+
+Classification: repeated mistake, same root cause as cause #1 in §7 ("The target branch was not explicitly verified and reported before each write"). This is a live confirmation of the "Recurrence risk" warned about in §8: a different AI session repeated the exact pattern this incident describes.
+
+Summary: Raphael received Ryunosuke's approval for the *content* of an `INCIDENT_LOG.md` addition (a separate, unrelated repeated-mistake record about environment-specific facts leaking into canonical agent files) and, without first checking `git branch --show-current`, ran `git add` and `git commit` directly. The local checkout was on `main`, not the session's designated branch `claude/raphael-orchestrator-design-5duz71`, so the commit landed on `main`. Content approval was again conflated with write-location authorization — the exact failure named in this incident's cause #2.
+
+Detection and recovery: caught immediately after the commit (before any push) by running `git status`/`git log` as a self-check. No push had occurred, so `origin/main` was never affected and no other collaborator or session was exposed to the errant commit. Recovery: the session's designated branch (`claude/raphael-orchestrator-design-5duz71`, itself found to already be represented in current `main` under different commit SHAs from an earlier bundle/patch handoff, per this session's history) was rebuilt from current `origin/main`, the commit was cherry-picked onto it, and local `main` was hard-reset back to exactly match `origin/main`. A diff between the old branch tip and `origin/main` confirmed no file was uniquely lost. Nothing was pushed without Ryunosuke's separate approval.
+
+Generalized prevention (proposed, pending Ryunosuke approval): before any `git commit` in this repository, Raphael must run and report `git branch --show-current` and confirm it matches the session's designated working branch (never `main`) as an explicit pre-write step, not an after-the-fact check. This should be added as a mechanical pre-condition alongside the existing action-gate mechanism (`scripts/check_action_gate.py`), since the first occurrence of this same cause (2026-07-26) was not sufficient by itself to prevent a second occurrence in a different AI session eleven days later.
+
+Status: recovered without remote impact. Remains open as part of the parent incident's unresolved branch-discipline control until a mechanical (not merely documented) pre-commit branch check is implemented and tested.
+
 
 ---
 
