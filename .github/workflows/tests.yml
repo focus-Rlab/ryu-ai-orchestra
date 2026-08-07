@@ -1,0 +1,36 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run test suite
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Compile check
+        run: python3 -m compileall -q v1_core software_domain scripts tests
+
+      - name: Project state consistency (informational on PRs, required on main)
+        run: |
+          python3 scripts/check_project_state.py || {
+            if [ "${{ github.event_name }}" = "pull_request" ]; then
+              echo "::warning::PROJECT_STATE.json is not yet synced. This must pass before merge, per GOVERNANCE.md's state-sync gate, but is not blocking mid-PR work."
+              exit 0
+            fi
+            echo "::error::PROJECT_STATE.json is out of sync on main. This should not happen after merge."
+            exit 1
+          }

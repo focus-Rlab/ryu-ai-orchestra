@@ -1,15 +1,21 @@
 #!/usr/bin/env bash
-# Tracked git hook (not scripts/safe_commit.sh, which is bypassable by calling
-# `git commit` directly). Activate once per clone with:
-#   git config core.hooksPath scripts/hooks
+# Readable source copy of the main-branch commit guard. This file is NOT
+# activated by pointing core.hooksPath here — that was tried first and found
+# broken, because this path only exists in the working tree on branches
+# where it has been committed, so it silently disappears on `main` itself
+# (the one branch it must protect). See INCIDENT_LOG.md, "Independent review
+# synthesis (2026-08-07)".
+#
+# The real installer is .claude/hooks/session-start.sh, which writes this
+# same logic directly into .git/hooks/pre-commit (branch-independent) at the
+# start of every Claude Code session. Keep the two copies identical by hand;
+# manual clones can also copy this file to .git/hooks/pre-commit themselves.
 #
 # Root cause this closes: INCIDENT_LOG.md incident #1 (2026-07-26) and its
-# 2026-08-07 recurrence. An independent review of the 2026-08-07 recurrence
-# found that a wrapper script alone is not a real control because nothing
-# stops a plain `git commit` from skipping it. This hook runs on every
-# `git commit` regardless of how it was invoked (direct, --amend, through an
-# editor, through a GUI, through cherry-pick/revert/merge that ends in a
-# commit) because git itself invokes it, not the caller.
+# 2026-08-07 recurrence. This hook runs on every `git commit` regardless of
+# how it was invoked (direct, --amend, through an editor, through a GUI,
+# through cherry-pick/revert/merge that ends in a commit) because git itself
+# invokes it, not the caller.
 set -euo pipefail
 
 current_branch="$(git branch --show-current)"
