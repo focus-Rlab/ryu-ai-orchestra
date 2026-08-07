@@ -413,3 +413,13 @@ The reviewer's finding 3 identifies that `check_action_gate.py`'s `communication
 ## Closure status
 
 Not closed. Remains open pending: Ryunosuke's review of the hook mechanism and the residual gap above, and the broader cross-session/cross-AI audit (finding 4) that has not yet been performed.
+
+## Addendum: acting on finding 4 (2026-08-07, same day)
+
+Ryunosuke asked Raphael to predict that other gates in the repository were likely similarly unenforced, and to check and fix them, not only the one gate tied to the immediate trigger. This audit found:
+
+- `.github/` had no CI workflow at all. None of the 71 unit tests, `scripts/check_action_gate.py`, or `scripts/check_project_state.py` were ever run automatically by GitHub on push or PR; they only ran when a session happened to remember to run them by hand. Fixed: added `.github/workflows/tests.yml`, running the test suite and a project-state consistency check on every push/PR to `main`.
+- `scripts/check_project_state.py` currently reports `verified_project_digest does not match project content` against the real repository — expected, since this session's in-progress file changes have not been re-synced yet, but it confirms the same "nothing catches staleness automatically" pattern until this incident's CI addition merges.
+- The `core.hooksPath scripts/hooks` fix from the section above was itself broken, and this was only found by testing it properly: `scripts/hooks/pre-commit` is a tracked file that exists only on branches where it has been committed, so checking out `main` (which does not have it pre-merge) made the hook silently vanish — on exactly the branch it exists to protect. The first attempt to verify this end-to-end actually created a real commit on local `main` (immediately caught, not pushed, reverted with `git reset --hard origin/main`, no remote impact). A second, contaminated re-test appeared to pass only because a stale hook file from earlier in the session was still sitting in `.git/hooks/`, which does not represent what a genuinely new session would see. The corrected version writes the hook logic directly into `.git/hooks/pre-commit` (the branch-independent default location) from `.claude/hooks/session-start.sh`, and was re-verified in a fresh, unrelated `git clone` with no shared state with this session's repository: commit refused on `main`, allowed on a feature branch.
+
+This is recorded honestly, including the mid-verification slip and the false-positive re-test, rather than only reporting the final working state, per the same standard applied to the rest of this incident.
