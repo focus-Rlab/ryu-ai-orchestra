@@ -14,6 +14,26 @@
       "root_cause_id": "single-path-failure-treated-as-outcome-impossibility",
       "confirmed_occurrences": 4,
       "record": "Ryunosuke report in the conversation requesting the PR #24 extension"
+    },
+    "shallow-answer-2026-08-07": {
+      "root_cause_id": "instruction-read-but-not-applied-at-action-boundary",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#2026-08-07 escalation: shallow doc-pointer answer, and treating it as optional to log"
+    },
+    "governance-bypassing-direct-commit-2026-07-26": {
+      "root_cause_id": "target-branch-not-verified-before-write",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#1. Incident title: Governance-bypassing direct commits to main for Raphael evaluation criteria"
+    },
+    "main-direct-commit-2026-08-07": {
+      "root_cause_id": "target-branch-not-verified-before-write",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#13. Recurrence: 2026-08-07 direct commit to main in the current session"
+    },
+    "action-gate-not-wired-to-triggers-2026-08-07": {
+      "root_cause_id": "enforcement-tool-exists-but-not-fail-closed-at-trigger-point",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#Independent review synthesis (2026-08-07)"
     }
   }
 }

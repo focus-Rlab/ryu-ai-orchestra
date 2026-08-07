@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Tracked git hook (not scripts/safe_commit.sh, which is bypassable by calling
+# `git commit` directly). Activate once per clone with:
+#   git config core.hooksPath scripts/hooks
+#
+# Root cause this closes: INCIDENT_LOG.md incident #1 (2026-07-26) and its
+# 2026-08-07 recurrence. An independent review of the 2026-08-07 recurrence
+# found that a wrapper script alone is not a real control because nothing
+# stops a plain `git commit` from skipping it. This hook runs on every
+# `git commit` regardless of how it was invoked (direct, --amend, through an
+# editor, through a GUI, through cherry-pick/revert/merge that ends in a
+# commit) because git itself invokes it, not the caller.
+set -euo pipefail
+
+current_branch="$(git branch --show-current)"
+
+if [ "$current_branch" = "main" ]; then
+  echo "REFUSED (pre-commit hook): current branch is 'main'." >&2
+  echo "Non-trivial changes must be committed on a dedicated branch (GOVERNANCE.md §13)." >&2
+  echo "Create or switch to a working branch first, e.g.:" >&2
+  echo "  git checkout -B <branch-name> origin/main" >&2
+  exit 1
+fi

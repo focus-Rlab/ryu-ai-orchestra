@@ -385,3 +385,31 @@ Before writing or approving any `agents/*.md` (or other AI-agnostic canonical) c
 ## Closure conditions
 
 This incident remains open until: the clarifier draft correction is shown to Ryunosuke and accepted; a check for this pattern is added to Raphael's canonical-document authoring process (matching the "読了から実行への適用ゲート" mechanism in `GOVERNANCE.md` §9); and Ryunosuke approves the closure record.
+
+---
+
+# Independent review synthesis (2026-08-07)
+
+Ryunosuke pointed out that Raphael's response to its own 2026-08-07 mistakes (the `main` direct-commit recurrence and the shallow doc-pointer answer) skipped most of `GOVERNANCE.md` §9's required steps: no cross-audit beyond the single triggering case, no tested mechanical control, no independent review despite it being mandatory for repeated/major mistakes, and `scripts/check_action_gate.py` — the tool built for exactly this situation — was never invoked. This section records the independent review Raphael then ran (a fresh `general-purpose` agent with no prior involvement in the conversation, reviewing only the repository files) and what changed as a result.
+
+## Independent reviewer's findings
+
+1. **The root-cause analyses already written (§13 above and the "instructions read but not applied" incident's 2026-08-07 escalation) are correct but understate a deeper, shared cause**: `scripts/check_action_gate.py` has existed since 2026-08-03 specifically to force a read-to-action binding, yet it was invoked for neither the direct commit nor the doc-pointer answer. Three incidents in one session — branch discipline, the shallow answer, and the earlier environment-specific-facts incident — share "an existing enforcement tool was not invoked," not three unrelated causes. The gate is opt-in, not fail-closed at the point of action.
+2. **The first corrective control Raphael built, `scripts/safe_commit.sh`, was an inadequate control by itself**: it only guards calls that go through the wrapper. A plain `git commit`, `--amend`, `cherry-pick`, `merge`, or `revert` landing on `main` would bypass it entirely, since no `.git/hooks/pre-commit` had been installed. This is the same class of failure the wrapper was meant to fix — a control that must be remembered is not a real control.
+3. **A mechanical control for the shallow-answer pattern already existed and was simply unused**: `scripts/check_action_gate.py`'s `preflight_failure_review.communication_plan` field (audience, plain-language summary, jargon-to-explain, understanding check) is exactly the right gate for a doc-pointer answer with unexplained jargon. No new tool was needed; the existing one was not run.
+4. **The cross-audit was too narrow**: it checked incident-log recurrence but not other write paths in this session (PR creation, other canonical edits) or whether the same unguarded-trigger problem exists for other AI entry points this repository is meant to support (ChatGPT, Codex, Gemini, per `README.md`'s cross-AI mandate).
+5. **Verdict as given**: not adequate to close without a non-bypassable hook and an actually-enforced communication-plan gate.
+
+## Corrective action taken in response
+
+- Added `scripts/hooks/pre-commit` (tracked in the repository, activated per clone with `git config core.hooksPath scripts/hooks`) which git itself invokes on every commit regardless of call path, closing the bypass the reviewer found in `scripts/safe_commit.sh`. Tested in `tests/test_pre_commit_hook.py`: a bare `git commit` on `main` is refused (`test_bare_git_commit_is_blocked_on_main`), the same call succeeds on a feature branch (`test_bare_git_commit_succeeds_on_feature_branch`). Both tests pass. Manually verified in this session's actual working copy: after running `git config core.hooksPath scripts/hooks`, a real `git commit` attempt while checked out on `main` was refused with the hook's message.
+- `scripts/safe_commit.sh` is kept as a friendlier explicit entrypoint but is no longer the authoritative control; the tracked hook is.
+- Registered `governance-bypassing-direct-commit-2026-07-26`, `main-direct-commit-2026-08-07`, `shallow-answer-2026-08-07`, and `action-gate-not-wired-to-triggers-2026-08-07` in `evaluations/action-gates/mistake_registry.json` under their respective `root_cause_id`s so future occurrence counts are traceable.
+
+## Residual open gap (not solved, stated honestly)
+
+The reviewer's finding 3 identifies that `check_action_gate.py`'s `communication_plan` field is the correct control for shallow/jargon-heavy answers, but there is no mechanical interceptor that forces this check to run before Raphael sends a user-facing technical message — unlike the git hook, this trigger point has no equivalent of "git itself calls it." Closing this gap fully would need either a wrapper around message-sending (not available in this execution environment) or a firm behavioral commitment enforced only by Raphael's own discipline, checked after the fact by Ryunosuke or a review agent. This is recorded as open, not fixed, so it is not misrepresented as solved.
+
+## Closure status
+
+Not closed. Remains open pending: Ryunosuke's review of the hook mechanism and the residual gap above, and the broader cross-session/cross-AI audit (finding 4) that has not yet been performed.
