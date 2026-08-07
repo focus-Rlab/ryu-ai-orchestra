@@ -318,3 +318,43 @@ The existing generalized control remains: a failed tool or preferred path is evi
 - `requirements-designer`, `implementer`, and `tester-evaluator` were actually started. All three accepted the remediated product evidence, subject to committing the official records and passing final repository checks.
 
 Status: corrective recovery implemented. Incident closure remains pending until the acceptance record, current state, code fixes, completion action gate, GitHub commit, and PR #26 readiness are all verified. Main merge remains Ryunosuke's decision.
+
+# Incident: environment-specific facts written into AI-agnostic canonical agent files (2026-08-07)
+
+Classification: repeated mistake, escalated to major-mistake management. Confirmed minimum occurrence count: 2, based on Ryunosuke's report.
+
+## Summary and impact
+
+Ryunosuke reported two occurrences of the same root cause. First, during creation of the requirements-designer/implementer/tester-evaluator agents, work was initially placed only inside the Claude Code-specific `.claude/agents/` adapter files rather than also producing the AI-agnostic canonical `agents/*.md` files, contrary to Ryunosuke's explicit intent that any AI, not only Claude, should be able to operate the agents (`README.md`, `AGENT_STANDARD.md` two-layer model). Ryunosuke's explicit instruction during that same session corrected this by establishing the two-layer structure; a cross-audit performed for this incident found no remaining instance of that specific defect (canonical files exist and are populated for all three agents).
+
+Second, while drafting a proposed design for a new "clarifier" agent in this session, Raphael wrote "常に禁止: 画像生成" (image generation always prohibited) and listed image generation as permanently out of scope, reasoning from the fact that this Claude Code session's currently connected connectors (Figma, Gmail, Google Calendar, Google Drive) and an MCP registry search included no image-generation service. That reasoning is specific to the current execution environment and connector state, not a universal property of the clarifier role — other AI environments (e.g. ChatGPT, Gemini) may have native image-generation capability. The draft had not yet been written to a file when Ryunosuke caught the error.
+
+## Root cause
+
+Raphael conflates two layers when authoring canonical (`agents/*.md`) content: (1) constraints and facts inherent to the agent's defined role, applicable regardless of execution environment, and (2) constraints and facts specific to the current session's execution environment or currently connected tools/connectors. Facts from (2) are written into canonical text as if they were (1), producing both the earlier Claude-only-file placement defect and today's "always prohibited" image-generation clause.
+
+## Impact and similar-case audit
+
+A cross-audit of `agents/requirements-designer.md`, `agents/implementer.md`, `agents/tester-evaluator.md`, and `docs/THREE_AGENT_PILOT_DESIGN.md` for the same pattern found:
+
+- No recurrence of the "canonical file missing, adapter-only" defect; all three existing agents have both layers populated.
+- References to "Claude Code" as the preferred environment in the "Model and environment policy" sections are explicitly scoped as a pilot-stage decision ("今回のパイロットでは単一環境固定"), not asserted as a permanent or universal constraint, and technical-enforcement claims are explicitly attributed to the `.claude/agents/*.md` adapter mechanism rather than presented as AI-agnostic fact.
+- `docs/THREE_AGENT_PILOT_DESIGN.md` is itself scoped as a Claude Code pilot implementation record, not the canonical AI-agnostic layer, so its Claude Code-specific language is appropriately placed there.
+- No file-level correction was required in the three existing agents as a result of this audit.
+
+The unaudited residual risk is in Raphael's authoring process itself: without a check at the point of drafting, the same conflation can recur in any future canonical document, not only agent files.
+
+## Corrective action
+
+The clarifier design draft (not yet committed as a file) is being corrected before creation:
+
+- The "常に禁止: 画像生成" / out-of-scope wording is replaced with an environment-independent policy statement: image generation, where an execution environment supports it, remains subject to `STARTUP_CONTEXT.md` §10's prior-approval requirement for paid or billing-uncertain services; the canonical file does not assert whether generation is technically available in any given environment.
+- The Workflow section's "対話はRaphael(Claude Code)が担う" wording is being revised to state the AI-agnostic invariant (interview continuity from Ryunosuke's perspective) separately from the current Claude Code adapter's specific mechanism (a single-shot subagent invocation cannot hold a live multi-turn conversation with Ryunosuke directly).
+
+## Generalized prevention (proposed, pending Ryunosuke approval)
+
+Before writing or approving any `agents/*.md` (or other AI-agnostic canonical) content, Raphael must ask explicitly, for each constraint or capability statement: "is this true because of the role itself, or because of what this specific session/environment currently has connected?" Session-specific facts belong only in the environment adapter file (e.g. `.claude/agents/*.md`) or in implementation-record documents explicitly scoped as such, never in the AI-agnostic canonical text.
+
+## Closure conditions
+
+This incident remains open until: the clarifier draft correction is shown to Ryunosuke and accepted; a check for this pattern is added to Raphael's canonical-document authoring process (matching the "読了から実行への適用ゲート" mechanism in `GOVERNANCE.md` §9); and Ryunosuke approves the closure record.
