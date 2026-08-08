@@ -34,6 +34,21 @@
       "root_cause_id": "enforcement-tool-exists-but-not-fail-closed-at-trigger-point",
       "confirmed_occurrences": 1,
       "record": "INCIDENT_LOG.md#Independent review synthesis (2026-08-07)"
+    },
+    "corrective-proposal-narrowed-2026-08-08": {
+      "root_cause_id": "instruction-read-but-not-applied-at-action-boundary",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#Incident: corrective-mechanism proposal narrowed a general requirement to literal examples (2026-08-08)"
+    },
+    "aura-evaluation-feedback-literalized-2026-08-05": {
+      "root_cause_id": "feedback-generalized-principle-reduced-to-literal-examples",
+      "confirmed_occurrences": 1,
+      "record": "evaluations/week4-improvement-review/AURA_USER_ACCEPTANCE_2026-08-05.md#この評価を扱うときの最重要注意"
+    },
+    "corrective-proposal-narrowed-2026-08-08-feedback-literalized": {
+      "root_cause_id": "feedback-generalized-principle-reduced-to-literal-examples",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#Incident: corrective-mechanism proposal narrowed a general requirement to literal examples (2026-08-08)"
     }
   }
 }

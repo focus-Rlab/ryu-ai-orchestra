@@ -423,3 +423,37 @@ Ryunosuke asked Raphael to predict that other gates in the repository were likel
 - The `core.hooksPath scripts/hooks` fix from the section above was itself broken, and this was only found by testing it properly: `scripts/hooks/pre-commit` is a tracked file that exists only on branches where it has been committed, so checking out `main` (which does not have it pre-merge) made the hook silently vanish — on exactly the branch it exists to protect. The first attempt to verify this end-to-end actually created a real commit on local `main` (immediately caught, not pushed, reverted with `git reset --hard origin/main`, no remote impact). A second, contaminated re-test appeared to pass only because a stale hook file from earlier in the session was still sitting in `.git/hooks/`, which does not represent what a genuinely new session would see. The corrected version writes the hook logic directly into `.git/hooks/pre-commit` (the branch-independent default location) from `.claude/hooks/session-start.sh`, and was re-verified in a fresh, unrelated `git clone` with no shared state with this session's repository: commit refused on `main`, allowed on a feature branch.
 
 This is recorded honestly, including the mid-verification slip and the false-positive re-test, rather than only reporting the final working state, per the same standard applied to the rest of this incident.
+
+# Incident: corrective-mechanism proposal narrowed a general requirement to literal examples (2026-08-08)
+
+Classification: repeated mistake, escalated to major-mistake management. This occurrence is simultaneously:
+
+1. The 4th confirmed occurrence of `instruction-read-but-not-applied-at-action-boundary` (after `instruction-application-001`, `aura-premature-stop-2026-08-04`, `shallow-answer-2026-08-07`).
+2. The 2nd confirmed occurrence of a root cause first named, but never registered, during the 2026-08-05 recording of `evaluations/week4-improvement-review/AURA_USER_ACCEPTANCE_2026-08-05.md`: reducing Ryunosuke's generalized feedback to a literal restatement of the specific examples he gave, instead of extracting the underlying principle. That earlier occurrence is registered retroactively below as `feedback-generalized-principle-reduced-to-literal-examples`, occurrence 1.
+
+## Summary
+
+Ryunosuke asked Raphael to prioritize the most severe items in Raphael/agent-improvement work. Raphael proposed two mechanisms: a canonical-document contamination check and a communication-clarity check. The second proposal:
+
+- Named three specific jargon words (スポットチェック, フィクスチャ, デビエーション) as the fix target, rather than the already-recorded general rule (`MASTER_SPEC.md` §27 / `agents/raphael.md`): any term matching one of five defined categories (general jargon, project-specific naming, common English/business terms, file/command/ID names, English abbreviations) requires classification and explanation. The three words were examples of those categories in the source evaluation, not an exhaustive target list.
+- Scoped the entire mechanism to jargon-explanation gaps specifically, when Ryunosuke's actual, repeatedly-stated requirement is general: any case where a rule he previously flagged and told Raphael not to repeat was recorded and read, but not applied at the moment of the actual action, regardless of subject matter.
+
+Ryunosuke identified both narrowings and named them explicitly as a mistake requiring correction and recording, without being asked whether it was worth recording.
+
+## Root cause
+
+Both narrowings share one mechanism: when converting a generalized instruction into an implementation plan, Raphael anchored on the concrete illustrative details present in the immediate conversation (the three example words; the single "communication clarity" framing of this specific design discussion) instead of first checking those details against the already-recorded general rule they were instances of. The general rule existed in canonical text already read earlier in this same conversation, but was not rebound to this concrete design task — the same structural gap named in the parent incident above, now confirmed as recurring in a new subject area (proposal scoping, not just commits or doc-pointer answers).
+
+## Impact and similar-case audit
+
+No incorrect mechanism was built or shipped; the narrowing was caught before implementation. Impact is one wasted proposal round and a further trust cost from Ryunosuke having to name the same pattern again. The other work completed earlier in this conversation (PROJECT_STATE.json sync in PR #31, bundle-branch content review in PR #32) did not involve converting a generalized instruction into a narrowed implementation scope and is not implicated by this specific failure mode.
+
+## Corrective action
+
+- Registered `feedback-generalized-principle-reduced-to-literal-examples` (occurrences: 2) and incremented `instruction-read-but-not-applied-at-action-boundary` to 4 confirmed occurrences in `evaluations/action-gates/mistake_registry.json`.
+- The communication-clarity mechanism is redesigned around the five-category classification framework itself (a glossary of previously-flagged terms plus their category, extensible over time), not a fixed word list.
+- The enforcement-mechanism work is redefined to target the general pattern (any previously-recorded, applicable rule not rebound to the current action) via a Stop-hook extension of the existing `scripts/check_action_gate.py` schema, rather than a narrow jargon-only tool. Implementation follows in this same session.
+
+## Closure conditions
+
+Remains open until: the redesigned mechanisms are implemented and tested; independent review is performed (required for repeated mistakes per `GOVERNANCE.md` §9); and Ryunosuke confirms the corrected scope matches what he actually asked for.
