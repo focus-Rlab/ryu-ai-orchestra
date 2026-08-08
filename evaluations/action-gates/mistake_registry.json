@@ -49,6 +49,21 @@
       "root_cause_id": "feedback-generalized-principle-reduced-to-literal-examples",
       "confirmed_occurrences": 1,
       "record": "INCIDENT_LOG.md#Incident: corrective-mechanism proposal narrowed a general requirement to literal examples (2026-08-08)"
+    },
+    "tool-scope-examples-taken-as-boundary-2026-08-08": {
+      "root_cause_id": "feedback-generalized-principle-reduced-to-literal-examples",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#Incident: current execution environment treated as a fixed constraint during research (2026-08-08)"
+    },
+    "claude-assumed-as-fixed-environment-2026-08-08": {
+      "root_cause_id": "current-execution-environment-treated-as-fixed-constraint",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#Incident: current execution environment treated as a fixed constraint during research (2026-08-08)"
+    },
+    "custom-tooling-without-alternatives-check-2026-08-08": {
+      "root_cause_id": "instruction-read-but-not-applied-at-action-boundary",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#Incident: custom tooling built without checking for existing alternatives, despite a prior instruction to do so (2026-08-08)"
     }
   }
 }

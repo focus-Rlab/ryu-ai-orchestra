@@ -457,3 +457,55 @@ No incorrect mechanism was built or shipped; the narrowing was caught before imp
 ## Closure conditions
 
 Remains open until: the redesigned mechanisms are implemented and tested; independent review is performed (required for repeated mistakes per `GOVERNANCE.md` §9); and Ryunosuke confirms the corrected scope matches what he actually asked for.
+
+# Incident: current execution environment treated as a fixed constraint during research (2026-08-08)
+
+Classification: repeated mistake, escalated to major-mistake management. This is the 3rd confirmed occurrence within this single session of the `feedback-generalized-principle-reduced-to-literal-examples` root cause (after the two occurrences registered in the entry above), and is closely related to (but not identical to) the 2026-08-07 "environment-specific facts written into AI-agnostic canonical agent files" incident: both share the structural confusion of "what is true of my current context" versus "what is true of the general question," but the earlier incident was about writing environment-specific claims into canonical text, while this one is about implicitly scoping a research answer to the current AI/environment without saying so. Registered as a new root cause, `current-execution-environment-treated-as-fixed-constraint`.
+
+## Summary
+
+While researching model-customization options (fine-tuning, custom model training) at Ryunosuke's request, Raphael reported "fine-tuning is not available for Claude" as if that closed the option, without separately asking or stating whether Ryunosuke would accept using a different AI model or execution environment for that specific capability. Per this repository's own established architecture (`README.md`, `agents/raphael.md`), ChatGPT, Claude, Codex, and Gemini are interchangeable execution resources, not fixed. Ryunosuke pointed out that nothing in his request assumed Claude specifically, and asked why that assumption was made.
+
+Separately, and using the same underlying pattern, Ryunosuke had to repeat that "Supabase" and "fine-tuning / building a custom model" were given as examples (with explicit "など"/"とか" qualifiers) of categories to research broadly, not as the literal boundary of the search. This is the third time in this session Raphael treated a given example as the scope rather than a pointer to a category.
+
+## Root cause
+
+When answering a technical-feasibility question, Raphael defaulted to evaluating options against the properties of the AI model/environment currently running the conversation (Claude, via Claude Code) instead of first asking "is this constraint inherent to the goal, or specific to my current runtime?" This is the same class of failure as the 2026-08-07 canonical-contamination incident: session-local facts leaking into a scope they do not belong in — there, into permanent canonical text; here, into a supposedly general feasibility answer.
+
+## Impact and similar-case audit
+
+No irreversible action was taken; the narrowing was caught before any implementation decision was made. Impact is additional rounds of correction and a further trust cost, now compounding across three same-session occurrences of the literal-examples pattern plus this related environment-assumption pattern.
+
+## Corrective action
+
+- Re-researched fine-tuning/custom-model feasibility with the "must run on Claude" assumption explicitly removed (see the conversation's next response for the reconsidered findings: LoRA fine-tuning and DPO on small open-weight models are realistic, low-cost options if Ryunosuke is willing to introduce an additional AI model for a narrow, specialized role such as a judge/critic).
+- Added `STARTUP_CONTEXT.md` §12, a durable, cross-session, cross-AI rule requiring this environment-vs-inherent-constraint check and the examples-are-not-the-scope check on every future research/proposal task, so this does not need to be re-explained in a new conversation or a different AI.
+
+## Closure conditions
+
+Remains open until Ryunosuke confirms the reconsidered fine-tuning/custom-model findings match what he asked for, and until a future similar-but-not-identical case (a different technical question, not fine-tuning) is checked against `STARTUP_CONTEXT.md` §12 without Ryunosuke having to name the pattern again.
+
+# Incident: custom tooling built without checking for existing alternatives, despite a prior instruction to do so (2026-08-08)
+
+Classification: repeated mistake, escalated to major-mistake management. 5th confirmed occurrence of `instruction-read-but-not-applied-at-action-boundary` (after `instruction-application-001`, `aura-premature-stop-2026-08-04`, `shallow-answer-2026-08-07`, `corrective-proposal-narrowed-2026-08-08`).
+
+## Summary
+
+Ryunosuke reports that he previously told a different AI session that research before building must be thorough enough to avoid spending time building things that did not need to be built from scratch — and that this was recorded. Raphael built `scripts/check_action_gate.py`-adjacent custom tooling earlier in this same session (`scripts/check_canonical_environment_neutrality.py`, `scripts/check_communication_glossary.py`, the Stop-hook wiring) without first researching whether mature existing tools already covered the same need. A later research pass in this same conversation found that they do: NeMo Guardrails, Guardrails AI, and LlamaGuard are established open-source frameworks for exactly this class of problem (mechanically enforcing rules on LLM output), and Langfuse is an established open-source, self-hostable observability platform for exactly the audit-trail purpose `mistake_registry.json` and `evaluations/action-gates/` were hand-built for today.
+
+## Root cause and verification of the prior-instruction claim
+
+A repository-wide search for any existing canonical rule requiring an existing-alternatives check before custom implementation (`git grep` across `main` for relevant terms) found no such rule anywhere in `README.md`, `GOVERNANCE.md`, `MASTER_SPEC.md`, `agents/raphael.md`, or any other canonical file. This means Ryunosuke's prior instruction to a different AI session, even if genuinely given and even if that other session recorded it somewhere, never reached this repository's canonical layer — the single source all sessions are supposed to read from. Whether the root failure was "a different AI recorded it only in local/conversational memory, never as a GitHub commit" or "a GitHub commit was made but did not survive to the current `main`" is not established by this session's evidence and is not guessed here. Either way, the practical effect matches this repository's own stated concern in `STARTUP_CONTEXT.md` §8: a report of "shared" or "recorded" is not verified until a new session can actually recover it from the canonical entry path.
+
+## Impact
+
+Time was spent building bespoke tooling for a problem class with mature, tested, free, open-source solutions already available, when at minimum a research pass to check should have happened first regardless of whether the specific prior instruction had reached this session.
+
+## Corrective action
+
+- `STARTUP_CONTEXT.md` §13 adds the missing canonical rule directly, closing the propagation gap regardless of its original cause.
+- The custom tooling built today (`scripts/check_canonical_environment_neutrality.py`, `scripts/check_communication_glossary.py`, `.claude/hooks/stop-communication-check.*`) is not being deleted or retracted in this entry — that is a separate decision requiring comparison against the existing-tool alternatives and Ryunosuke's approval, tracked as an open follow-up rather than decided unilaterally here.
+
+## Closure conditions
+
+Remains open until: Ryunosuke decides whether to keep, replace, or retire today's custom tooling in favor of an existing-tool alternative; and a future implementation task in this repository demonstrates the existing-alternatives check actually happening before code is written, without Ryunosuke prompting it.
