@@ -27,3 +27,43 @@ if [ "$current_branch" = "main" ]; then
   echo "  git checkout -B <branch-name> origin/main" >&2
   exit 1
 fi
+
+# Canonical-document environment-neutrality check. Root cause this closes:
+# INCIDENT_LOG.md "environment-specific facts written into AI-agnostic
+# canonical agent files (2026-08-07)". Best-effort: skips with a warning if
+# python or the checker script is unavailable, rather than blocking unrelated
+# commits on a missing secondary tool — only the main-branch guard above is
+# unconditional.
+staged_agent_files="$(git diff --cached --name-only -- 'agents/*.md' || true)"
+if [ -n "$staged_agent_files" ]; then
+  checker="scripts/check_canonical_environment_neutrality.py"
+  py=""
+  for candidate in python3 python; do
+    if command -v "$candidate" >/dev/null 2>&1 && [ "$("$candidate" -c 'print(1)' 2>/dev/null)" = "1" ]; then
+      py="$candidate"
+      break
+    fi
+  done
+  if [ -z "$py" ] || [ ! -f "$checker" ]; then
+    echo "WARNING (pre-commit hook): skipping canonical environment-neutrality check (python or $checker not found)." >&2
+  else
+    tmpdir="$(mktemp -d)"
+    check_failed=0
+    while IFS= read -r f; do
+      [ -z "$f" ] && continue
+      out="$tmpdir/staged.md"
+      git show ":$f" > "$out"
+      if ! output="$("$py" "$checker" "$out" --root "$tmpdir" 2>&1)"; then
+        check_failed=1
+        echo "[$f]" >&2
+        echo "$output" >&2
+      fi
+    done <<< "$staged_agent_files"
+    rm -rf "$tmpdir"
+    if [ "$check_failed" -eq 1 ]; then
+      echo "REFUSED (pre-commit hook): canonical environment-neutrality check failed on staged agents/*.md changes." >&2
+      echo "If the phrasing is intentional and environment-agnostic, rephrase it. If it is genuinely environment-specific, move it to the matching .claude/agents or .codex/agents adapter file instead." >&2
+      exit 1
+    fi
+  fi
+fi
