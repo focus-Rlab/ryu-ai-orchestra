@@ -208,6 +208,18 @@ This incident may be marked closed only after:
 6. corrective controls are implemented and tested;
 7. Ryunosuke approves the closure record.
 
+## 13. Recurrence: 2026-08-07 direct commit to `main` in the current session
+
+Classification: repeated mistake, same root cause as cause #1 in §7 ("The target branch was not explicitly verified and reported before each write"). This is a live confirmation of the "Recurrence risk" warned about in §8: a different AI session repeated the exact pattern this incident describes.
+
+Summary: Raphael received Ryunosuke's approval for the *content* of an `INCIDENT_LOG.md` addition (a separate, unrelated repeated-mistake record about environment-specific facts leaking into canonical agent files) and, without first checking `git branch --show-current`, ran `git add` and `git commit` directly. The local checkout was on `main`, not the session's designated branch `claude/raphael-orchestrator-design-5duz71`, so the commit landed on `main`. Content approval was again conflated with write-location authorization — the exact failure named in this incident's cause #2.
+
+Detection and recovery: caught immediately after the commit (before any push) by running `git status`/`git log` as a self-check. No push had occurred, so `origin/main` was never affected and no other collaborator or session was exposed to the errant commit. Recovery: the session's designated branch (`claude/raphael-orchestrator-design-5duz71`, itself found to already be represented in current `main` under different commit SHAs from an earlier bundle/patch handoff, per this session's history) was rebuilt from current `origin/main`, the commit was cherry-picked onto it, and local `main` was hard-reset back to exactly match `origin/main`. A diff between the old branch tip and `origin/main` confirmed no file was uniquely lost. Nothing was pushed without Ryunosuke's separate approval.
+
+Generalized prevention (proposed, pending Ryunosuke approval): before any `git commit` in this repository, Raphael must run and report `git branch --show-current` and confirm it matches the session's designated working branch (never `main`) as an explicit pre-write step, not an after-the-fact check. This should be added as a mechanical pre-condition alongside the existing action-gate mechanism (`scripts/check_action_gate.py`), since the first occurrence of this same cause (2026-07-26) was not sufficient by itself to prevent a second occurrence in a different AI session eleven days later.
+
+Status: recovered without remote impact. Remains open as part of the parent incident's unresolved branch-discipline control until a mechanical (not merely documented) pre-commit branch check is implemented and tested.
+
 
 ---
 
@@ -290,6 +302,21 @@ Generalized prevention: an impossibility claim must inventory every required exe
 Status: corrective changes are added to PR #24 for review. This escalation is not closed until the extended tests pass, the PR diff is independently reviewed, and Ryunosuke merges or rejects the proposed rule change.
 
 Control boundary: the validator checks record consistency; it cannot independently infer an omitted conversational mistake from JSON alone. Repeated and major cases therefore require independent review. The prior four occurrences are represented by one aggregated Ryunosuke report with a confirmed minimum count, not four invented incident records.
+
+## 2026-08-07 escalation: shallow doc-pointer answer, and treating it as optional to log
+
+Classification: repeated mistake, escalated to major-mistake management. This is at minimum the third confirmed occurrence of the root cause `instruction-read-but-not-applied-at-action-boundary`, after the 2026-08-03 and 2026-08-04 occurrences above.
+
+Summary: while diagnosing why this session's GitHub connector could not write (push/create branch), Raphael pointed Ryunosuke to an official documentation URL and gave GitHub-jargon instructions ("Installed GitHub Apps", "Contents: Read and write") without first fetching and reading the page, i.e. without doing the work of turning it into a concrete, beginner-usable instruction. This directly violates the plain-language explanation rule recorded earlier in this same session in `MASTER_SPEC.md` §27 and `agents/raphael.md`. When Ryunosuke pointed this out, Raphael's own follow-up response asked whether the mistake was worth recording at all ("口頭での訂正で十分ですか"), rather than recognizing it immediately as a further occurrence of an already-named, already-major-escalated pattern.
+
+Root cause: same as the parent incident — a rule Raphael had already read (and in this instance, had personally just written into canonical text minutes earlier in the same conversation) was not rebound to the immediate next action of answering a question. The additional failure specific to this occurrence: Raphael also did not recognize the mistake's severity class correctly after the fact, treating a third occurrence of a named major-incident root cause as an optional, log-it-or-not item instead of an automatic major-mistake record.
+
+Impact: Ryunosuke had to notice and name the shallow-answer pattern himself for a second time in the same session (after already having scored this category 1/10 and made it a permanent rule earlier), and then had to explicitly prompt Raphael a second time ("自分のやったミスの自覚ないよな") before Raphael classified its own conversational response as evidence of the same failure. Trust cost is compounded by the fact that the violated rule was self-authored earlier in the same session.
+
+Generalized prevention (reinforces, does not replace, the parent incident's action-gate mechanism): when Raphael identifies that its own prior response matches a pattern already named in this log, it must classify the response as a repeat occurrence in the same turn it is identified, without asking Ryunosuke whether the occurrence is worth recording. Whether to *close* an incident is Ryunosuke's decision; whether an occurrence *gets recorded* at the point Raphael itself recognizes the pattern is not optional and does not require Ryunosuke's prompting.
+
+Status: recorded directly following Ryunosuke's correction, on the correct branch (branch verified before this commit, per the separate 2026-08-07 branch-discipline recurrence recorded in §13 above). Remains open as part of the parent incident until the same mechanical, not merely documented, control exists for self-recognized pattern matches as for externally reported ones.
+
 # Incident: application test invoked from repository root (2026-08-04)
 
 During AURA validation, `npm test` was first invoked from the repository root, where no `package.json` exists. The command failed before running tests and made no file changes. Root cause: command groups were combined without binding each command to the directory that owns its configuration. App checks were rerun from `apps/effort-avatar`; repository checks were run separately from the root. Both passed. Prevention: keep application-package commands and repository-level commands in separate executions with explicit working directories. Classification: general, first recorded occurrence, bounded non-mutating impact.
@@ -318,3 +345,167 @@ The existing generalized control remains: a failed tool or preferred path is evi
 - `requirements-designer`, `implementer`, and `tester-evaluator` were actually started. All three accepted the remediated product evidence, subject to committing the official records and passing final repository checks.
 
 Status: corrective recovery implemented. Incident closure remains pending until the acceptance record, current state, code fixes, completion action gate, GitHub commit, and PR #26 readiness are all verified. Main merge remains Ryunosuke's decision.
+
+# Incident: environment-specific facts written into AI-agnostic canonical agent files (2026-08-07)
+
+Classification: repeated mistake, escalated to major-mistake management. Confirmed minimum occurrence count: 2, based on Ryunosuke's report.
+
+## Summary and impact
+
+Ryunosuke reported two occurrences of the same root cause. First, during creation of the requirements-designer/implementer/tester-evaluator agents, work was initially placed only inside the Claude Code-specific `.claude/agents/` adapter files rather than also producing the AI-agnostic canonical `agents/*.md` files, contrary to Ryunosuke's explicit intent that any AI, not only Claude, should be able to operate the agents (`README.md`, `AGENT_STANDARD.md` two-layer model). Ryunosuke's explicit instruction during that same session corrected this by establishing the two-layer structure; a cross-audit performed for this incident found no remaining instance of that specific defect (canonical files exist and are populated for all three agents).
+
+Second, while drafting a proposed design for a new "clarifier" agent in this session, Raphael wrote "常に禁止: 画像生成" (image generation always prohibited) and listed image generation as permanently out of scope, reasoning from the fact that this Claude Code session's currently connected connectors (Figma, Gmail, Google Calendar, Google Drive) and an MCP registry search included no image-generation service. That reasoning is specific to the current execution environment and connector state, not a universal property of the clarifier role — other AI environments (e.g. ChatGPT, Gemini) may have native image-generation capability. The draft had not yet been written to a file when Ryunosuke caught the error.
+
+## Root cause
+
+Raphael conflates two layers when authoring canonical (`agents/*.md`) content: (1) constraints and facts inherent to the agent's defined role, applicable regardless of execution environment, and (2) constraints and facts specific to the current session's execution environment or currently connected tools/connectors. Facts from (2) are written into canonical text as if they were (1), producing both the earlier Claude-only-file placement defect and today's "always prohibited" image-generation clause.
+
+## Impact and similar-case audit
+
+A cross-audit of `agents/requirements-designer.md`, `agents/implementer.md`, `agents/tester-evaluator.md`, and `docs/THREE_AGENT_PILOT_DESIGN.md` for the same pattern found:
+
+- No recurrence of the "canonical file missing, adapter-only" defect; all three existing agents have both layers populated.
+- References to "Claude Code" as the preferred environment in the "Model and environment policy" sections are explicitly scoped as a pilot-stage decision ("今回のパイロットでは単一環境固定"), not asserted as a permanent or universal constraint, and technical-enforcement claims are explicitly attributed to the `.claude/agents/*.md` adapter mechanism rather than presented as AI-agnostic fact.
+- `docs/THREE_AGENT_PILOT_DESIGN.md` is itself scoped as a Claude Code pilot implementation record, not the canonical AI-agnostic layer, so its Claude Code-specific language is appropriately placed there.
+- No file-level correction was required in the three existing agents as a result of this audit.
+
+The unaudited residual risk is in Raphael's authoring process itself: without a check at the point of drafting, the same conflation can recur in any future canonical document, not only agent files.
+
+## Corrective action
+
+The clarifier design draft (not yet committed as a file) is being corrected before creation:
+
+- The "常に禁止: 画像生成" / out-of-scope wording is replaced with an environment-independent policy statement: image generation, where an execution environment supports it, remains subject to `STARTUP_CONTEXT.md` §10's prior-approval requirement for paid or billing-uncertain services; the canonical file does not assert whether generation is technically available in any given environment.
+- The Workflow section's "対話はRaphael(Claude Code)が担う" wording is being revised to state the AI-agnostic invariant (interview continuity from Ryunosuke's perspective) separately from the current Claude Code adapter's specific mechanism (a single-shot subagent invocation cannot hold a live multi-turn conversation with Ryunosuke directly).
+
+## Generalized prevention (proposed, pending Ryunosuke approval)
+
+Before writing or approving any `agents/*.md` (or other AI-agnostic canonical) content, Raphael must ask explicitly, for each constraint or capability statement: "is this true because of the role itself, or because of what this specific session/environment currently has connected?" Session-specific facts belong only in the environment adapter file (e.g. `.claude/agents/*.md`) or in implementation-record documents explicitly scoped as such, never in the AI-agnostic canonical text.
+
+## Closure conditions
+
+This incident remains open until: the clarifier draft correction is shown to Ryunosuke and accepted; a check for this pattern is added to Raphael's canonical-document authoring process (matching the "読了から実行への適用ゲート" mechanism in `GOVERNANCE.md` §9); and Ryunosuke approves the closure record.
+
+---
+
+# Independent review synthesis (2026-08-07)
+
+Ryunosuke pointed out that Raphael's response to its own 2026-08-07 mistakes (the `main` direct-commit recurrence and the shallow doc-pointer answer) skipped most of `GOVERNANCE.md` §9's required steps: no cross-audit beyond the single triggering case, no tested mechanical control, no independent review despite it being mandatory for repeated/major mistakes, and `scripts/check_action_gate.py` — the tool built for exactly this situation — was never invoked. This section records the independent review Raphael then ran (a fresh `general-purpose` agent with no prior involvement in the conversation, reviewing only the repository files) and what changed as a result.
+
+## Independent reviewer's findings
+
+1. **The root-cause analyses already written (§13 above and the "instructions read but not applied" incident's 2026-08-07 escalation) are correct but understate a deeper, shared cause**: `scripts/check_action_gate.py` has existed since 2026-08-03 specifically to force a read-to-action binding, yet it was invoked for neither the direct commit nor the doc-pointer answer. Three incidents in one session — branch discipline, the shallow answer, and the earlier environment-specific-facts incident — share "an existing enforcement tool was not invoked," not three unrelated causes. The gate is opt-in, not fail-closed at the point of action.
+2. **The first corrective control Raphael built, `scripts/safe_commit.sh`, was an inadequate control by itself**: it only guards calls that go through the wrapper. A plain `git commit`, `--amend`, `cherry-pick`, `merge`, or `revert` landing on `main` would bypass it entirely, since no `.git/hooks/pre-commit` had been installed. This is the same class of failure the wrapper was meant to fix — a control that must be remembered is not a real control.
+3. **A mechanical control for the shallow-answer pattern already existed and was simply unused**: `scripts/check_action_gate.py`'s `preflight_failure_review.communication_plan` field (audience, plain-language summary, jargon-to-explain, understanding check) is exactly the right gate for a doc-pointer answer with unexplained jargon. No new tool was needed; the existing one was not run.
+4. **The cross-audit was too narrow**: it checked incident-log recurrence but not other write paths in this session (PR creation, other canonical edits) or whether the same unguarded-trigger problem exists for other AI entry points this repository is meant to support (ChatGPT, Codex, Gemini, per `README.md`'s cross-AI mandate).
+5. **Verdict as given**: not adequate to close without a non-bypassable hook and an actually-enforced communication-plan gate.
+
+## Corrective action taken in response
+
+- Added `scripts/hooks/pre-commit` (tracked in the repository, activated per clone with `git config core.hooksPath scripts/hooks`) which git itself invokes on every commit regardless of call path, closing the bypass the reviewer found in `scripts/safe_commit.sh`. Tested in `tests/test_pre_commit_hook.py`: a bare `git commit` on `main` is refused (`test_bare_git_commit_is_blocked_on_main`), the same call succeeds on a feature branch (`test_bare_git_commit_succeeds_on_feature_branch`). Both tests pass. Manually verified in this session's actual working copy: after running `git config core.hooksPath scripts/hooks`, a real `git commit` attempt while checked out on `main` was refused with the hook's message.
+- `scripts/safe_commit.sh` is kept as a friendlier explicit entrypoint but is no longer the authoritative control; the tracked hook is.
+- Registered `governance-bypassing-direct-commit-2026-07-26`, `main-direct-commit-2026-08-07`, `shallow-answer-2026-08-07`, and `action-gate-not-wired-to-triggers-2026-08-07` in `evaluations/action-gates/mistake_registry.json` under their respective `root_cause_id`s so future occurrence counts are traceable.
+
+## Residual open gap (not solved, stated honestly)
+
+The reviewer's finding 3 identifies that `check_action_gate.py`'s `communication_plan` field is the correct control for shallow/jargon-heavy answers, but there is no mechanical interceptor that forces this check to run before Raphael sends a user-facing technical message — unlike the git hook, this trigger point has no equivalent of "git itself calls it." Closing this gap fully would need either a wrapper around message-sending (not available in this execution environment) or a firm behavioral commitment enforced only by Raphael's own discipline, checked after the fact by Ryunosuke or a review agent. This is recorded as open, not fixed, so it is not misrepresented as solved.
+
+## Closure status
+
+Not closed. Remains open pending: Ryunosuke's review of the hook mechanism and the residual gap above, and the broader cross-session/cross-AI audit (finding 4) that has not yet been performed.
+
+## Addendum: acting on finding 4 (2026-08-07, same day)
+
+Ryunosuke asked Raphael to predict that other gates in the repository were likely similarly unenforced, and to check and fix them, not only the one gate tied to the immediate trigger. This audit found:
+
+- `.github/` had no CI workflow at all. None of the 71 unit tests, `scripts/check_action_gate.py`, or `scripts/check_project_state.py` were ever run automatically by GitHub on push or PR; they only ran when a session happened to remember to run them by hand. Fixed: added `.github/workflows/tests.yml`, running the test suite and a project-state consistency check on every push/PR to `main`.
+- `scripts/check_project_state.py` currently reports `verified_project_digest does not match project content` against the real repository — expected, since this session's in-progress file changes have not been re-synced yet, but it confirms the same "nothing catches staleness automatically" pattern until this incident's CI addition merges.
+- The `core.hooksPath scripts/hooks` fix from the section above was itself broken, and this was only found by testing it properly: `scripts/hooks/pre-commit` is a tracked file that exists only on branches where it has been committed, so checking out `main` (which does not have it pre-merge) made the hook silently vanish — on exactly the branch it exists to protect. The first attempt to verify this end-to-end actually created a real commit on local `main` (immediately caught, not pushed, reverted with `git reset --hard origin/main`, no remote impact). A second, contaminated re-test appeared to pass only because a stale hook file from earlier in the session was still sitting in `.git/hooks/`, which does not represent what a genuinely new session would see. The corrected version writes the hook logic directly into `.git/hooks/pre-commit` (the branch-independent default location) from `.claude/hooks/session-start.sh`, and was re-verified in a fresh, unrelated `git clone` with no shared state with this session's repository: commit refused on `main`, allowed on a feature branch.
+
+This is recorded honestly, including the mid-verification slip and the false-positive re-test, rather than only reporting the final working state, per the same standard applied to the rest of this incident.
+
+# Incident: corrective-mechanism proposal narrowed a general requirement to literal examples (2026-08-08)
+
+Classification: repeated mistake, escalated to major-mistake management. This occurrence is simultaneously:
+
+1. The 4th confirmed occurrence of `instruction-read-but-not-applied-at-action-boundary` (after `instruction-application-001`, `aura-premature-stop-2026-08-04`, `shallow-answer-2026-08-07`).
+2. The 2nd confirmed occurrence of a root cause first named, but never registered, during the 2026-08-05 recording of `evaluations/week4-improvement-review/AURA_USER_ACCEPTANCE_2026-08-05.md`: reducing Ryunosuke's generalized feedback to a literal restatement of the specific examples he gave, instead of extracting the underlying principle. That earlier occurrence is registered retroactively below as `feedback-generalized-principle-reduced-to-literal-examples`, occurrence 1.
+
+## Summary
+
+Ryunosuke asked Raphael to prioritize the most severe items in Raphael/agent-improvement work. Raphael proposed two mechanisms: a canonical-document contamination check and a communication-clarity check. The second proposal:
+
+- Named three specific jargon words (スポットチェック, フィクスチャ, デビエーション) as the fix target, rather than the already-recorded general rule (`MASTER_SPEC.md` §27 / `agents/raphael.md`): any term matching one of five defined categories (general jargon, project-specific naming, common English/business terms, file/command/ID names, English abbreviations) requires classification and explanation. The three words were examples of those categories in the source evaluation, not an exhaustive target list.
+- Scoped the entire mechanism to jargon-explanation gaps specifically, when Ryunosuke's actual, repeatedly-stated requirement is general: any case where a rule he previously flagged and told Raphael not to repeat was recorded and read, but not applied at the moment of the actual action, regardless of subject matter.
+
+Ryunosuke identified both narrowings and named them explicitly as a mistake requiring correction and recording, without being asked whether it was worth recording.
+
+## Root cause
+
+Both narrowings share one mechanism: when converting a generalized instruction into an implementation plan, Raphael anchored on the concrete illustrative details present in the immediate conversation (the three example words; the single "communication clarity" framing of this specific design discussion) instead of first checking those details against the already-recorded general rule they were instances of. The general rule existed in canonical text already read earlier in this same conversation, but was not rebound to this concrete design task — the same structural gap named in the parent incident above, now confirmed as recurring in a new subject area (proposal scoping, not just commits or doc-pointer answers).
+
+## Impact and similar-case audit
+
+No incorrect mechanism was built or shipped; the narrowing was caught before implementation. Impact is one wasted proposal round and a further trust cost from Ryunosuke having to name the same pattern again. The other work completed earlier in this conversation (PROJECT_STATE.json sync in PR #31, bundle-branch content review in PR #32) did not involve converting a generalized instruction into a narrowed implementation scope and is not implicated by this specific failure mode.
+
+## Corrective action
+
+- Registered `feedback-generalized-principle-reduced-to-literal-examples` (occurrences: 2) and incremented `instruction-read-but-not-applied-at-action-boundary` to 4 confirmed occurrences in `evaluations/action-gates/mistake_registry.json`.
+- The communication-clarity mechanism is redesigned around the five-category classification framework itself (a glossary of previously-flagged terms plus their category, extensible over time), not a fixed word list.
+- The enforcement-mechanism work is redefined to target the general pattern (any previously-recorded, applicable rule not rebound to the current action) via a Stop-hook extension of the existing `scripts/check_action_gate.py` schema, rather than a narrow jargon-only tool. Implementation follows in this same session.
+
+## Closure conditions
+
+Remains open until: the redesigned mechanisms are implemented and tested; independent review is performed (required for repeated mistakes per `GOVERNANCE.md` §9); and Ryunosuke confirms the corrected scope matches what he actually asked for.
+
+# Incident: current execution environment treated as a fixed constraint during research (2026-08-08)
+
+Classification: repeated mistake, escalated to major-mistake management. This is the 3rd confirmed occurrence within this single session of the `feedback-generalized-principle-reduced-to-literal-examples` root cause (after the two occurrences registered in the entry above), and is closely related to (but not identical to) the 2026-08-07 "environment-specific facts written into AI-agnostic canonical agent files" incident: both share the structural confusion of "what is true of my current context" versus "what is true of the general question," but the earlier incident was about writing environment-specific claims into canonical text, while this one is about implicitly scoping a research answer to the current AI/environment without saying so. Registered as a new root cause, `current-execution-environment-treated-as-fixed-constraint`.
+
+## Summary
+
+While researching model-customization options (fine-tuning, custom model training) at Ryunosuke's request, Raphael reported "fine-tuning is not available for Claude" as if that closed the option, without separately asking or stating whether Ryunosuke would accept using a different AI model or execution environment for that specific capability. Per this repository's own established architecture (`README.md`, `agents/raphael.md`), ChatGPT, Claude, Codex, and Gemini are interchangeable execution resources, not fixed. Ryunosuke pointed out that nothing in his request assumed Claude specifically, and asked why that assumption was made.
+
+Separately, and using the same underlying pattern, Ryunosuke had to repeat that "Supabase" and "fine-tuning / building a custom model" were given as examples (with explicit "など"/"とか" qualifiers) of categories to research broadly, not as the literal boundary of the search. This is the third time in this session Raphael treated a given example as the scope rather than a pointer to a category.
+
+## Root cause
+
+When answering a technical-feasibility question, Raphael defaulted to evaluating options against the properties of the AI model/environment currently running the conversation (Claude, via Claude Code) instead of first asking "is this constraint inherent to the goal, or specific to my current runtime?" This is the same class of failure as the 2026-08-07 canonical-contamination incident: session-local facts leaking into a scope they do not belong in — there, into permanent canonical text; here, into a supposedly general feasibility answer.
+
+## Impact and similar-case audit
+
+No irreversible action was taken; the narrowing was caught before any implementation decision was made. Impact is additional rounds of correction and a further trust cost, now compounding across three same-session occurrences of the literal-examples pattern plus this related environment-assumption pattern.
+
+## Corrective action
+
+- Re-researched fine-tuning/custom-model feasibility with the "must run on Claude" assumption explicitly removed (see the conversation's next response for the reconsidered findings: LoRA fine-tuning and DPO on small open-weight models are realistic, low-cost options if Ryunosuke is willing to introduce an additional AI model for a narrow, specialized role such as a judge/critic).
+- Added `STARTUP_CONTEXT.md` §12, a durable, cross-session, cross-AI rule requiring this environment-vs-inherent-constraint check and the examples-are-not-the-scope check on every future research/proposal task, so this does not need to be re-explained in a new conversation or a different AI.
+
+## Closure conditions
+
+Remains open until Ryunosuke confirms the reconsidered fine-tuning/custom-model findings match what he asked for, and until a future similar-but-not-identical case (a different technical question, not fine-tuning) is checked against `STARTUP_CONTEXT.md` §12 without Ryunosuke having to name the pattern again.
+
+# Incident: custom tooling built without checking for existing alternatives, despite a prior instruction to do so (2026-08-08)
+
+Classification: repeated mistake, escalated to major-mistake management. 5th confirmed occurrence of `instruction-read-but-not-applied-at-action-boundary` (after `instruction-application-001`, `aura-premature-stop-2026-08-04`, `shallow-answer-2026-08-07`, `corrective-proposal-narrowed-2026-08-08`).
+
+## Summary
+
+Ryunosuke reports that he previously told a different AI session that research before building must be thorough enough to avoid spending time building things that did not need to be built from scratch — and that this was recorded. Raphael built `scripts/check_action_gate.py`-adjacent custom tooling earlier in this same session (`scripts/check_canonical_environment_neutrality.py`, `scripts/check_communication_glossary.py`, the Stop-hook wiring) without first researching whether mature existing tools already covered the same need. A later research pass in this same conversation found that they do: NeMo Guardrails, Guardrails AI, and LlamaGuard are established open-source frameworks for exactly this class of problem (mechanically enforcing rules on LLM output), and Langfuse is an established open-source, self-hostable observability platform for exactly the audit-trail purpose `mistake_registry.json` and `evaluations/action-gates/` were hand-built for today.
+
+## Root cause and verification of the prior-instruction claim
+
+A repository-wide search for any existing canonical rule requiring an existing-alternatives check before custom implementation (`git grep` across `main` for relevant terms) found no such rule anywhere in `README.md`, `GOVERNANCE.md`, `MASTER_SPEC.md`, `agents/raphael.md`, or any other canonical file. This means Ryunosuke's prior instruction to a different AI session, even if genuinely given and even if that other session recorded it somewhere, never reached this repository's canonical layer — the single source all sessions are supposed to read from. Whether the root failure was "a different AI recorded it only in local/conversational memory, never as a GitHub commit" or "a GitHub commit was made but did not survive to the current `main`" is not established by this session's evidence and is not guessed here. Either way, the practical effect matches this repository's own stated concern in `STARTUP_CONTEXT.md` §8: a report of "shared" or "recorded" is not verified until a new session can actually recover it from the canonical entry path.
+
+## Impact
+
+Time was spent building bespoke tooling for a problem class with mature, tested, free, open-source solutions already available, when at minimum a research pass to check should have happened first regardless of whether the specific prior instruction had reached this session.
+
+## Corrective action
+
+- `STARTUP_CONTEXT.md` §13 adds the missing canonical rule directly, closing the propagation gap regardless of its original cause.
+- The custom tooling built today (`scripts/check_canonical_environment_neutrality.py`, `scripts/check_communication_glossary.py`, `.claude/hooks/stop-communication-check.*`) is not being deleted or retracted in this entry — that is a separate decision requiring comparison against the existing-tool alternatives and Ryunosuke's approval, tracked as an open follow-up rather than decided unilaterally here.
+
+## Closure conditions
+
+Remains open until: Ryunosuke decides whether to keep, replace, or retire today's custom tooling in favor of an existing-tool alternative; and a future implementation task in this repository demonstrates the existing-alternatives check actually happening before code is written, without Ryunosuke prompting it.
