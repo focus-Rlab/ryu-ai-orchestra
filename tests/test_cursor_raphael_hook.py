@@ -1,4 +1,7 @@
 import importlib.util
+import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -71,6 +74,23 @@ class CursorRaphaelHookTest(unittest.TestCase):
         output = hook.encode_hook_output({"agent_message": "実行条件を確認"})
         output.encode("ascii")
         self.assertIn("\\u5b9f", output)
+
+    def test_hook_accepts_utf8_japanese_bytes_from_cursor(self):
+        payload = {
+            "hook_event_name": "beforeSubmitPrompt",
+            "conversation_id": "windows-utf8-test",
+            "prompt": "同じミスを根本から直して",
+        }
+        completed = subprocess.run(
+            [sys.executable, str(HOOK_PATH)],
+            input=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            cwd=Path(__file__).parents[1],
+            check=False,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stderr.decode("ascii"))
+        self.assertEqual(json.loads(completed.stdout.decode("ascii")), {"continue": True})
 
 
 if __name__ == "__main__":
