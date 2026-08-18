@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
-  "phase": "V1 Week 4",
-  "status": "week4_improvement_adoption_pending_start",
-  "latest_merged_pr": 29,
-  "active_issue": 27,
-  "active_branch": "raphael/sync-project-state-after-pr29",
-  "paused_issue": null,
-  "next_action": "Start Issue #27 (V1 Week 4: improvement adoption and cross-domain readiness). First extract all improvement candidates from the Week 2 and Week 3 execution records, provisionally classify each as adopt, reject, or hold, and attach evidence, impact scope, responsible layer, and rollback method. Get independent review before formal adoption. Do not change ROADMAP.md Week 4 purpose, order, deliverables, or completion conditions without Ryunosuke's approval. The previous next_action text describing AURA revision from a 30/100 result is superseded: PR #26 already remediated AURA, and Issue #15's acceptance criteria (9/9) and AURA tests (13/13) passed, per PROJECT_HANDOFF.md section 15 and Issue #27's own prerequisites.",
-  "verified_at": "2026-08-08",
-  "evidence": "PR #29 (branch codex/mistake-prevention-controls) was merged into main by Ryunosuke on 2026-08-05T11:01:25Z, superseding the previously recorded latest_merged_pr of 28. Verified via gh pr list --state merged and gh issue view 27 on 2026-08-08: zero open PRs exist, and Issue #27 is open with one comment and no linked in-progress branch. The prior next_action text (AURA 30/100 revision) was stale and did not match actual GitHub state, matching the exact PR-merge-not-synced failure pattern GOVERNANCE.md section 17 names as a major-mistake candidate. This update corrects only the location-tracking fields; it does not evaluate or decide any Issue #27 content.",
-  "verified_project_digest": "sha256:79d1491be8b7475ad550f8325c6c62280771df69d89bce11251bdcfc92c8af8f",
-  "paused_note": null
+  "phase": "V1 Raphael Runner pilot",
+  "status": "first_real_task_pending_selection",
+  "latest_merged_pr": 32,
+  "active_issue": 34,
+  "active_branch": "codex/sync-runner-pilot-state",
+  "paused_issue": 27,
+  "next_action": "Choose one small task tied to Ryunosuke's real goals, create its Raphael Runner task contract before execution, produce a user-accessible result, and record technical evidence separately from Ryunosuke's acceptance. Do not add broad infrastructure during this pilot.",
+  "verified_at": "2026-08-18",
+  "evidence": "Ryunosuke merged PR #33 (Raphael Runner completion gate) and then PR #32 (mechanical mistake-prevention infrastructure). Both GitHub Actions workflows passed on the conflict-resolved PR #32 head before merge. No pull requests remain open. Issue #34 now tracks the first real-task pilot, while Issue #27 is intentionally paused rather than deleted or redefined.",
+  "verified_project_digest": "sha256:ad1891bc22451cf3f374cda7974b7eddebbdcfa4ab4a593c1da84386ddab7c52",
+  "paused_note": "Issue #27 remains available with its original Week 4 purpose and has not been started under the previous next_action. Resume only after the first Raphael Runner real-task pilot is evaluated or Ryunosuke explicitly changes priority."
 }
