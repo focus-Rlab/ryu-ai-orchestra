@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
-  "phase": "V1 Raphael Runner pilot",
-  "status": "first_real_task_pending_selection",
-  "latest_merged_pr": 32,
-  "active_issue": 34,
-  "active_branch": "codex/sync-runner-pilot-state",
+  "phase": "V1 Raphael Gateway V0",
+  "status": "gateway_v0_implementation_in_progress",
+  "latest_merged_pr": 35,
+  "active_issue": 37,
+  "active_branch": "codex/raphael-gateway-v0",
   "paused_issue": 27,
-  "next_action": "Choose one small task tied to Ryunosuke's real goals, create its Raphael Runner task contract before execution, produce a user-accessible result, and record technical evidence separately from Ryunosuke's acceptance. Do not add broad infrastructure during this pilot.",
+  "next_action": "Review and merge the Gateway V0 implementation, then start Docker Desktop on Ryunosuke Windows PC, launch Open WebUI through scripts/start_raphael.ps1, configure an AI API only after paid-use approval, and complete one real accepted task through the mandatory Gateway.",
   "verified_at": "2026-08-18",
-  "evidence": "Ryunosuke merged PR #33 (Raphael Runner completion gate) and then PR #32 (mechanical mistake-prevention infrastructure). Both GitHub Actions workflows passed on the conflict-resolved PR #32 head before merge. No pull requests remain open. Issue #34 now tracks the first real-task pilot, while Issue #27 is intentionally paused rather than deleted or redefined.",
-  "verified_project_digest": "sha256:ad1891bc22451cf3f374cda7974b7eddebbdcfa4ab4a593c1da84386ddab7c52",
-  "paused_note": "Issue #27 remains available with its original Week 4 purpose and has not been started under the previous next_action. Resume only after the first Raphael Runner real-task pilot is evaluated or Ryunosuke explicitly changes priority."
+  "evidence": "Ryunosuke approved the Raphael Gateway architecture and set completion plus real operation as this week goal. Issue #37 records the accepted scope. PR #36 and Issue #34 were closed without merge because the business experiment did not address the root problem. Gateway core, SQLite experience store, Open WebUI compose connection, Windows launcher, and 10 historical regression cases are implemented locally; 117 tests pass. Docker runtime validation remains pending on Ryunosuke PC because Docker is unavailable in this execution environment.",
+  "verified_project_digest": "sha256:67b0c172dcaf86003b15b7b099e7a215e75400954263ba1f9272f71a988cf9dd",
+  "paused_note": "Original Week 4 remains paused without deletion or redefinition until Raphael Gateway V0 is operating and evaluated."
 }
