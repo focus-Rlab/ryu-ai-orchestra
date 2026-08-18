@@ -39,6 +39,14 @@ class CursorRaphaelHookTest(unittest.TestCase):
         self.assertIn("RAPHAEL TASK CONTRACT", first["agent_message"])
         self.assertEqual(second["permission"], "allow")
 
+    def test_read_tool_is_covered_by_project_hook_configuration(self):
+        config = (Path(__file__).parents[1] / ".cursor" / "hooks.json").read_text(
+            encoding="utf-8"
+        )
+        import json
+        pre_tool = json.loads(config)["hooks"]["preToolUse"][0]
+        self.assertNotIn("matcher", pre_tool)
+
     def test_tool_is_denied_when_prompt_gate_was_bypassed(self):
         result = hook.pre_tool(self.base)
         self.assertEqual(result["permission"], "deny")
