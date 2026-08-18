@@ -11,6 +11,8 @@ from .models import (
 )
 from .orchestrator import Orchestrator
 from .runner import CompletionDecision, RaphaelRunner, TaskContract
+from .experience_store import Experience, ExperienceStore, seed_default_experiences
+from .gateway import GatewayReply, PreparedRequest, RaphaelGateway
 
 __all__ = [
     "ApprovalRecord",
@@ -24,4 +26,10 @@ __all__ = [
     "RunState",
     "TaskContract",
     "CompletionDecision",
+    "Experience",
+    "ExperienceStore",
+    "GatewayReply",
+    "PreparedRequest",
+    "RaphaelGateway",
+    "seed_default_experiences",
 ]
