@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
   "phase": "V1 Cursor Raphael enforcement",
-  "status": "cursor_enforcement_pending_merge_and_pc_test",
-  "latest_merged_pr": 38,
+  "status": "handoff_to_claude_pr43_pending",
+  "latest_merged_pr": 42,
   "active_issue": 39,
-  "active_branch": "codex/cursor-raphael-enforcement",
+  "active_branch": "codex/cursor-hook-utf8-input",
   "paused_issue": 27,
-  "next_action": "Merge the Cursor Raphael enforcement PR, pull main in Cursor on Ryunosuke Windows PC, trust the workspace, restart Cursor, and run one real task to verify contract injection and automatic continuation on missing evidence.",
+  "next_action": "Claude must read PROJECT_HANDOFF.md section 17, verify and ask Ryunosuke to merge PR #43 if still open, have Ryunosuke pull main in Cursor, then repeat the real Windows Cursor test. If it still fails, inspect Cursor hook logs before making another fix. Do not merge main without Ryunosuke approval.",
   "verified_at": "2026-08-18",
-  "evidence": "Ryunosuke explicitly changed the immediate execution environment from Open WebUI Gateway operation to Cursor. PR #38 remains valuable and merged because its portable Runner, SQLite experience store, and enforcement core are reused. Cursor project hooks, an always-applied Raphael rule, fail-closed pre-tool enforcement, completion continuation, and five hook regression tests are implemented locally. All 122 repository tests pass.",
-  "verified_project_digest": "sha256:db9c8374bb8edb654f83851d86e1b8f896da57f51f05b6b92878f26d5c275264",
-  "paused_note": "Original Week 4 remains paused. Open WebUI runtime activation is also deferred while the portable Gateway core is exercised through Cursor hooks."
+  "evidence": "PRs #38, #40, #41, and #42 are merged. Ryunosuke Windows checkout is pulled through merge commit 1b42728. Cursor real test still reports fail-closed hook returned no output. PR #43 fixes the remaining UTF-8 input boundary, adds a subprocess regression matching Cursor Japanese byte input, and has 125 local tests plus two GitHub Actions checks passing. PR #43 remains open at handoff. Cursor credits are near limit, so execution transfers to Claude. Gateway activation remains a documented future option; Open WebUI, Docker activation, and paid AI API configuration have not occurred.",
+  "verified_project_digest": "sha256:697375f31cf1b85ceae56b978152cf6c71b015a559c01dff0788dfb92f0c8d97",
+  "paused_note": "Original Week 4 remains paused. Open WebUI Gateway runtime is preserved as a future option in docs/RAPHAEL_GATEWAY_V0.md while Cursor enforcement is tested first."
 }
