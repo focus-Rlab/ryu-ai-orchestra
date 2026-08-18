@@ -10,6 +10,7 @@ from .models import (
     RunState,
 )
 from .orchestrator import Orchestrator
+from .runner import CompletionDecision, RaphaelRunner, TaskContract
 
 __all__ = [
     "ApprovalRecord",
@@ -17,7 +18,10 @@ __all__ = [
     "CostKind",
     "ImprovementCandidate",
     "Orchestrator",
+    "RaphaelRunner",
     "Request",
     "RunRecord",
     "RunState",
+    "TaskContract",
+    "CompletionDecision",
 ]

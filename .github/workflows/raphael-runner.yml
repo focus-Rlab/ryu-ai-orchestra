@@ -1,0 +1,33 @@
+name: Raphael Runner
+
+on:
+  pull_request:
+    paths:
+      - "v1_core/**"
+      - "scripts/raphael_runner.py"
+      - "tests/**"
+      - ".github/workflows/raphael-runner.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "v1_core/**"
+      - "scripts/raphael_runner.py"
+      - "tests/**"
+      - ".github/workflows/raphael-runner.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run all repository tests
+        run: python -m unittest discover -s tests -v
