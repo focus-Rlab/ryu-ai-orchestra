@@ -191,3 +191,59 @@ Draft PR #28は、規則全体の強制適用、成果物共有・受入、会�
 今後、正本や引き継ぎファイルを更新した後は、内容の意味だけでなく、ファイルがUTF-8として読めることも検証対象に含める。
 
 このトークで隆之介が評価した具体的な良かった点、だめだった点、再監査で判明した見落としは`evaluations/week4-improvement-review/CONVERSATION_REVIEW.md`を正とする。要約だけで具体例を失わない。
+
+## 17. 2026-08-18 Cursor実機試験とClaudeへの引き継ぎ
+
+### 隆之介が確定した当面の目的
+
+CursorでRaphaelを呼び出し、蓄積した改善点、過去のミス、継続すべき行動を、文章として
+読むだけでなく実際の作業へ強制反映する。Open WebUIでのGateway運用開始は当面保留する。
+
+### 完了済み
+
+- PR #38: portable Runner、SQLite経験ストア、Gateway共通コア、Open WebUI構成をmainへマージ
+- PR #40: Cursor Rules/HooksによるRaphael契約、実行前停止、証拠不足時の自動継続をmainへマージ
+- PR #41: Read/Grepを含む全ツールを`preToolUse`強制入口の対象へ修正してmainへマージ
+- PR #42: Windowsで日本語Hook出力をCursorが読めない問題に対し、ASCII JSON出力へ修正してmainへマージ
+- 隆之介のWindows PCはmainをPR #42のマージコミット`1b42728`までpull済み
+- ローカル単体検査ではHookの`beforeSubmitPrompt`と`preToolUse`はいずれもJSONを返した
+
+### 現在の未完了点
+
+Cursor実機では、ツール実行時に次が表示される。
+
+`Tool blocked because this hook is configured to fail closed ... returned no output.`
+
+PR #42は出力側だけを直しており、Cursorが渡す日本語UTF-8入力をWindows Pythonが既定の
+文字コードで読む失敗経路が残っていた。PowerShell手動試験はPowerShellが入力を変換する
+ため、この問題を再現できなかった。
+
+### 未マージPR #43
+
+- URL: https://github.com/focus-Rlab/ryu-ai-orchestra/pull/43
+- branch: `codex/cursor-hook-utf8-input`
+- head: `1500c2a7cd59a3620f8cb675d594a376ae2dc0b2`
+- stdinを生バイトで受け、UTF-8 BOM対応で明示デコード
+- stdout/stderrも明示的なバイト出力に変更
+- Cursor相当の日本語UTF-8入力をsubprocessで再現する回帰テストを追加
+- 125テストとGitHub Actions 2件は成功済み
+
+### Claudeが最初に行うこと
+
+1. GitHub上でPR #43が未マージなら内容と成功済みチェックを確認する
+2. 隆之介にPR #43のマージを依頼する。Claudeはmainへ勝手にマージしない
+3. マージ後、隆之介のCursor PowerShellで`git pull origin main`を実行する
+4. 同じ実運用依頼をCursor Agentへ送り、Raphael契約がAgentへ渡るか確認する
+5. まだ失敗する場合は推測修正を重ねず、Cursor Hooksの実ログを取得して根本原因を特定する
+6. 成功後、証拠不足時のstop Hook自動継続まで試し、Issue #39の本人受入を記録する
+
+### 実運用テスト用依頼
+
+`ラファエルとして、このリポジトリで「蓄積した経験が実行に反映されない問題」への現在の対策を、実際にファイルを読んで確認してください。表面的な説明ではなく、根本原因と、強制システムが本当に動く状態かを報告してください。`
+
+### 費用と未実施事項
+
+- Cursorのクレジット上限が近いため、この続きはClaudeへ引き継ぐ
+- Open WebUIは未起動、Docker Desktop導入も未確認
+- Gateway用AI APIキーは未設定で、API課金は開始していない
+- Cursor案でも外部有料MCPや使用量課金は隆之介の承認なしに有効化しない

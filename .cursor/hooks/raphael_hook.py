@@ -166,7 +166,8 @@ def encode_hook_output(value: dict[str, Any]) -> str:
 
 def hook_main() -> int:
     try:
-        data = json.load(sys.stdin)
+        raw_input = sys.stdin.buffer.read()
+        data = json.loads(raw_input.decode("utf-8-sig"))
         event = data.get("hook_event_name")
         handlers = {
             "beforeSubmitPrompt": before_submit,
@@ -176,10 +177,14 @@ def hook_main() -> int:
             "stop": stop,
         }
         result = handlers.get(event, lambda _: {})(data)
-        print(encode_hook_output(result))
+        sys.stdout.buffer.write((encode_hook_output(result) + "\n").encode("ascii"))
+        sys.stdout.buffer.flush()
         return 0
     except Exception as error:
-        print(encode_hook_output({"error": str(error)}), file=sys.stderr)
+        sys.stderr.buffer.write(
+            (encode_hook_output({"error": str(error)}) + "\n").encode("ascii")
+        )
+        sys.stderr.buffer.flush()
         return 2
 
 
