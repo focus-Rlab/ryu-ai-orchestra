@@ -12,5 +12,6 @@ __pycache__/
 *.pyc
 .raphael/runs/
 .raphael/*.db
+.raphael/cursor/
 evaluations/action-gates/communication_observations.jsonl
 evaluations/action-gates/communication_observations_debug.log
