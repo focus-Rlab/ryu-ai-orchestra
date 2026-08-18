@@ -1,0 +1,43 @@
+# Raphael Gateway V0
+
+## 何を変えるか
+
+これまでは、AIが記録を読んでも実行時に忘れられました。V0では、ユーザーとAIの間に
+Raphael Gatewayを置きます。Gatewayは依頼ごとにSQLiteから関連経験を探し、完了条件へ
+自動変換します。条件の証拠が不足した完了報告はユーザーへ通しません。
+
+経路は次の1本です。
+
+`隆之介 → Open WebUI → Raphael Gateway → AI API`
+
+Open WebUIからAI APIへ直接接続する機能は無効にします。UI、AIモデル、保存先は分離して
+いるため、将来どれかを交換しても経験データと制御コアを残せます。
+
+## 今回できること
+
+- すべての依頼に「過去経験をどう適用したか」の証拠を要求する
+- 問題・ミス時に、原因と再発防止の証拠を追加要求する
+- 有料利用、削除、GitHub操作、画面成果などを依頼内容から判定する
+- 必須証拠がない完了報告を遮断する
+- 依頼、適用経験、結果をSQLiteへ保存する
+
+## V0の限界
+
+Gatewayは、AIが書いた証拠文字列の真偽まで単独では確認できません。GitHub Actionsや
+実ファイルなど機械確認できる証拠は、次の段階で専用検証器へ接続します。V0は「記録を
+読ませるだけ」から「毎回、自動で条件化して不足を止める」への基礎です。
+
+## Windowsでの起動
+
+1. Docker Desktopをインストールして起動する
+2. リポジトリ直下でPowerShellを開く
+3. `powershell -ExecutionPolicy Bypass -File scripts/start_raphael.ps1` を実行する
+4. 初回だけRaphaelの利用者アカウントを作る
+5. モデル一覧から `raphael` を選ぶ
+
+AI APIキーが未設定でも画面とGatewayは起動しますが、AI回答は実行しません。有料APIを
+使う場合は隆之介の承認後、`.env` の `UPSTREAM_API_KEY` を設定します。
+
+## 停止
+
+`docker compose down` を実行します。会話と経験DBはDocker volumeに残ります。
