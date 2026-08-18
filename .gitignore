@@ -11,3 +11,5 @@ dist/
 __pycache__/
 *.pyc
 .raphael/runs/
+evaluations/action-gates/communication_observations.jsonl
+evaluations/action-gates/communication_observations_debug.log

@@ -14,6 +14,56 @@
       "root_cause_id": "single-path-failure-treated-as-outcome-impossibility",
       "confirmed_occurrences": 4,
       "record": "Ryunosuke report in the conversation requesting the PR #24 extension"
+    },
+    "shallow-answer-2026-08-07": {
+      "root_cause_id": "instruction-read-but-not-applied-at-action-boundary",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#2026-08-07 escalation: shallow doc-pointer answer, and treating it as optional to log"
+    },
+    "governance-bypassing-direct-commit-2026-07-26": {
+      "root_cause_id": "target-branch-not-verified-before-write",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#1. Incident title: Governance-bypassing direct commits to main for Raphael evaluation criteria"
+    },
+    "main-direct-commit-2026-08-07": {
+      "root_cause_id": "target-branch-not-verified-before-write",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#13. Recurrence: 2026-08-07 direct commit to main in the current session"
+    },
+    "action-gate-not-wired-to-triggers-2026-08-07": {
+      "root_cause_id": "enforcement-tool-exists-but-not-fail-closed-at-trigger-point",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#Independent review synthesis (2026-08-07)"
+    },
+    "corrective-proposal-narrowed-2026-08-08": {
+      "root_cause_id": "instruction-read-but-not-applied-at-action-boundary",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#Incident: corrective-mechanism proposal narrowed a general requirement to literal examples (2026-08-08)"
+    },
+    "aura-evaluation-feedback-literalized-2026-08-05": {
+      "root_cause_id": "feedback-generalized-principle-reduced-to-literal-examples",
+      "confirmed_occurrences": 1,
+      "record": "evaluations/week4-improvement-review/AURA_USER_ACCEPTANCE_2026-08-05.md#この評価を扱うときの最重要注意"
+    },
+    "corrective-proposal-narrowed-2026-08-08-feedback-literalized": {
+      "root_cause_id": "feedback-generalized-principle-reduced-to-literal-examples",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#Incident: corrective-mechanism proposal narrowed a general requirement to literal examples (2026-08-08)"
+    },
+    "tool-scope-examples-taken-as-boundary-2026-08-08": {
+      "root_cause_id": "feedback-generalized-principle-reduced-to-literal-examples",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#Incident: current execution environment treated as a fixed constraint during research (2026-08-08)"
+    },
+    "claude-assumed-as-fixed-environment-2026-08-08": {
+      "root_cause_id": "current-execution-environment-treated-as-fixed-constraint",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#Incident: current execution environment treated as a fixed constraint during research (2026-08-08)"
+    },
+    "custom-tooling-without-alternatives-check-2026-08-08": {
+      "root_cause_id": "instruction-read-but-not-applied-at-action-boundary",
+      "confirmed_occurrences": 1,
+      "record": "INCIDENT_LOG.md#Incident: custom tooling built without checking for existing alternatives, despite a prior instruction to do so (2026-08-08)"
     }
   }
 }

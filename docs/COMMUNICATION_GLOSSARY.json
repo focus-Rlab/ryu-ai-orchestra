@@ -1,0 +1,37 @@
+{
+  "_schema_note": "Extensible registry of terms confirmed to need explanation for Ryunosuke, per the five-category classification in MASTER_SPEC.md section 27 and agents/raphael.md. Append new terms here as they are flagged; do not special-case individual terms in code. category must be one of: general_jargon, project_specific_name, common_business_english, file_or_command_or_id, english_abbreviation.",
+  "categories": [
+    "general_jargon",
+    "project_specific_name",
+    "common_business_english",
+    "file_or_command_or_id",
+    "english_abbreviation"
+  ],
+  "terms": [
+    {
+      "term": "スポットチェック",
+      "category": "common_business_english",
+      "source": "evaluations/three-agent-pilot/EVALUATION.md user acceptance section, 2026-08-01"
+    },
+    {
+      "term": "フィクスチャ",
+      "category": "general_jargon",
+      "source": "evaluations/three-agent-pilot/EVALUATION.md user acceptance section, 2026-08-01"
+    },
+    {
+      "term": "デビエーション",
+      "category": "project_specific_name",
+      "source": "evaluations/three-agent-pilot/EVALUATION.md user acceptance section, 2026-08-01"
+    },
+    {
+      "term": "クローズ",
+      "category": "common_business_english",
+      "source": "evaluations/three-agent-pilot/EVALUATION.md user acceptance section, 2026-08-01"
+    },
+    {
+      "term": "REQ",
+      "category": "file_or_command_or_id",
+      "source": "evaluations/three-agent-pilot/EVALUATION.md user acceptance section, 2026-08-01"
+    }
+  ]
+}
