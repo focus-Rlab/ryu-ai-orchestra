@@ -10,7 +10,6 @@
     "preToolUse": [
       {
         "command": "python .cursor/hooks/raphael_hook.py",
-        "matcher": "Shell|Write|Delete|Task|MCP:.*",
         "failClosed": true
       }
     ],
