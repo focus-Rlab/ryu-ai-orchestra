@@ -159,6 +159,11 @@ def record(task_id: str, name: str, value: str) -> int:
     return 2
 
 
+def encode_hook_output(value: dict[str, Any]) -> str:
+    """Return ASCII-only JSON so Cursor can parse it on Windows code pages."""
+    return json.dumps(value, ensure_ascii=True)
+
+
 def hook_main() -> int:
     try:
         data = json.load(sys.stdin)
@@ -171,10 +176,10 @@ def hook_main() -> int:
             "stop": stop,
         }
         result = handlers.get(event, lambda _: {})(data)
-        print(json.dumps(result, ensure_ascii=False))
+        print(encode_hook_output(result))
         return 0
     except Exception as error:
-        print(json.dumps({"error": str(error)}, ensure_ascii=False), file=sys.stderr)
+        print(encode_hook_output({"error": str(error)}), file=sys.stderr)
         return 2
 
 
