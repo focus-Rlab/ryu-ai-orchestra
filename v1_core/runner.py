@@ -47,6 +47,7 @@ class RaphaelRunner:
         *,
         task_type: str = "general",
         task_id: str | None = None,
+        additional_requirements: tuple[str, ...] = (),
     ) -> TaskContract:
         if task_type not in {"general", "visual"}:
             raise ValueError("task_type must be 'general' or 'visual'")
@@ -54,6 +55,9 @@ class RaphaelRunner:
         requirements = list(self.GENERAL_REQUIREMENTS)
         if task_type == "visual":
             requirements.extend(self.VISUAL_REQUIREMENTS)
+        for requirement in additional_requirements:
+            if requirement and requirement not in requirements:
+                requirements.append(requirement)
 
         contract = TaskContract(
             task_id=task_id or str(uuid4()),
@@ -97,7 +101,7 @@ class RaphaelRunner:
     @staticmethod
     def _satisfied(requirement: str, evidence: dict[str, Any]) -> bool:
         value = evidence.get(requirement)
-        if requirement == "user_acceptance_passed":
+        if requirement.endswith("_passed"):
             return value is True
         return isinstance(value, str) and bool(value.strip())
 
