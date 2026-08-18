@@ -83,6 +83,17 @@ class RaphaelRunnerTest(unittest.TestCase):
         self.assertFalse(blocked.passed)
         self.assertTrue(passed.passed)
 
+    def test_additional_requirements_are_enforced(self):
+        contract = self.runner.start(
+            "過去経験を適用する",
+            additional_requirements=("experience_application_evidence",),
+        )
+        decision = self.runner.finish(
+            contract.task_id, {"result_evidence": "done"}
+        )
+        self.assertFalse(decision.passed)
+        self.assertEqual(decision.missing, ["experience_application_evidence"])
+
     def test_record_can_be_loaded_by_a_new_runner_process(self):
         contract = self.runner.start("履歴を保存する")
 
