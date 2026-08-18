@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeSubmitPrompt": [
+      {
+        "command": "python .cursor/hooks/raphael_hook.py",
+        "failClosed": true
+      }
+    ],
+    "preToolUse": [
+      {
+        "command": "python .cursor/hooks/raphael_hook.py",
+        "matcher": "Shell|Write|Delete|Task|MCP:.*",
+        "failClosed": true
+      }
+    ],
+    "postToolUse": [
+      {
+        "command": "python .cursor/hooks/raphael_hook.py",
+        "matcher": "Shell|Write|Delete|Task|MCP:.*"
+      }
+    ],
+    "postToolUseFailure": [
+      {
+        "command": "python .cursor/hooks/raphael_hook.py"
+      }
+    ],
+    "stop": [
+      {
+        "command": "python .cursor/hooks/raphael_hook.py",
+        "loop_limit": 3
+      }
+    ]
+  }
+}
