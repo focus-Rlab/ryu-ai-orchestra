@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
-  "phase": "V1 Raphael Gateway V0",
-  "status": "gateway_v0_implementation_in_progress",
-  "latest_merged_pr": 35,
-  "active_issue": 37,
-  "active_branch": "codex/raphael-gateway-v0",
+  "phase": "V1 Cursor Raphael enforcement",
+  "status": "cursor_enforcement_pending_merge_and_pc_test",
+  "latest_merged_pr": 38,
+  "active_issue": 39,
+  "active_branch": "codex/cursor-raphael-enforcement",
   "paused_issue": 27,
-  "next_action": "Review and merge the Gateway V0 implementation, then start Docker Desktop on Ryunosuke Windows PC, launch Open WebUI through scripts/start_raphael.ps1, configure an AI API only after paid-use approval, and complete one real accepted task through the mandatory Gateway.",
+  "next_action": "Merge the Cursor Raphael enforcement PR, pull main in Cursor on Ryunosuke Windows PC, trust the workspace, restart Cursor, and run one real task to verify contract injection and automatic continuation on missing evidence.",
   "verified_at": "2026-08-18",
-  "evidence": "Ryunosuke approved the Raphael Gateway architecture and set completion plus real operation as this week goal. Issue #37 records the accepted scope. PR #36 and Issue #34 were closed without merge because the business experiment did not address the root problem. Gateway core, SQLite experience store, Open WebUI compose connection, Windows launcher, and 10 historical regression cases are implemented locally; 117 tests pass. Docker runtime validation remains pending on Ryunosuke PC because Docker is unavailable in this execution environment.",
-  "verified_project_digest": "sha256:67b0c172dcaf86003b15b7b099e7a215e75400954263ba1f9272f71a988cf9dd",
-  "paused_note": "Original Week 4 remains paused without deletion or redefinition until Raphael Gateway V0 is operating and evaluated."
+  "evidence": "Ryunosuke explicitly changed the immediate execution environment from Open WebUI Gateway operation to Cursor. PR #38 remains valuable and merged because its portable Runner, SQLite experience store, and enforcement core are reused. Cursor project hooks, an always-applied Raphael rule, fail-closed pre-tool enforcement, completion continuation, and five hook regression tests are implemented locally. All 122 repository tests pass.",
+  "verified_project_digest": "sha256:db9c8374bb8edb654f83851d86e1b8f896da57f51f05b6b92878f26d5c275264",
+  "paused_note": "Original Week 4 remains paused. Open WebUI runtime activation is also deferred while the portable Gateway core is exercised through Cursor hooks."
 }
