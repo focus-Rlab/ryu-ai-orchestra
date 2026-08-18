@@ -1,5 +1,8 @@
 # Ryu AI Orchestra
 
+> **現在の最優先:** 蓄積経験を実行時に強制反映する Raphael Gateway V0。
+> 仕組みと起動方法は [docs/RAPHAEL_GATEWAY_V0.md](docs/RAPHAEL_GATEWAY_V0.md) を参照。
+
 隆之介専用のAIエージェント組織を、役割・権限・記憶・評価・セキュリティの正本として管理し、ChatGPT、Claude、Codex、Gemini、GitHub Copilot等から再利用するための基盤です。
 
 ## 現在地
