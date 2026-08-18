@@ -67,6 +67,11 @@ class CursorRaphaelHookTest(unittest.TestCase):
         result = hook.record(state["task_id"], "invented_evidence", "fake")
         self.assertEqual(result, 2)
 
+    def test_hook_output_is_ascii_safe_for_windows_cursor(self):
+        output = hook.encode_hook_output({"agent_message": "実行条件を確認"})
+        output.encode("ascii")
+        self.assertIn("\\u5b9f", output)
+
 
 if __name__ == "__main__":
     unittest.main()
